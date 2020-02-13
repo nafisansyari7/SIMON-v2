@@ -336,9 +336,10 @@
                                     <label for="end">Tanggal Berakhir</label>
                                     <input name="end" type="date" class="form-control @error('end') is-invalid @enderror" value="{{Request::old('end')}}" id="end" required>
                                 </div>
-                                <div class="form-group col-6">
-                                    <label for="kak">Kerangka Acuan Kerja</label>
+                                <div class="form-group col-12">
+                                    <label for="kak">Kerangka Acuan Kerja*</label>
                                     <input type="file" class="form-control-file" name="kak" id="kak">
+                                    <p><b>Catatan:</b> *disertai tanda tangan dan stampel dari Pembimbing Lapangan/Instansi</p>
                                 </div>
                             </div>
                         </div>
@@ -403,7 +404,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Yakin ingin mengirimkan pendaftaran?<br><b>Data yang diajukan tidak dapat diubah lagi</b>
+                            <p>Yakin ingin mengirimkan pendaftaran?<br><b>Data yang diajukan tidak dapat diubah lagi</b><br>
+                            <b class="text-danger font-italic">*Pastikan seluruh anggota kelompok telah memperbarui foto profil.</b>
                             </p>
                         </div>
                         <div class="modal-footer">

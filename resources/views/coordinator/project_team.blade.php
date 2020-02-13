@@ -231,25 +231,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="daginganjing" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div id="sambalado"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="modal fade" id="modalSuccess">
     <div class="modal-dialog">
         <div class="modal-content bg-success">
@@ -310,16 +291,16 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="'+full.kak+'" class="btn btn-primary m-1 sayurkol">Kerangka</button>' +
-                    '<button id="' + buttonId + '" class="btn btn-info detail m-1">Detail</button>'
+                    return '<a href="../berkas/kak/'+full.kak+'" target="_blank" class="btn btn-sm btn-primary m-1">Kerangka</a>' +
+                    '<button id="' + buttonId + '" class="btn btn-sm btn-info detail m-1">Detail</button>'
                 }
             },
             {
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-success terima m-1">Terima</button>' +
-                        '<button id="' + buttonId + '" class="btn btn-danger tolak m-1">Tolak</button>'
+                    return '<button id="' + buttonId + '" class="btn btn-sm btn-success terima m-1">Terima</button>' +
+                        '<button id="' + buttonId + '" class="btn btn-sm btn-danger tolak m-1">Tolak</button>'
                 }
             }
         ]
@@ -488,7 +469,7 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="'+full.kak+'" class="btn btn-primary m-1 sayurkol">Kerangka</button>' +
+                    return '<a href="../berkas/kak/'+full.kak+'" target="_blank" class="btn btn-sm btn-primary m-1">Kerangka</a>' +
                     '<button id="' + buttonId + '" class="btn btn-sm btn-info detail m-1">Detail</button>'
                 }
             },
@@ -502,11 +483,6 @@
             }
         ]
     });
-    $('#mahasiswa-pk tbody').on('click', '.sayurkol', function() {
-        let berkas = $(this).attr('id')
-        $('#daginganjing').modal('show')
-        PDFObject.embed('../berkas/kak/'+berkas, "#sambalado")
-    })
     
     $('#mahasiswa-pk tbody').on('click', '.detail', function() {
         let id = $(this).attr('id')
