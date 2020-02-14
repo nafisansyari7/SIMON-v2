@@ -74,10 +74,10 @@ class CoordinatorController extends Controller
 
         $GroupProject->save();
         $verif = GroupProject::findOrFail($id);
-        $quota = Lecturer::findOrFail($request->supervisor);
         $verif->is_verified = $request->is_verified + '1';
-        $quota->quota = $request->quota + '1';
-        $quota->save();
+        $quota = Lecturer::find($request->supervisor);
+        $bimbingan = $quota->quota + 1;
+        $quota->update(['quota' => $bimbingan]);
 
         if ($verif->save()) {
             return response()->json("success");

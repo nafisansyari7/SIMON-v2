@@ -80,14 +80,14 @@
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="ipk">IPK</label>
-                                            <input type="number" class="form-control @error('ipk-1') is-invalid @enderror" id="ipk-1" readonly value="{{Request::old('ipk-1')}}" name="ipk-1">
+                                            <input type="number" class="form-control @error('ipk-1') is-invalid @enderror" id="ipk-1" readonly value="{{Request::old('ipk-1')}}" min="2.5" name="ipk-1">
                                             @error('ipk-1')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="sks">SKS</label>
-                                            <input type="number" class="form-control @error('sks-1') is-invalid @enderror" id="sks-1" readonly value="{{Request::old('sks-1')}}" name="sks-1">
+                                            <input type="number" class="form-control @error('sks-1') is-invalid @enderror" id="sks-1" readonly value="{{Request::old('sks-1')}}" min="90" name="sks-1">
                                             @error('sks-1')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -162,14 +162,14 @@
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="ipk">IPK</label>
-                                            <input type="number" class="form-control @error('ipk-2') is-invalid @enderror" id="ipk-2" readonly value="{{Request::old('ipk-2')}}" name="ipk-2">
+                                            <input type="number" class="form-control @error('ipk-2') is-invalid @enderror" id="ipk-2" readonly value="{{Request::old('ipk-2')}}" min="2.5" name="ipk-2">
                                             @error('ipk-2')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="sks">SKS</label>
-                                            <input type="number" class="form-control @error('sks-2') is-invalid @enderror" id="sks-2" readonly value="{{Request::old('sks-2')}}" name="sks-2">
+                                            <input type="number" class="form-control @error('sks-2') is-invalid @enderror" id="sks-2" readonly value="{{Request::old('sks-2')}}" min="90" name="sks-2">
                                             @error('sks-2')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -244,14 +244,14 @@
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="ipk">IPK</label>
-                                            <input type="number" class="form-control @error('ipk-3') is-invalid @enderror" id="ipk-3" readonly value="{{Request::old('ipk-3')}}" name="ipk-3">
+                                            <input type="number" class="form-control @error('ipk-3') is-invalid @enderror" id="ipk-3" readonly value="{{Request::old('ipk-3')}}" min="2.5" name="ipk-3">
                                             @error('ipk-3')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="sks">SKS</label>
-                                            <input type="number" class="form-control @error('sks-3') is-invalid @enderror" id="sks-3" readonly value="{{Request::old('sks-3')}}" name="sks-3">
+                                            <input type="number" class="form-control @error('sks-3') is-invalid @enderror" id="sks-3" readonly value="{{Request::old('sks-3')}}" min="90" name="sks-3">
                                             @error('sks-3')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -550,7 +550,7 @@
                                 <div class="info-box bg-success">
                                     <div class="info-box-content">
                                         <span class="info-box-text text-center">Seminar</span>
-                                        <span class="info-box-number text-center mb-0">{{ Carbon\Carbon::parse($anggota->GroupProjectSchedule->date)->format('d F Y') }}</span>
+                                        <span class="info-box-number text-center mb-0">{{ $anggota->GroupProjectSchedule->day }}, {{ $anggota->GroupProjectSchedule->tanggal }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -596,7 +596,7 @@
                                                 <b class="d-block">{{$anggota->GroupProjectSchedule->place}}</b>
                                             </p>
                                             <p class="text-sm">Tanggal & Waktu
-                                                <b class="d-block">{{ Carbon\Carbon::parse($anggota->GroupProjectSchedule->date)->format('d F Y') }}</b>
+                                                <b class="d-block">{{ $anggota->GroupProjectSchedule->day }}, {{ $anggota->GroupProjectSchedule->tanggal }}</b>
                                                 {{ Carbon\Carbon::parse($anggota->GroupProjectSchedule->time)->format('H:i') }}
                                                 -
                                                 {{ Carbon\Carbon::parse($anggota->GroupProjectSchedule->time_end)->format('H:i') }}
@@ -822,7 +822,7 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="bimbinganPK">Lembar Bimbingan PK</label>
-                                    <input type="file" class="form-control-file" name="bimbinganPK" id="bimbinganPK">
+                                    <input type="file" class="form-control-file" name="bimbinganPK" id="bimbinganPK" required>
                                 </div>
                                 <!-- <div class="form-group col-6">
                                     <label for="kak">Kerangka Acuan Kerja</label>
@@ -830,7 +830,7 @@
                                 </div> -->
                                 <div class="form-group col-6">
                                     <label for="setuju">Lembar Persetujuan Seminar PKL dan PK</label>
-                                    <input type="file" class="form-control-file" name="setuju" id="setuju">
+                                    <input type="file" class="form-control-file" name="setuju" id="setuju" required>
                                 </div>
                             </div>
                             <hr>
@@ -851,23 +851,23 @@
                                 <div class="form-group col-6">
                                     <label for="nilaiPKL">Lembar Penilaian PKL</label>
                                     @if ($key === 0) @endif
-                                    <input type="file" class="form-control-file" name="nilaiPKL_{{$key+1}}" id="nilaiPKL_{{$key+1}}">
+                                    <input type="file" class="form-control-file" name="nilaiPKL_{{$key+1}}" id="nilaiPKL_{{$key+1}}" required>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="sertifikat">Sertifikat Kehadiran Seminar</label>
                                     @if ($key === 0) @endif
-                                    <input type="file" class="form-control-file" name="sertifikat_{{$key+1}}" id="sertifikat_{{$key+1}}">
+                                    <input type="file" class="form-control-file" name="sertifikat_{{$key+1}}" id="sertifikat_{{$key+1}}" required>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="bimbingPKL">Lembar Bimbingan PKL Lapangan</label>
                                     @if ($key === 0) @endif
-                                    <input type="file" class="form-control-file" name="bimbingPKL_{{$key+1}}" id="bimbingPKL_{{$key+1}}">
+                                    <input type="file" class="form-control-file" name="bimbingPKL_{{$key+1}}" id="bimbingPKL_{{$key+1}}" required>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="sertifikatLkmm">Sertifikat LKMM</label>
                                     @if ($key === 0) @endif
                                     <input type="file" class="form-control-file" name="sertifikatLkmm_{{$key+1}}"
-                                        id="sertifikatLkmm_{{$key+1}}">
+                                        id="sertifikatLkmm_{{$key+1}}" required>
                                 </div>
                             </div>
                             <hr>
@@ -1026,14 +1026,14 @@
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="ipk">IPK</label>
-                                            <input type="number" class="form-control @error('ipk-4') is-invalid @enderror" id="ipk-4" readonly value="{{Request::old('ipk-4')}}" name="ipk-4">
+                                            <input type="number" class="form-control @error('ipk-4') is-invalid @enderror" id="ipk-4" readonly value="{{Request::old('ipk-4')}}" min="2.5" name="ipk-4">
                                             @error('ipk-4')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="sks">SKS</label>
-                                            <input type="number" class="form-control @error('sks-4') is-invalid @enderror" id="sks-4" readonly value="{{Request::old('sks-4')}}" name="sks-4">
+                                            <input type="number" class="form-control @error('sks-4') is-invalid @enderror" id="sks-4" readonly value="{{Request::old('sks-4')}}" min="90" name="sks-4">
                                             @error('sks-4')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror

@@ -31,8 +31,8 @@
     <tbody>
         @foreach($datas as $data)
             <tr>
-                <td>{{Auth::user()->convertDay($data->GroupProjectSchedule->day)}}</td>
-                <td>{{Auth::user()->convertTanggal($data->GroupProjectSchedule->tanggal)}}</td>
+                <td>{{$data->GroupProjectSchedule->day}}</td>
+                <td>{{$data->GroupProjectSchedule->tanggal}}</td>
                 <td>{{ Carbon\Carbon::parse($data->GroupProjectSchedule->time)->format('H.i') . " - " . Carbon\Carbon::parse($data->GroupProjectSchedule->time_end)->format('H.i') . ""}}</td>
                 <td>{{$data->GroupProjectSchedule->place}}</td>
                 <td>{{$data->title}}</td>

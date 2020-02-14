@@ -15,7 +15,7 @@
                     Verifikasi Pendaftaran
                 </h3>
             </div>
-            <div class="card-body">
+            <div class="card-body  table-responsive">
                 <table id="registration" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
@@ -38,7 +38,7 @@
                     Kelompok
                 </h3>
             </div>
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table id="mahasiswa-pk" class="table table-striped projects w-100">
                     <thead>
                         <tr>
@@ -55,7 +55,7 @@
     </div>
 </section>
 <!-- Modal Registration Detail -->
-<div class="modal fade" id="reg-detail" aria-hidden="true">
+<div class="modal fade table-responsive" id="reg-detail" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -193,9 +193,11 @@
                         <select name="supervisor" id="editSupervisor" class="form-control" style="width: 100%;">
                             @foreach($lecture as $lecturer)
                             @if($lecturer->quota >= 4)
-                            <option id="editLecturer" class="editLecturer bg-danger" value="{{$lecturer->id}}"> {{$lecturer->name}} - Banyak Bimbingan: {{$lecturer->quota}}</option>
+                            <option class="editLecturer bg-danger" value="{{$lecturer->id}}"> {{$lecturer->name}} - Banyak Bimbingan: {{$lecturer->quota}}</option>
+                            @elseif($lecturer->quota >= 2)
+                            <option class="editLecturer bg-warning" value="{{$lecturer->id}}"> {{$lecturer->name}} - Banyak Bimbingan: {{$lecturer->quota}}</option>
                             @else
-                            <option id="editLecturer" class="editLecturer" value="{{$lecturer->id}}"> {{$lecturer->name}} - Banyak Bimbingan: {{$lecturer->quota}}</option>
+                            <option class="editLecturer" value="{{$lecturer->id}}"> {{$lecturer->name}} - Banyak Bimbingan: {{$lecturer->quota}}</option>
                             @endif
                             @endforeach
                         </select>
@@ -279,7 +281,7 @@
                 "render": function(data, type, full, meta) {
                     let img = ''
                     for (let i = 0; i < full.internship_students.length; i++) {
-                        img += '<img src="../public/image/' + full.internship_students[i].user.image_profile + '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' + full.internship_students[i].name + '"><p hidden>' + full.internship_students[i].nim + full.internship_students[i].name + '</p>'
+                        img += '<a href=../public/image/' + full.internship_students[i].user.image_profile + ' target="_blank"><img src="../public/image/' + full.internship_students[i].user.image_profile + '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' + full.internship_students[i].name + '"></a>'
                     }
                     return img
                 }
@@ -454,7 +456,7 @@
                 "render": function(data, type, full, meta) {
                     let img = ''
                     for (let i = 0; i < full.internship_students.length; i++) {
-                        img += '<img src="../public/image/' + full.internship_students[i].user.image_profile + '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' + full.internship_students[i].name + '"><p hidden>' + full.internship_students[i].name + full.internship_students[i].name + '</p>'
+                        img += '<a href=../public/image/' + full.internship_students[i].user.image_profile + ' target="_blank"><img src="../public/image/' + full.internship_students[i].user.image_profile + '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' + full.internship_students[i].name + '"></a>'
                     }
                     return img
                 }

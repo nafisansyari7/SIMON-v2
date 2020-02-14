@@ -252,7 +252,7 @@
         "columns": [{
                 sortable: false,
                 "render": function(data, type, full, meta) {
-                    return '<b>' + moment(full.group_project_schedule.date).format('D MMMM YYYY') + '</b><br><small>' + full.group_project_schedule.place + '<br>' +
+                    return '<b>' + full.group_project_schedule.tanggal + '</b><br><small>' + full.group_project_schedule.place + '<br>' +
                         moment(full.group_project_schedule.time, 'HH:mm:ss').format('HH:mm') + '-' + moment(full.group_project_schedule.time_end, 'HH:mm:ss').format('HH:mm') + ' WITA</small>'
                 }
             },
@@ -264,7 +264,7 @@
                 "render": function(data, type, full, meta) {
                     let img = ''
                     for (let i = 0; i < full.internship_students.length; i++) {
-                        img += '<img src="../public/image/' + full.internship_students[i].user.image_profile + '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' + full.internship_students[i].name + '"><p hidden>' + full.internship_students[i].nim + full.internship_students[i].name + '</p>'
+                        img += '<a href=../public/image/' + full.internship_students[i].user.image_profile + ' target="_blank"><img src="../public/image/' + full.internship_students[i].user.image_profile + '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' + full.internship_students[i].name + '"></a>'
                     }
                     return img
                 }
