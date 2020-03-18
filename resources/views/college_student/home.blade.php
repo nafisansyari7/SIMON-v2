@@ -849,6 +849,11 @@
                                     <input type="text" class="form-control" id="nama" value="{{$anggota->name}}" readonly>
                                 </div>
                                 <div class="form-group col-6">
+                                    <label for="nilaiPKL">Kartu Rencana Studi</label>
+                                    @if ($key === 0) @endif
+                                    <input type="file" class="form-control-file" name="krs_{{$key+1}}" id="krs_{{$key+1}}" required>
+                                </div>
+                                <div class="form-group col-6">
                                     <label for="nilaiPKL">Lembar Penilaian PKL</label>
                                     @if ($key === 0) @endif
                                     <input type="file" class="form-control-file" name="nilaiPKL_{{$key+1}}" id="nilaiPKL_{{$key+1}}" required>
