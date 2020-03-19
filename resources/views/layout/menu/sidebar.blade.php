@@ -43,6 +43,13 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+        <a href="{{ url('mahasiswa/home')}}" class="{{(request()->is('mahasiswa/home')) ? 'active' : ''}} nav-link">
+            <i class="nav-icon fas fa-calendar-alt"></i>
+              Seminar PKL dan PK
+          </a>
+        </li>
+
         @endif
         @if(Auth::user()->isCoordinator())
         <li class="nav-header font-weight-bold">Koordinator PKL dan PK</li>
