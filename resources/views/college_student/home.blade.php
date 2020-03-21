@@ -942,11 +942,6 @@
 </section>
 @endsection
 
-@section('title', 'Mahasiswa | Seminar PKL dan PK')
-@section('content')
-<section class="content">
-
-
 @section('ajax')
 <script>
     function fetchData(i) {

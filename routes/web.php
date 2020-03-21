@@ -24,6 +24,8 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function() {
     Route::prefix('mahasiswa')->group(function () {
         Route::get('home', 'CollegeStudentController@index')->name('mahasiswa.home');
         Route::get('progress', 'CollegeStudentController@progress');
+        Route::get('seminar', 'AgendaController@index');
+        Route::get('seminar/show', 'AgendaController@get');
         Route::get('mahasiswa-cek', 'GroupProjectController@show')->name('mahasiswa.index');
         Route::post('daftar', 'GroupProjectController@store')->name('mahasiswa.daftar');
         Route::get('project/{id}', 'CollegeStudentController@show');

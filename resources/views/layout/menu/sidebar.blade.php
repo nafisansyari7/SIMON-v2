@@ -44,9 +44,11 @@
           </a>
         </li>
         <li class="nav-item">
-        <a href="{{ url('mahasiswa/home')}}" class="{{(request()->is('mahasiswa/home')) ? 'active' : ''}} nav-link">
+          <a href="{{ url('mahasiswa/seminar')}}" class="{{(request()->is('mahasiswa/seminar')) ? 'active' : ''}} nav-link">
             <i class="nav-icon fas fa-calendar-alt"></i>
-              Seminar PKL dan PK
+            <p>
+              Agenda Seminar PKL dan PK
+            </p>
           </a>
         </li>
 
