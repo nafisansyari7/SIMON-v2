@@ -33,8 +33,8 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function() {
         Route::put('project/{id}/upload', 'CollegeStudentController@upload')->name('upload-laporan');
         Route::get('getVerif/{id}', 'GroupProjectController@getVerif');
         Route::put('daftarSeminar/{id}/edit', 'GroupProjectController@accSeminar');
-        Route::get('detailArsip/{id}', 'AgendaController@detailArsip');
         Route::get('detailDaftarSem/{id}', 'AgendaController@detailDaftar');
+        Route::get('hadiriSeminar/{id}', 'AgendaController@hadiriSeminar');
     });   
 
 });

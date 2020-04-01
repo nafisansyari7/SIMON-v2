@@ -163,7 +163,7 @@
                 </div>
                 </form>
             </div>
-        </div>=
+        </div>
     </div>
 </div>
 <!-- Terima Modal -->
@@ -228,15 +228,6 @@
                         <input type="hidden" id="examiner_role_3" name="examiner_3[role]" value="Penguji 1">
                     </div>
                     <div class="form-group">
-                    <label>Penguji II</label>
-                        <select id="examiner_4" name="examiner_4[lecturer_id]" class="form-control">
-                            @foreach($examiner as $lecturer)
-                            <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
-                            @endforeach
-                        </select>
-                        <input type="hidden" id="examiner_role_4" name="examiner_4[role]" value="Penguji 2">
-                    </div>
-              <      <div class="form-group">
                         <label>Penguji II</label>
                         <input type="text" class="form-control" id="examiner_4" value="" disabled>
                         <input type="hidden" class="form-control" id="examiner_4_id" name="examiner_4[lecturer_id]" value="">
@@ -618,7 +609,8 @@
                     let buttonId = full.id;
                     return '<button id="' + buttonId + '" class="btn btn-primary detail">Detail</button>' +
                         '<button id="' + buttonId + '" class="btn btn-warning edit mx-1">Edit</button>' +
-                        '<button id="' + buttonId + '" class="btn btn-success selesai">Selesai</button>'
+                        '<button id="' + buttonId + '" class="btn btn-info menghadiri">Menghadiri</button>' +
+                        '<button id="' + buttonId + '" class="btn btn-success selesai mx-1">Selesai</button>'
                 }
             }
         ]

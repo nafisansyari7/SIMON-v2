@@ -138,6 +138,37 @@
         </div>=
     </div>
 </div>
+<!-- Hadiri modal -->
+<div class="modal fade" id="hadiri-seminar" aria-hidden="true">
+    <form id="is-done">
+    @csrf
+    <input type="hidden" name="groupProject" id="gp_id" value="">
+    <input type="hidden" id="_method" value="PUT" name="_method">
+    <input type="hidden" name="is_verified" id="is_done" value="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-check mr-1"></i>
+                    Konfirmasi
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Yakin Ingin Mengikuti Seminar?
+                    <b class="text-danger font-italic">*Pastikan anda bisa menghadiri seminar dan tidak bertbrakan dengan agenda lain.</b></p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success float-right">Selesai</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+    </form>
+</div>
 @endsection
 @section('ajax')
 <script>
@@ -219,6 +250,18 @@ $("#seminar").DataTable({
 
                     $('#mahasiswa tbody').append(modal)
                 });
+            }
+        })
+    });
+    $('#seminar tbody').on('click', '.hadiri', function() {
+        let id = $(this).attr('id')
+        $('#seminar-finish').modal('show');
+
+        $.ajax({
+            url: "../mahasiswa/hadiriSeminar/" + id,
+            success: function(result) {
+                $('#is_done').val(result.data.is_verified)
+                $('#gp_id').val(result.data.id)
             }
         })
     });

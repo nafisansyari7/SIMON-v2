@@ -42,6 +42,12 @@ class AgendaController extends Controller
         $supervisor = GroupProjectSupervisor::with('Lecturer')->where('group_project_id', $Anggota->id)->first();
         return response()->json(['data' => $Anggota, 'fck' => $fck, 'supervisor' => $supervisor]);
     }
+    public function hadiriSeminar($id)
+    {
+        $getIsVerif = GroupProject::with('GroupProjectSupervisor.Lecturer')->findOrFail($id);
+        // dd($getIsVerif);
+        return response()->json(['data' => $getIsVerif]);
+    }
 
 
     /**
