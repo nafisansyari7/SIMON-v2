@@ -33,6 +33,16 @@ class AgendaController extends Controller
         }])->where('is_verified', '3')->get();
         return response()->json(['data' => $verified]);
     }
+    public function detailDaftar($id)
+    {
+        $Anggota = GroupProject::with(['Agency', 'InternshipStudents' => function ($abc) {
+            $abc->with(['Jobdescs', 'File']);
+        }])->find($id);
+        $fck = GroupProjectExaminer::with('Lecturer')->where('group_project_id', $Anggota->id)->get();
+        $supervisor = GroupProjectSupervisor::with('Lecturer')->where('group_project_id', $Anggota->id)->first();
+        return response()->json(['data' => $Anggota, 'fck' => $fck, 'supervisor' => $supervisor]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

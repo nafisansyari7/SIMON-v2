@@ -54,6 +54,90 @@
         </div>
     </div>
 </section>
+<!-- Detail Modal -->
+<div class="modal fade" id="detail" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    Detail
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs mb-2" id="tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link" id="team-tab" data-toggle="pill" href="#team" role="tab" aria-controls="team" aria-selected="true">Mahasiswa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="instansi-tab" data-toggle="pill" href="#instansi" role="tab" aria-controls="instansi" aria-selected="false">Instansi/Perusahaan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="seminar-tab" data-toggle="pill" href="#detailsm" role="tab" aria-controls="seminar" aria-selected="false">Penguji</a>
+                    </li>
+                </ul>           
+                <form id="form_detail">
+                <div class="tab-content" id="tabContent">
+                    <div class="tab-pane fade show active" id="team" role="tabpanel" aria-labelledby="team-tab">
+                        <table class="table table-responsive" id="mahasiswa">
+                            <thead>
+                                <tr>
+                                    <th>NIM</th>
+                                    <th>Nama</th>
+                                    <th>Job Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="instansi" role="tabpanel" aria-labelledby="instansi-tab">
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <label for="instansi">Nama Instansi/Perusahaan</label>
+                                <input type="text" class="form-control" id="agency" value="" readonly>
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="instansi">Pembimbing Lapangan</label>
+                                <input type="text" class="form-control" id="pemLapangan" value="" readonly>
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="bidang">Bidang/Sektor Usaha</label>
+                                <input type="text" class="form-control" id="bidang" value="" readonly>
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="alamat">Alamat</label>
+                                <input type="text" class="form-control" id="alamat" value="" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="detailsm" role="tabpanel" aria-labelledby="seminar-tab">
+                        <div class="form-group">
+                            <label>Ketua Penguji</label>
+                            <input type="text" class="form-control" id="ketuapem" value="" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Sekretaris</label>
+                            <input type="text" class="form-control" id="pem1" value="" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Penguji I</label>
+                            <input type="text" class="form-control" id="pem2" value="" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Penguji II</label>
+                            <input type="text" class="form-control" id="pem3" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>=
+    </div>
+</div>
 @endsection
 @section('ajax')
 <script>
@@ -93,5 +177,51 @@ $("#seminar").DataTable({
             
         ]
     });
+
+    $('#seminar tbody').on('click', '.detail', function() {
+        let id = $(this).attr('id')
+        $('#detail').modal('show');
+
+        $.ajax({
+            url: "../mahasiswa/detailDaftarSem/" + id,
+            success: function(result) {
+                $('#mahasiswa tbody').html('')
+                $('#files tbody').html('')
+                $('#agency').val(result.data.agency.agency_name)
+                $('#pemLapangan').val(result.data.field_supervisor)
+                $('#bidang').val(result.data.agency.sector)
+                $('#alamat').val(result.data.agency.address)
+                $('#pem3').val(result.supervisor.lecturer.name) 
+                result.fck.forEach(function(mmk) {
+                    let role = mmk.role;
+                    if (role === "Ketua Penguji") {
+                        $('#ketuapem').val(mmk.lecturer.name);
+                    } else if (role === "Sekretaris") {
+                        $('#pem1').val(mmk.lecturer.name);
+                    } else if (role === "Penguji 1") {
+                        $('#pem2').val(mmk.lecturer.name);
+                    } else if (role === "Penguji 2") {
+                        $('#pem3').val(mmk.lecturer.name);
+                    }
+                });
+
+
+                result.data.internship_students.forEach(function(i) {
+                    let call_job = ''
+                    i.jobdescs.forEach(function(job) {
+                        call_job += job.jobname + '<br>'
+                    })
+                    
+                    modal = '<tr><td>' + i.nim + '</td>' +
+                        '<td>' + i.name + '</td>' +
+
+                        '<td>' + call_job + '</td></tr>'
+
+                    $('#mahasiswa tbody').append(modal)
+                });
+            }
+        })
+    });
+
 </script>
 @endsection
