@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function() {
         Route::put('daftarSeminar/{id}/edit', 'GroupProjectController@accSeminar');
         Route::get('detailDaftarSem/{id}', 'AgendaController@detailDaftar');
         Route::get('hadiriSeminar/{id}', 'AgendaController@hadiriSeminar');
+        Route::get('hadiri', 'AgendaController@hadiriSeminar')->name('mahasiswa.hadir');
     });   
 
 });
@@ -81,6 +82,13 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
         Route::get('newsReport/{id}', 'GroupProjectNewsReportController@get');
         Route::put('newsReport/{id}/edit', 'GroupProjectNewsReportController@store');
         Route::get('exportExcel', 'GroupProjectController@export');
+        //route CRUD
+        Route::get('/rekomendasi','RekomendasiController@index');
+        Route::get('/rekomendasi/tambah','RekomendasiController@tambah');
+        Route::post('/rekomendasi/store','RekomendasiController@store');
+        Route::get('/rekomendasi/edit/{id}','RekomendasiController@edit');
+        Route::post('/rekomendasi/update','RekomendasiController@update');
+        Route::get('/rekomendasi/hapus/{id}','RekomendasiController@hapus');
         });
     });
 Route::group(['middleware' => ['auth', 'role:admin']], function() {  

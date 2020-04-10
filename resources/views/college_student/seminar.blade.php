@@ -139,12 +139,7 @@
     </div>
 </div>
 <!-- Hadiri modal -->
-<div class="modal fade" id="hadiri-seminar" aria-hidden="true">
-    <form id="is-done">
-    @csrf
-    <input type="hidden" name="groupProject" id="gp_id" value="">
-    <input type="hidden" id="_method" value="PUT" name="_method">
-    <input type="hidden" name="is_verified" id="is_done" value="">
+<div class="modal fade" id="hadiri" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -157,17 +152,43 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Yakin Ingin Mengikuti Seminar?
-                    <b class="text-danger font-italic">*Pastikan anda bisa menghadiri seminar dan tidak bertbrakan dengan agenda lain.</b></p>
+                <p>Yakin ingin menghadiri Seminar?<br><br>
+                    <div class="form-group col-12">
+                        <label for="nim">NIM</label>
+                        <div class="row">
+                            <div class="col-9">
+                                <input name="internship_student_id" type="hidden" value="{{ Auth::user()->InternshipStudent->id }}" class="form-control" id="">
+                                <input name="nim[]" type="text" value="{{ Auth::user()->InternshipStudent->nim }}" class="form-control" id="nim-1" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="name">Nama</label>
+                        <div class="row">
+                            <div class="col-9">
+                                <input name="internship_student_id" type="hidden" value="{{ Auth::user()->InternshipStudent->id }}" class="form-control" id="">
+                                <input name="name[]" type="text" value="{{ Auth::user()->InternshipStudent->name }}" class="form-control" id="name-1" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="name">Nama</label>
+                        <div class="row">
+                            <div class="col-9">
+                                <input name="users_id" type="hidden" value="{{ Auth::user()->id }}" class="form-control" id="">
+                                <input name="email[]" type="text" value="{{ Auth::user()->pemail }}" class="form-control" id="email-1" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                <b class="text-danger font-italic">*Pastikan anda bisa menghadiri dan tidak bertabrakan dengan jadwal lain.</b>
+                </p>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success float-right">Selesai</button>
+                <button type="submit" class="btn btn-primary float-right">Yakin</button>
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
-    </form>
 </div>
 @endsection
 @section('ajax')
@@ -255,7 +276,7 @@ $("#seminar").DataTable({
     });
     $('#seminar tbody').on('click', '.hadiri', function() {
         let id = $(this).attr('id')
-        $('#seminar-finish').modal('show');
+        $('#hadiri').modal('show');
 
         $.ajax({
             url: "../mahasiswa/hadiriSeminar/" + id,
