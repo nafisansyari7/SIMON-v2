@@ -95,6 +95,7 @@ class SeminarController extends Controller
                 'tanggal' => 'required|date',
                 'waktuMulai' => 'required',
                 'waktuSelesai' => 'required',
+                'kuota' => 'required',
             ],
             [
                 'required' => 'Harap di isi',
@@ -105,7 +106,8 @@ class SeminarController extends Controller
             'place' => $request->tempat,
             'time' => $request->waktuMulai,
             'time_end' => $request->waktuSelesai,
-            'group_project_id' => $id
+            'quota' => $request->kuota,
+            'group_project_id' => $id,
         ]);
         $penguji = new Lecturer();
         $penguji = ([
@@ -190,6 +192,7 @@ class SeminarController extends Controller
         $jadwal->place = $request->input('editTempat');
         $jadwal->time = $request->input('editStart');
         $jadwal->time_end = $request->input('editEnd');
+        $jadwal->quota = $request->input('editKuota');
         $jadwal->update();
         $i = 1;
         foreach ($examiner as $val) {

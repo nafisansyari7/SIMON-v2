@@ -11,7 +11,7 @@ class GroupProjectSchedule extends Model
     protected $table = 'group_projects_schedules';
     protected $appends = ['day', 'tanggal'];
     protected $fillable = [
-        'date', 'place', 'time', 'time_end', 'group_project_id'
+        'date', 'place', 'time', 'time_end', 'group_project_id', 'quota'
     ];
 
     public function GroupProject() {

@@ -44,6 +44,7 @@
                             <th>Tanggal</th>
                             <th>Judul</th>
                             <th>Kelompok</th>
+                            <th>Kuota Pengamat</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -201,6 +202,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label>Kuota Pengamat</label>
+                        <div class="input-group">
+                            <input type="text" name="kuota" id="kuota" class="form-control"> 
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label>Ketua Penguji</label>
                         <select id="examiner_1" name="examiner_1[lecturer_id]" class="form-control">
                             @foreach($examiner as $lecturer)
@@ -279,8 +286,8 @@
             <div class="modal-body">
                 <form id="editVerifSeminar" method="POST">
                     @csrf
-                    <input type="hidden" name="groupProject" id="group_id" value="">
-                    <input type="hidden" id="_method" value="PUT" name="_method">
+                    <input type="text" name="groupProject" id="group_id" value="">
+                    <input type="text" id="_method" value="PUT" name="_method">
                     <div class="form-group">
                         <label>Tempat</label>
                         <input id="editTempat" name="editTempat" type="text" class="form-control">
@@ -295,6 +302,12 @@
                             <input id="editStart" name="editStart" type="time" class="form-control">
                             <input id="editEnd" name="editEnd" type="time" class="form-control">
                         </div>
+                        <div class="form-group">
+                        <label>Kuota Pengamat</label>
+                        <div class="input-group">
+                            <input type="text" name="editKuota" id="editKuota" class="form-control"> 
+                        </div>
+                    </div>
                     </div>
                 <div class="form-group">
                     <label>Ketua Penguji</label>
@@ -423,6 +436,7 @@
             {
                 data: "group_project_supervisor.lecturer.name"
             },
+
             {
                 sortable: false,
                 "render": function(data, type, full, meta) {
@@ -601,6 +615,12 @@
                         img += '<a href=../public/image/' + full.internship_students[i].user.image_profile + ' target="_blank"><img src="../public/image/' + full.internship_students[i].user.image_profile + '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' + full.internship_students[i].name + '"></a>'
                     }
                     return img
+                }
+            },
+            {
+                sortable: false,
+                "render": function(data, type, full, meta) {
+                    return '<b>' + full.group_project_schedule.quota + '</b>'
                 }
             },
             {

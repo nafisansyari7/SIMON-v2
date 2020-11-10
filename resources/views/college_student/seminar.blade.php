@@ -44,6 +44,7 @@
                             <th>Tanggal</th>
                             <th>Judul</th>
                             <th>Kelompok</th>
+                            <th>Kuota Pengamat</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -153,43 +154,32 @@
             </div>
             <div class="modal-body">
                 <p>Yakin ingin menghadiri Seminar?<br><br>
+                    <form id="pengamat" method="POST">
+                     @csrf
+                     <!-- <input type="text" name="student" id="student_id" value="">
+                     <input type="text" id="_method" value="PUT" name="_method"> -->
+                    
                     <div class="form-group col-12">
-                        <label for="nim">NIM</label>
                         <div class="row">
                             <div class="col-9">
-                                <input name="internship_student_id" type="hidden" value="{{ Auth::user()->InternshipStudent->id }}" class="form-control" id="">
-                                <input name="nim[]" type="text" value="{{ Auth::user()->InternshipStudent->nim }}" class="form-control" id="nim-1" disabled>
+                                <input name="internship_student_id" type="text" value="{{ Auth::user()->InternshipStudent->id }}" class="form-control" id="">
+                                <input name="group_projects_schedule_id" type="text" value="" class="form-control" id="">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-12">
-                        <label for="name">Nama</label>
-                        <div class="row">
-                            <div class="col-9">
-                                <input name="internship_student_id" type="hidden" value="{{ Auth::user()->InternshipStudent->id }}" class="form-control" id="">
-                                <input name="name[]" type="text" value="{{ Auth::user()->InternshipStudent->name }}" class="form-control" id="name-1" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12">
-                        <label for="name">Nama</label>
-                        <div class="row">
-                            <div class="col-9">
-                                <input name="users_id" type="hidden" value="{{ Auth::user()->id }}" class="form-control" id="">
-                                <input name="email[]" type="text" value="{{ Auth::user()->pemail }}" class="form-control" id="email-1" disabled>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                 <b class="text-danger font-italic">*Pastikan anda bisa menghadiri dan tidak bertabrakan dengan jadwal lain.</b>
                 </p>
             </div>
+            </form>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary float-right">Yakin</button>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 @section('ajax')
 <script>
@@ -216,6 +206,12 @@ $("#seminar").DataTable({
                         img += '<a href=../public/image/' + full.internship_students[i].user.image_profile + ' target="_blank"><img src="../public/image/' + full.internship_students[i].user.image_profile + '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' + full.internship_students[i].name + '"></a>'
                     }
                     return img
+                }
+            },
+            {
+                sortable: false,
+                "render": function(data, type, full, meta) {
+                    return '<b>' + full.group_project_schedule.quota + '</b>'
                 }
             },
             {
@@ -276,16 +272,24 @@ $("#seminar").DataTable({
     });
     $('#seminar tbody').on('click', '.hadiri', function() {
         let id = $(this).attr('id')
-        $('#hadiri').modal('show');
 
         $.ajax({
             url: "../mahasiswa/hadiriSeminar/" + id,
+            dataType:"json",
             success: function(result) {
-                $('#is_done').val(result.data.is_verified)
-                $('#gp_id').val(result.data.id)
+                $('#hadiri').modal('show');
+                $('#student_id').val(result.data.id)
+                // $('#is_done').val(result.data.is_verified)
+                // $('#gp_id').val(result.data.id)
             }
         })
     });
+    $('#pengamat').submit(function(e){
+        e.preventDefault();
 
+        var request = new FormData(this);
+
+        const id = $('#')
+    })
 </script>
 @endsection

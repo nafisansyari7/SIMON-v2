@@ -49,6 +49,7 @@ class AgendaController extends Controller
         }])->find($id);
         $fck = GroupProjectExaminer::with('Lecturer')->where('group_project_id', $Anggota->id)->get();
         $supervisor = GroupProjectSupervisor::with('Lecturer')->where('group_project_id', $Anggota->id)->first();
+        // $student = 
         return response()->json(['data' => $Anggota, 'fck' => $fck, 'supervisor' => $supervisor]);
     }
 
