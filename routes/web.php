@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function() {
         Route::get('detailDaftarSem/{id}', 'AgendaController@detailDaftar');
         Route::get('hadiriSeminar/{id}', 'AgendaController@hadiriSeminar');
         Route::get('hadiri', 'AgendaController@hadiriSeminar')->name('mahasiswa.hadir');
+        Route::post('pengamat/{id}', 'AgendaController@yakin');
     });   
 
 });

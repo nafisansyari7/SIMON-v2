@@ -155,16 +155,13 @@
             <div class="modal-body">
                 <p>Yakin ingin menghadiri Seminar?<br><br>
                     <form id="pengamat" method="POST">
-                     @csrf
-                     <!-- <input type="text" name="student" id="student_id" value="">
-                     <input type="text" id="_method" value="PUT" name="_method"> -->
-                    
+                     @csrf                  
                     <div class="form-group col-12">
                         <div class="row">
                             <div class="col-9">
                                 <input name="internship_student_id" type="text" value="{{ Auth::user()->InternshipStudent->id }}" class="form-control" id="">
-                                <input name="group_projects_schedule_id" type="text" value="" class="form-control" id="">
-                            </div>
+                                <input type="text" name="groupProject" id="group_id" value="">
+                         </div>
                         </div>
                     </div>
                     
@@ -172,10 +169,10 @@
                 <b class="text-danger font-italic">*Pastikan anda bisa menghadiri dan tidak bertabrakan dengan jadwal lain.</b>
                 </p>
             </div>
-            </form>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary float-right">Yakin</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -218,6 +215,7 @@ $("#seminar").DataTable({
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
+
                     return '<button id="' + buttonId + '" class="btn btn-primary detail">Detail</button>' +
                     '<button id="' + buttonId + '" class="btn btn-success hadiri ml-1 mr-1">Hadiri</button>'
                 }
@@ -278,18 +276,35 @@ $("#seminar").DataTable({
             dataType:"json",
             success: function(result) {
                 $('#hadiri').modal('show');
-                $('#student_id').val(result.data.id)
-                // $('#is_done').val(result.data.is_verified)
-                // $('#gp_id').val(result.data.id)
+                $('#group_id').val(result.data.id)
             }
         })
     });
+
     $('#pengamat').submit(function(e){
         e.preventDefault();
 
         var request = new FormData(this);
 
-        const id = $('#')
+        const id = $('#group_id').val();
+        $.ajax({
+            url: "pengamat/" + id,
+            method: "POST",
+            data: request,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data){
+                if (data == "success") {
+                    $('#pengamat')[0].reset();
+                    $('#hadiri').modal('hide');
+                    $('#seminar').DataTable().ajax.reload();
+                }
+                else {
+                    $('#modalFailed').modal();
+                }
+            }
+        });
     })
 </script>
 @endsection

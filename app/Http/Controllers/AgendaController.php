@@ -8,6 +8,7 @@ use App\Lecturer;
 use App\GroupProjectSchedule;
 use App\GroupProjectExaminer;
 use App\GroupProjectSupervisor;
+use App\Observer;
 
 class AgendaController extends Controller
 {
@@ -49,7 +50,6 @@ class AgendaController extends Controller
         }])->find($id);
         $fck = GroupProjectExaminer::with('Lecturer')->where('group_project_id', $Anggota->id)->get();
         $supervisor = GroupProjectSupervisor::with('Lecturer')->where('group_project_id', $Anggota->id)->first();
-        // $student = 
         return response()->json(['data' => $Anggota, 'fck' => $fck, 'supervisor' => $supervisor]);
     }
 
@@ -70,9 +70,17 @@ class AgendaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function yakin(Request $request)
     {
-        //
+        $pengamat = new Observer([
+            'internship_student_id' => $request->internship_student_id,
+            'group_projects_schedule_id' => $request->groupProject,
+
+        ]);
+        if ($pengamat->save()) {
+            return response()->json("success");
+        }
+        return response()->json("failed");
     }
 
     /**
@@ -83,7 +91,9 @@ class AgendaController extends Controller
      */
     public function show($id)
     {
-        //
+        $getIsVerif = GroupProject::with(['GroupProjectSupervisor.Lecturer', 'GroupProjectSchedule'])->findOrFail($id);
+
+        return response()->json(['data' => $getIsVerif]);
     }
 
     /**

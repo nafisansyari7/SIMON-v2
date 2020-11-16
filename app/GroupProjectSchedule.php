@@ -17,6 +17,9 @@ class GroupProjectSchedule extends Model
     public function GroupProject() {
         return $this->belongsTo('App\GroupProject');
     }
+    public function InternshipStudent() {
+        return $this->belongsToMany('App\InternshipStudent');
+    }
     public function formatDateWithDayName($date)
     {
         setlocale(LC_TIME, 'id_ID.utf8');

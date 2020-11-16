@@ -13,7 +13,10 @@ class InternshipStudent extends Model
     {
         return $this->belongsToMany('App\GroupProject', 'internship_student_group_project', 'internship_student_id', 'group_project_id');
     }
-
+    public function GroupProjectSchedule()
+    {
+        return $this->belongsToMany('App\GroupProjectSchedule', 'internship_student_group_project', 'internship_student_id', 'group_project_id');
+    }
     public function Jobdescs()
     {
         return $this->belongsToMany('App\Jobdesc', 'internship_student_jobdesc', 'internship_student_id', 'jobdesc_id');
