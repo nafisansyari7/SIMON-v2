@@ -23,6 +23,28 @@
   <link rel="stylesheet" href="/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="/assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <script src="jquery-2.1.4.js"></script>
+  <script>
+   $(document).ready(function() {
+  
+     $("#tombol_hide").click(function() {
+       $("#box").hide();
+     })
+  
+     $("#tombol_show").click(function() {
+       $("#box").show();
+     })
+  
+   });
+   </script>
+   <style>
+   #box {
+     width: 300px;
+     height: 80px;
+     background-color: pink;
+     border: 2px solid black;
+   }
+   </style>
   <style>
     .pdfobject-container { height: 30rem; border: 1rem solid rgba(0,0,0,.1); }
   </style>

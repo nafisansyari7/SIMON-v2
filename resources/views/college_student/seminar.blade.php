@@ -45,6 +45,7 @@
                             <th>Judul</th>
                             <th>Kelompok</th>
                             <th>Kuota Pengamat</th>
+                            <!-- <th>Status</th> -->
                             <th></th>
                         </tr>
                     </thead>
@@ -170,7 +171,7 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary float-right">Yakin</button>
+                <button id="tombol_hide"type="submit" class="btn btn-primary float-right">Yakin</button>
             </div>
             </form>
         </div>
@@ -185,7 +186,8 @@ $("#seminar").DataTable({
         "ajax": {
             url: "{{ url('../mahasiswa/seminar/show') }}"
         },
-        "columns": [{
+        "columns": [
+            {
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     return '<b>' + full.group_project_schedule.tanggal + '</b><br><small>' + full.group_project_schedule.place + '<br>' +
@@ -211,6 +213,12 @@ $("#seminar").DataTable({
                     return '<b>' + full.group_project_schedule.quota + '</b>'
                 }
             },
+            // {
+            //     sortable: false,
+            //     "render": function(data, type, full, meta) {
+            //         return '<b>' + full.group_project_schedule.status + '</b>'
+            //     }
+            // },
             {
                 sortable: false,
                 "render": function(data, type, full, meta) {
@@ -298,6 +306,7 @@ $("#seminar").DataTable({
                 if (data == "success") {
                     $('#pengamat')[0].reset();
                     $('#hadiri').modal('hide');
+                    // $('#data').hide();
                     $('#seminar').DataTable().ajax.reload();
                 }
                 else {

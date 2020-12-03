@@ -76,6 +76,7 @@ class SeminarController extends Controller
             $abc->with('User');
         }])->where('is_verified', '3')->get();
         return response()->json(['data' => $verified]);
+        
     }
 
 
