@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\GroupProject;
 use App\Lecturer;
+use App\InternshipStudent;
 use App\GroupProjectSchedule;
 use App\GroupProjectExaminer;
 use App\GroupProjectSupervisor;
-use App\Observer;
+use App\InternshipStudentGroupProjectsSchedule;
+use Auth;
 
 class AgendaController extends Controller
 {
@@ -19,12 +21,36 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        $seminar = GroupProject::with(['Agency', 'GroupProjectSchedule', 'InternshipStudents' => function ($abc) {
+        $seminar = GroupProject::with(['Agency', 'GroupProjectSchedule' => function ($abc) {
+            $abc->with('InternshipStudentGroupProjectsSchedule');
+        }, 'GroupProjectSupervisor' => function ($ccd) {
+            $ccd->with('Lecturer');
+        }, 'InternshipStudents' => function ($abc) {
             $abc->with('User');
         }])->where('is_verified', '3')->get();
-        // dd($seminar);
-        return view('college_student.seminar', compact('seminar'));
+        
+        if($seminar->count() != 0){
+            $ini = Auth::user()->InternshipStudent->id;
+            foreach ($seminar as $s) {
+                    $pengamat[] = $s->GroupProjectSchedule->InternshipStudentGroupProjectsSchedule->where('internship_student_id', $ini)->count();
+                    $peserta[] = $s->GroupProjectSchedule->InternshipStudentGroupProjectsSchedule->where('group_project_schedule_id', $s->GroupProjectSchedule->id)->count();
+                    $gua[] = $s->InternshipStudents->where('id', $ini)->count();
+            }
+            $res = [
+                'seminar' => $seminar,
+                'pengamat' => $pengamat,
+                'peserta' => $peserta,
+                'gua' => $gua
+            ];
+    
+            // dd($gua);
+            return view('college_student.seminar', $res);
+        }
+        else{
+            return view('college_student.seminar', compact('seminar'));
+        }
     }
+
     public function get()
     {
         $verified = GroupProject::with(['Agency', 'GroupProjectSchedule', 'GroupProjectSupervisor' => function ($ccd) {
@@ -34,6 +60,7 @@ class AgendaController extends Controller
         }])->where('is_verified', '3')->get();
         return response()->json(['data' => $verified]);
     }
+
     public function detailDaftar($id)
     {
         $Anggota = GroupProject::with(['Agency', 'InternshipStudents' => function ($abc) {
@@ -43,6 +70,7 @@ class AgendaController extends Controller
         $supervisor = GroupProjectSupervisor::with('Lecturer')->where('group_project_id', $Anggota->id)->first();
         return response()->json(['data' => $Anggota, 'fck' => $fck, 'supervisor' => $supervisor]);
     }
+
     public function hadiriSeminar($id)
     {
         $Anggota = GroupProject::with(['Agency', 'InternshipStudents' => function ($abc) {
@@ -52,7 +80,19 @@ class AgendaController extends Controller
         $supervisor = GroupProjectSupervisor::with('Lecturer')->where('group_project_id', $Anggota->id)->first();
         return response()->json(['data' => $Anggota, 'fck' => $fck, 'supervisor' => $supervisor]);
     }
+    
+    public function absen($id)
+    {
+        $Anggota = GroupProject::with(['Agency', 'GroupProjectSchedule', 'GroupProjectSupervisor' => function ($ccd) {
+            $ccd->with('Lecturer');
+        }, 'InternshipStudents' => function ($abc) {
+            $abc->with(['Jobdescs', 'File']);
+        }])->find($id);
 
+        // dd($Anggota);
+        
+        return view('document.absen', compact('Anggota'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -72,15 +112,12 @@ class AgendaController extends Controller
      */
     public function yakin(Request $request)
     {
-        $pengamat = new Observer([
-            'internship_student_id' => $request->internship_student_id,
-            'group_projects_schedule_id' => $request->groupProject,
-
-        ]);
-        if ($pengamat->save()) {
-            return response()->json("success");
-        }
-        return response()->json("failed");
+        // dd($request);
+        $student = InternshipStudent::where('id', $request->internship_student_id)->first();
+        $group = GroupProjectSchedule::where('group_project_id', $request->groupProject)->first();
+        $student->GroupProjectSchedules()->attach($group->id);
+        $student->save();
+        return redirect(route("seminar.list"));
     }
 
     /**
@@ -91,9 +128,14 @@ class AgendaController extends Controller
      */
     public function show($id)
     {
-        $getIsVerif = GroupProject::with(['GroupProjectSupervisor.Lecturer', 'GroupProjectSchedule'])->findOrFail($id);
+        $student = \DB::table('group_projects_schedules')
+        ->join('observers', 'group_projects_schedules.id', '=', 'observers.group_project_schedule_id')
+        ->join('internship_students', 'observers.internship_student_id', '=', 'internship_students.id')
+        ->where('group_project_id', '=', $id)
+        ->get();
+        // dd($student);
 
-        return response()->json(['data' => $getIsVerif]);
+        return response()->json(['data' => $student]);
     }
 
     /**
@@ -125,8 +167,12 @@ class AgendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $student = InternshipStudent::where('id', $request->internship_student_id)->first();
+        $group = GroupProjectSchedule::where('group_project_id', $request->groupProject)->first();
+        $student->GroupProjectSchedules()->detach($group->id);
+        $student->save();
+        return redirect(route("seminar.list"));
     }
 }

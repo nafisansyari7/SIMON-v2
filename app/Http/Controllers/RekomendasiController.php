@@ -4,71 +4,108 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Lecturer;
+use App\Recommendation;
+use Auth;
 
 
 class RekomendasiController extends Controller
 {
 	public function index()
 	{
-    	// mengambil data dari table rekomendasi
-		$rekomendasi = DB::table('rekomendasi')->paginate(10);
-
-    	// mengirim data rekomendasi ke view index
-		return view('coordinator.index',['rekomendasi' => $rekomendasi]);
+		$rek = Recommendation::with(['Lecturer', 'InternshipStudent' => function ($abc) {
+            $abc->with('User');
+        }])->get();
+		// dd($rek);
+		$lecture = Lecturer::get();
+		return view('coordinator.index', compact(['rek', 'lecture']));
 
 	}
 
-	// method untuk menampilkan view form tambah rekomendasi
-	public function tambah()
+	public function indexStudent()
 	{
-		// memanggil view tambah
-		return view('coordinator.tambah');
+		$rek = Recommendation::with('Lecturer')->get();
+
+		if($rek->count() != 0){
+            $ini = Auth::user()->InternshipStudent->id;
+            foreach ($rek as $s) {
+                $gua[] = $s->where('internship_student_id', $ini)->count();
+                $countGua = $s->where('internship_student_id', $ini)->count();
+			}
+			
+            $res = [
+				'rek' => $rek,
+				'gua' => $gua,
+				'countGua' => $countGua
+            ];
+            return view('college_student.recommendation', $res);
+        }
+        else{
+            return view('college_student.recommendation', compact('rek'));
+        }
+
 	}
 
-	// method untuk insert data ke table rekomendasi
 	public function store(Request $request)
 	{
-		// insert data ke table rekomendasi
-		DB::table('rekomendasi')->insert([
-			'judul' => $request->judul,
-			'klien' => $request->klien,
-			'keterangan' => $request->keterangan,
-			'stat' => $request->stat
-		]);
-		// alihkan halaman ke halaman rekomendasi
+		$rek = new Recommendation;
+        $rek->agency = $request->input('instansi');
+        $rek->description = $request->input('deskripsi');
+		$rek->status = 0;
+        $rek->lecturer_id = $request->input('supervisor');
+
+		$rek->save();
 		return redirect('koor/rekomendasi');
 	}
 
-	// method untuk edit data rekomendasi
-	public function edit($id)
+	public function storeStudent(Request $request)
 	{
-		// mengambil data rekomendasi berdasarkan id yang dipilih
-		$rekomendasi = DB::table('rekomendasi')->where('id',$id)->get();
-		// passing data rekomendasi yang didapat ke view edit.blade.php
-		return view('coordinator.edit',['rekomendasi' => $rekomendasi]);
+		$rek = Recommendation::findOrFail($request->rekId);
+        $rek->internship_student_id = $request->input('internship_student_id');
+		$rek->status = 1;
+
+		$rek->update();
+		return redirect('mahasiswa/rekomendasi');
 	}
 
 	// update data rekomendasi
 	public function update(Request $request)
 	{
-		// update data rekomendasi
-		DB::table('rekomendasi')->where('id',$request->id)->update([
-			'judul' => $request->judul,
-			'klien' => $request->klien,
-			'keterangan' => $request->keterangan,
-			'stat' => $request->stat
-		]);
-		// alihkan halaman ke halaman rekomendasi
+		$rek = Recommendation::findOrFail($request->rekId);
+		$rek->agency = $request->input('instansi');
+		$rek->description = $request->input('deskripsi');
+		if($request->input('supervisor') != null){
+			$rek->lecturer_id = $request->input('supervisor');
+		}
+		$rek->update();
 		return redirect('koor/rekomendasi');
 	}
 
 	// method untuk hapus data rekomendasi
-	public function hapus($id)
+	public function hapus(Request $request)
 	{
-		// menghapus data rekomendasi berdasarkan id yang dipilih
-		DB::table('rekomendasi')->where('id',$id)->delete();
-		
-		// alihkan halaman ke halaman rekomendasi
+		$rek = Recommendation::findOrFail($request->rekId);
+		$rek->delete();
 		return redirect('koor/rekomendasi');
+	}
+
+	public function batal(Request $request)
+	{
+		$rek = Recommendation::findOrFail($request->rekIdBatal);
+		$rek->status = 0;
+		$rek->internship_student_id = null;
+		$rek->update();
+		
+		return redirect('koor/rekomendasi');
+	}
+	
+	public function batalStudent(Request $request)
+	{
+		$rek = Recommendation::findOrFail($request->rekIdBatal);
+		$rek->status = 0;
+		$rek->internship_student_id = null;
+		$rek->update();
+		
+		return redirect('mahasiswa/rekomendasi');
 	}
 }

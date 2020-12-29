@@ -51,6 +51,12 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ url ('mahasiswa/rekomendasi') }}" class="{{(request()->is('mahasiswa/rekomendasi')) ? 'active' : ''}} nav-link">
+            <i class="nav-icon fas fa-tasks"></i>
+              Rekomendasi PKL dan PK
+          </a>
+        </li>
 
         @endif
         @if(Auth::user()->isCoordinator())
@@ -81,6 +87,13 @@
               Seminar PKL dan PK
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ url ('koor/rekomendasi') }}" class="{{(request()->is('koor/rekomendasi')) ? 'active' : ''}} nav-link">
+            <i class="nav-icon fas fa-tasks"></i>
+              Rekomendasi PKL dan PK
+          </a>
+        </li>
+        </li>
         <li class="nav-header font-weight-bold">Data</li>
         <li class="nav-item">
           <a href="{{ url ('koor/arsip-pk') }}" class="{{(request()->is('koor/arsip-pk')) ? 'active' : ''}} nav-link">
@@ -90,7 +103,7 @@
         </li>
         <li class="nav-item">
           <a href="{{ url ('koor/jobdesc') }}" class="{{(request()->is('koor/jobdesc')) ? 'active' : ''}} nav-link">
-            <i class="nav-icon fas fa-book"></i>
+            <i class="nav-icon fas fa-user-tag"></i>
               Data Jobdesc
           </a>
         </li>
@@ -125,7 +138,7 @@
         </li>
         <li class="nav-item">
         <a href="{{ url ('changePassword') }}" class="{{(request()->is('changePassword')) ? 'active' : ''}} nav-link">
-            <i class="nav-icon fas fa-user-cog"></i>
+            <i class="nav-icon fas fa-key"></i>
               Ganti Password
           </a>
         </li>

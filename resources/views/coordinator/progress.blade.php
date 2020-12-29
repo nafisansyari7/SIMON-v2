@@ -12,14 +12,14 @@
                     Progress Mahasiswa
                 </h3>
             </div>
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table id="progress-detail" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
                             <th>Kelompok</th>
                             <th>Pembimbing</th>
                             <th>Progress</th>
-                            <th></th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                 </table>
@@ -133,7 +133,7 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-info bimbingan">Update Progress</button>'
+                    return '<button id="' + buttonId + '" class="btn btn-info bimbingan" title="Update Progress"><i class="fas fa-spinner"></i> Update Progress</button>'
                 }
             }
         ]

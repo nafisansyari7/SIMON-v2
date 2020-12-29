@@ -287,8 +287,8 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-primary detail">Detail</button>' +
-                        '<button id="' + buttonId + '" class="btn btn-success news-report mx-1">Berita Acara</button>'
+                    return '<button id="' + buttonId + '" class="btn btn-primary detail" title="Detail"><i class="fas fa-info-circle"></i></button>' +
+                        '<button id="' + buttonId + '" class="btn btn-success news-report mx-1" title="Berita Acara"><i class="fas fa-file-alt"></i></button>'
                 }
             }
         ]

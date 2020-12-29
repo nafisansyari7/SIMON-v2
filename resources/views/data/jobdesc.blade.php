@@ -28,7 +28,7 @@
                     Jobdesc
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table id="jobdesc" class="table table-striped w-100">
                     <thead>
                         <tr>
@@ -211,8 +211,8 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-warning update m-1">Edit</button>'+
-                    '<button id="' + buttonId + '" class="btn btn-danger delete">Hapus</button>';
+                    return '<button id="' + buttonId + '" class="btn btn-warning update m-1" title="Edit"><i class="fas fa-edit"></i></button>'+
+                    '<button id="' + buttonId + '" class="btn btn-danger delete" title="Hapus"><i class="fas fa-trash"></i></button>';
                 }
             }
         ]

@@ -293,16 +293,16 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<a href="../berkas/kak/'+full.kak+'" target="_blank" class="btn btn-sm btn-primary m-1">Kerangka</a>' +
-                    '<button id="' + buttonId + '" class="btn btn-sm btn-info detail m-1">Detail</button>'
+                    return '<a href="../berkas/kak/'+full.kak+'" target="_blank" class="btn btn-sm btn-primary m-1" title="Kerangka Acuan Kerja"><i class="fas fa-file-alt"></i></a>' +
+                    '<button id="' + buttonId + '" class="btn btn-sm btn-info detail m-1" title="Detail"><i class="fas fa-info-circle"></i></button>'
                 }
             },
             {
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-sm btn-success terima m-1">Terima</button>' +
-                        '<button id="' + buttonId + '" class="btn btn-sm btn-danger tolak m-1">Tolak</button>'
+                    return '<button id="' + buttonId + '" class="btn btn-sm btn-success terima m-1" title="Terima"><i class="fas fa-check"></i></button>' +
+                        '<button id="' + buttonId + '" class="btn btn-sm btn-danger tolak m-1" title="Tolak"><i class="fas fa-stop-circle"></i></button>'
                 }
             }
         ]
@@ -471,16 +471,16 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<a href="../berkas/kak/'+full.kak+'" target="_blank" class="btn btn-sm btn-primary m-1">Kerangka</a>' +
-                    '<button id="' + buttonId + '" class="btn btn-sm btn-info detail m-1">Detail</button>'
+                    return '<a href="../berkas/kak/'+full.kak+'" target="_blank" class="btn btn-sm btn-primary m-1" title="Kerangka Acuan Kerja"><i class="fas fa-file-alt"></i></a>' +
+                    '<button id="' + buttonId + '" class="btn btn-sm btn-info detail m-1" title="Detail"><i class="fas fa-info-circle"></i></button>'
                 }
             },
             {
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-sm btn-warning edit m-1">Edit</button>' +
-                        '<button id="' + buttonId + '" class="btn btn-sm btn-danger hapus m-1">Hapus</button>'
+                    return '<button id="' + buttonId + '" class="btn btn-sm btn-warning edit m-1" title="Edit"><i class="fas fa-edit"></i></button>' +
+                        '<button id="' + buttonId + '" class="btn btn-sm btn-danger hapus m-1" title="Hapus"><i class="fas fa-trash"></i></button>'
                 }
             }
         ]

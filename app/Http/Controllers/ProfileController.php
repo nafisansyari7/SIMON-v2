@@ -48,7 +48,7 @@ class ProfileController extends Controller
         $user = User::findOrFail($id);
         request()->validate(
             [
-                'image_profile' => 'nullable|image|mimes:jpeg,png,png|max:2000',
+                'image_profile' => 'nullable|image|mimes:jpg,jpeg,png|max:2000',
                 'email' => 'nullable|email',
                 'telp' => 'nullable|numeric|min:11'
             ],

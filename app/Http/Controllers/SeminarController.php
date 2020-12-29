@@ -198,12 +198,14 @@ class SeminarController extends Controller
         $i = 1;
         foreach ($examiner as $val) {
             // dd($val);
-            $val->lecturer_id = $request->input('editExaminerId_' . $i);
-            $val->update();
+            if ($request->input('editExaminerId_' . $i)){
+                $val->lecturer_id = $request->input('editExaminerId_' . $i);
+                $val->update();
+            }
             $i++;
         }
 
-        if ($groupProject->save()) {
+        if ($jadwal->save()) {
             return response()->json("success");
         }
         return response()->json("failed");

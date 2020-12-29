@@ -79,17 +79,17 @@
                     <tbody>
                         <thead>
                             <tr>
-                                <th>Judul</th>
-                                <th>Tempat</th>
-                                <th>Tanggal</th>
-                                <th>Waktu</th>
+                                <th width="55%">Judul</th>
+                                <th width="15%">Tempat</th>
+                                <th width="15%">Tanggal</th>
+                                <th width="15%">Waktu</th>
                             </tr>
                         </thead>
                         @foreach ($agenda as $agend)
                         <tr>
                             <td>{{$agend->title}}</td>
                             <td>{{$agend->GroupProjectSchedule->place}}</td>
-                            <th>{{ Carbon\Carbon::parse($agend->GroupProjectSchedule->date)->format('d F Y') }}</th>
+                            <td>{{ Carbon\Carbon::parse($agend->GroupProjectSchedule->date)->format('d F Y') }}</td>
                             <td>{{ Carbon\Carbon::parse($agend->GroupProjectSchedule->time)->format('h:i') }} - {{ Carbon\Carbon::parse($agend->GroupProjectSchedule->time_end)->format('h:i') }}</td>
                         </tr>
                         @endforeach

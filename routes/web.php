@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function() {
     Route::prefix('mahasiswa')->group(function () {
         Route::get('home', 'CollegeStudentController@index')->name('mahasiswa.home');
         Route::get('progress', 'CollegeStudentController@progress');
-        Route::get('seminar', 'AgendaController@index');
+        Route::get('seminar', 'AgendaController@index')->name('seminar.list');
         Route::get('seminar/show', 'AgendaController@get');
         Route::get('mahasiswa-cek', 'GroupProjectController@show')->name('mahasiswa.index');
         Route::post('daftar', 'GroupProjectController@store')->name('mahasiswa.daftar');
@@ -36,9 +36,13 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function() {
         Route::get('detailDaftarSem/{id}', 'AgendaController@detailDaftar');
         Route::get('hadiriSeminar/{id}', 'AgendaController@hadiriSeminar');
         Route::get('hadiri', 'AgendaController@hadiriSeminar')->name('mahasiswa.hadir');
-        Route::post('pengamat/{id}', 'AgendaController@yakin');
+        Route::post('berhadir', 'AgendaController@yakin');
+        Route::post('batalHadir', 'AgendaController@destroy');
+        Route::get('/rekomendasi','RekomendasiController@indexStudent');
+        Route::post('/rekomendasi/store','RekomendasiController@storeStudent');
+        Route::post('/rekomendasi/batal','RekomendasiController@batalStudent');
     });   
-
+    
 });
 Route::group(['middleware' => ['auth', 'role:koordinator']], function() {  
     // koordinator
@@ -83,13 +87,15 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
         Route::get('newsReport/{id}', 'GroupProjectNewsReportController@get');
         Route::put('newsReport/{id}/edit', 'GroupProjectNewsReportController@store');
         Route::get('exportExcel', 'GroupProjectController@export');
+        Route::get('observer/{id}', 'AgendaController@show');
+        Route::get('absen/{id}', 'AgendaController@absen')->name('absen-seminar');
         //route CRUD
         Route::get('/rekomendasi','RekomendasiController@index');
-        Route::get('/rekomendasi/tambah','RekomendasiController@tambah');
         Route::post('/rekomendasi/store','RekomendasiController@store');
-        Route::get('/rekomendasi/edit/{id}','RekomendasiController@edit');
+        // Route::get('/rekomendasi/edit/{id}','RekomendasiController@edit');
         Route::post('/rekomendasi/update','RekomendasiController@update');
-        Route::get('/rekomendasi/hapus/{id}','RekomendasiController@hapus');
+        Route::post('/rekomendasi/hapus','RekomendasiController@hapus');
+        Route::post('/rekomendasi/batal','RekomendasiController@batal');
         });
     });
 Route::group(['middleware' => ['auth', 'role:admin']], function() {  

@@ -24,7 +24,7 @@
                     Arsip PKL dan PK
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table id="report" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
@@ -32,7 +32,7 @@
                             <th width="350px">Judul</th>
                             <th>Kelompok</th>
                             <th width="200px">Berita Acara & Laporan</th>
-                            <th></th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -287,8 +287,8 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-primary detail">Detail</button>' +
-                        '<button id="' + buttonId + '" class="btn btn-success news-report mx-1">Berita Acara</button>'
+                    return '<button id="' + buttonId + '" class="btn btn-primary detail" title="Detail"><i class="fas fa-info-circle"></i></button>' +
+                        '<button id="' + buttonId + '" class="btn btn-success news-report mx-1" title="Berita Acara"><i class="fas fa-file-alt"></i></button>'
                 }
             }
         ]

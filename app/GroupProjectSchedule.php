@@ -17,8 +17,8 @@ class GroupProjectSchedule extends Model
     public function GroupProject() {
         return $this->belongsTo('App\GroupProject');
     }
-    public function InternshipStudent() {
-        return $this->belongsToMany('App\InternshipStudent');
+    public function InternshipStudents() {
+        return $this->belongsToMany('App\InternshipStudent', 'observers', 'internship_student_id', 'group_project_schedule_id');
     }
     public function formatDateWithDayName($date)
     {
@@ -38,5 +38,8 @@ class GroupProjectSchedule extends Model
     public function getTanggalAttribute()
     {
         return $this->formatDate(Carbon::parse($this->date));
+    }
+    public function InternshipStudentGroupProjectsSchedule() {
+        return $this->hasMany(InternshipStudentGroupProjectsSchedule::class);
     }
 }
