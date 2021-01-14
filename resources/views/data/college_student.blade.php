@@ -8,9 +8,11 @@
             <div class="col-6">
                 <h5>Data Mahasiswa</h5>
             </div>
+            @if(Auth::user()->isAdmin())
             <div class="col-6">
                 <div class="float-right">
-                    <button type="button" class="btn btn-primary btn-sm" href="" data-toggle="modal" data-target="#modalTambah">
+                    <button type="button" class="btn btn-primary btn-sm" href="" data-toggle="modal"
+                        data-target="#modalTambah">
                         <i class="fas fa-user-plus mr-1"></i>
                         Tambah Mahasiswa
                     </button>
@@ -20,6 +22,7 @@
                     </button>
                 </div>
             </div>
+            @endif
         </div>
         <div class="card card-primary">
             <div class="card-header">
@@ -94,7 +97,8 @@
                         </div>
                         <div class="form-group col-6">
                             <label>IP Semester</label>
-                            <input type="number" class="form-control" id="ipSemester" name="ipSemester" placeholder="0.00">
+                            <input type="number" class="form-control" id="ipSemester" name="ipSemester"
+                                placeholder="0.00">
                         </div>
                         <div class="form-group col-6">
                             <label>SKS Semester</label>
@@ -149,18 +153,21 @@
                         <div class="form-group col-6">
                             <label>Jenis Kelamin</label>
                             <div class="form-check">
-                                <input class="form-check-input" id="male-gender" type="radio" name="editgender" value="L">
+                                <input class="form-check-input" id="male-gender" type="radio" name="editgender"
+                                    value="L">
                                 <label class="form-check-label">Laki-laki</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" id="female-gender" type="radio" name="editgender" value="P">
+                                <input class="form-check-input" id="female-gender" type="radio" name="editgender"
+                                    value="P">
                                 <label class="form-check-label">Perempuan</label>
                             </div>
                         </div>
                         <div class="form-group col-6">
                             <label>Status</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="editstatus" name="editstatus" value="A">
+                                <input class="form-check-input" type="checkbox" id="editstatus" name="editstatus"
+                                    value="A">
                                 <label for="editStatus" class="form-check-label">Aktif</label>
                             </div>
                         </div>
@@ -195,7 +202,6 @@
 <!-- Modal Import -->
 <div class="modal fade " id="modalImport" role="dialog">
     <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content ">
             <div class="modal-header">
@@ -207,15 +213,18 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
-
-                <form action="{{ route('student-import') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="file" name="file" class="form-control">
-                    <br>
+            <form action="mahasiswa/import" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group col-12">
+                        <label>Upload File Excel</label>
+                        <input type="file" name="select_file" id="file" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
                     <button type="submit" class="btn btn-primary float-right">Import Data</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
 
     </div>
@@ -264,15 +273,16 @@
     $("#mahasiswa").DataTable({
         "processing": true,
         "ajax": {
-            url: "{{ url('admin/getDataTableMhs') }}"
+            url: "{{ route('list-mhs') }}"
         },
         "columns": [{
                 data: "nim"
             },
             {
                 sortable: false,
-                "render": function(data, type, full, meta){
-                    return '<img src="../public/image/' + full.user.image_profile + '" data-toggle="tooltip" data-placement="bottom" class="img-circle table-avatar" width="40px">'
+                "render": function (data, type, full, meta) {
+                    return '<img src="../public/image/' + full.user.image_profile +
+                        '" data-toggle="tooltip" data-placement="bottom" class="img-circle table-avatar" width="40px">'
                 }
             },
             {
@@ -283,9 +293,11 @@
             },
             {
                 sortable: false,
-                "render": function(data, type, full, meta) {
+                "render": function (data, type, full, meta) {
                     if (full.status == "A") {
                         return '<span class="badge badge-success p-2">Aktif</span>';
+                    } else if (full.status == "S") {
+                        return '<span class="badge badge-primary p-2">Aktif PKL-PK</span>';
                     } else {
                         return '<span class="badge badge-danger p-2">Tidak Aktif</span>';
                     }
@@ -293,7 +305,7 @@
             },
             {
                 sortable: false,
-                "render": function(data, type, full, meta) {
+                "render": function (data, type, full, meta) {
                     let buttonId = full.id;
                     return '<button id="' + buttonId + '" class="btn btn-warning update">Edit</button>';
                 }
@@ -301,7 +313,7 @@
         ]
     });
 
-    $('#mahasiswa tbody').on('click', '.update', function() {
+    $('#mahasiswa tbody').on('click', '.update', function () {
         let id = $(this).attr('id');
 
         $("small").remove(".text-danger");
@@ -309,7 +321,7 @@
         $.ajax({
             url: "mahasiswa/" + id,
             dataType: "json",
-            success: function(result) {
+            success: function (result) {
                 $('#edit').modal('show');
 
                 $('#editnim').val(result.data.nim);
@@ -342,13 +354,13 @@
     function loadDataTable() {
         $.ajax({
             url: "{{ url('admin/getDataTableMhs') }}",
-            success: function(data) {
+            success: function (data) {
                 $('#dataTable').html(data);
             }
         })
     }
     loadDataTable();
-    $('#formSave').submit(function(e) {
+    $('#formSave').submit(function (e) {
         e.preventDefault();
 
         var request = new FormData(this);
@@ -360,7 +372,7 @@
             contentType: false,
             cache: false,
             processData: false,
-            success: function(data) {
+            success: function (data) {
                 if (data == "success") {
                     $('#modalSuccess').modal();
                     $('#formSave')[0].reset();
@@ -371,18 +383,19 @@
                     $('#modalFailed').modal();
                 }
             },
-            error: function(data) {
+            error: function (data) {
                 $("small").remove(".text-danger");
                 $("input").removeClass("is-invalid");
-                $.each(data.responseJSON.errors, function(key, value) {
+                $.each(data.responseJSON.errors, function (key, value) {
                     $('#' + key + '').addClass('is-invalid');
-                    $('#' + key + '').after('<small class="text-danger">' + value + '</small>')
+                    $('#' + key + '').after('<small class="text-danger">' + value +
+                        '</small>')
                 });
             }
         })
     })
 
-    $('#formEdit').submit(function(e) {
+    $('#formEdit').submit(function (e) {
         e.preventDefault();
 
         var request = new FormData(this);
@@ -395,7 +408,7 @@
             contentType: false,
             cache: false,
             processData: false,
-            success: function(data) {
+            success: function (data) {
                 if (data == "success") {
                     $('#modalSuccess').modal();
                     $('#formEdit')[0].reset();
@@ -406,19 +419,21 @@
                     $('#modalFailed').modal();
                 }
             },
-            error: function(data) {
+            error: function (data) {
                 $("small").remove(".text-danger");
                 $("input").removeClass("is-invalid");
-                $.each(data.responseJSON.errors, function(key, value) {
+                $.each(data.responseJSON.errors, function (key, value) {
                     $('#' + key + '').addClass('is-invalid');
-                    $('#' + key + '').after('<small class="text-danger">' + value + '</small>')
+                    $('#' + key + '').after('<small class="text-danger">' + value +
+                        '</small>')
                 });
             }
         })
     })
-    $("#import").click(function(e) {
+    $("#import").click(function (e) {
         e.preventDefault();
         $("#modalImport").modal();
     });
+
 </script>
 @endsection

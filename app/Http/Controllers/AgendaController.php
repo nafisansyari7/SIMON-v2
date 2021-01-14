@@ -9,8 +9,9 @@ use App\InternshipStudent;
 use App\GroupProjectSchedule;
 use App\GroupProjectExaminer;
 use App\GroupProjectSupervisor;
-use App\InternshipStudentGroupProjectsSchedule;
+use App\Observer;
 use Auth;
+use PDF;
 
 class AgendaController extends Controller
 {
@@ -22,7 +23,7 @@ class AgendaController extends Controller
     public function index()
     {
         $seminar = GroupProject::with(['Agency', 'GroupProjectSchedule' => function ($abc) {
-            $abc->with('InternshipStudentGroupProjectsSchedule');
+            $abc->with('Observer');
         }, 'GroupProjectSupervisor' => function ($ccd) {
             $ccd->with('Lecturer');
         }, 'InternshipStudents' => function ($abc) {
@@ -32,12 +33,13 @@ class AgendaController extends Controller
         if($seminar->count() != 0){
             $ini = Auth::user()->InternshipStudent->id;
             foreach ($seminar as $s) {
-                    $pengamat[] = $s->GroupProjectSchedule->InternshipStudentGroupProjectsSchedule->where('internship_student_id', $ini)->count();
-                    $peserta[] = $s->GroupProjectSchedule->InternshipStudentGroupProjectsSchedule->where('group_project_schedule_id', $s->GroupProjectSchedule->id)->count();
+                    $pengamat[] = $s->GroupProjectSchedule->Observer->where('internship_student_id', $ini)->count();
+                    $peserta[] = $s->GroupProjectSchedule->Observer->where('group_project_schedule_id', $s->GroupProjectSchedule->id)->count();
                     $gua[] = $s->InternshipStudents->where('id', $ini)->count();
             }
             $res = [
                 'seminar' => $seminar,
+                // 'seminarGua' => $seminarGua,
                 'pengamat' => $pengamat,
                 'peserta' => $peserta,
                 'gua' => $gua
@@ -90,8 +92,9 @@ class AgendaController extends Controller
         }])->find($id);
 
         // dd($Anggota);
-        
+        // $pdf = PDF::loadView('document.absen', compact('Anggota'));
         return view('document.absen', compact('Anggota'));
+        // return $pdf->stream();;
     }
 
     /**
@@ -116,8 +119,8 @@ class AgendaController extends Controller
         $student = InternshipStudent::where('id', $request->internship_student_id)->first();
         $group = GroupProjectSchedule::where('group_project_id', $request->groupProject)->first();
         $student->GroupProjectSchedules()->attach($group->id);
-        $student->save();
-        return redirect(route("seminar.list"));
+        
+        return redirect(route("agenda.list"));
     }
 
     /**
@@ -170,9 +173,10 @@ class AgendaController extends Controller
     public function destroy(Request $request)
     {
         $student = InternshipStudent::where('id', $request->internship_student_id)->first();
+        // dd($student);
         $group = GroupProjectSchedule::where('group_project_id', $request->groupProject)->first();
         $student->GroupProjectSchedules()->detach($group->id);
-        $student->save();
-        return redirect(route("seminar.list"));
+        
+        return redirect(route("agenda.list"));
     }
 }

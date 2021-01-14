@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Lecturer;
 use App\Recommendation;
+use App\InternshipStudentGroupProject;
 use Auth;
+use Mail;
+use App\Mail\RecommendationTaken;
 
 
 class RekomendasiController extends Controller
@@ -24,18 +27,22 @@ class RekomendasiController extends Controller
 
 	public function indexStudent()
 	{
+		$ini = Auth::user()->InternshipStudent->id;
 		$rek = Recommendation::with('Lecturer')->get();
-
-		if($rek->count() != 0){
-            $ini = Auth::user()->InternshipStudent->id;
-            foreach ($rek as $s) {
-                $gua[] = $s->where('internship_student_id', $ini)->count();
-                $countGua = $s->where('internship_student_id', $ini)->count();
+		$group = InternshipStudentGroupProject::get();
+		$groupgua = 0;
+		foreach($group as $g){
+			if($g->internship_student_id == $ini){
+				$groupgua = 1;
 			}
-			
+		}
+		if($rek->count() != 0){
+            foreach ($rek as $s) {
+				$countGua = $s->where('internship_student_id', $ini)->count();
+			}
             $res = [
 				'rek' => $rek,
-				'gua' => $gua,
+				'groupgua' => $groupgua,
 				'countGua' => $countGua
             ];
             return view('college_student.recommendation', $res);
@@ -60,11 +67,15 @@ class RekomendasiController extends Controller
 
 	public function storeStudent(Request $request)
 	{
-		$rek = Recommendation::findOrFail($request->rekId);
+		$rek = Recommendation::with(['InternshipStudent', 'Lecturer'])->findOrFail($request->rekId);
         $rek->internship_student_id = $request->input('internship_student_id');
 		$rek->status = 1;
-
+		
 		$rek->update();
+		
+		$data = Recommendation::with(['InternshipStudent', 'Lecturer'])->findOrFail($rek->id);
+
+		Mail::to('ti@ulm.ac.id')->send(new RecommendationTaken($data));
 		return redirect('mahasiswa/rekomendasi');
 	}
 

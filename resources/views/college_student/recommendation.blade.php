@@ -28,7 +28,7 @@
                 <h5>Rekomendasi</h5>
             </div>
         </div>
-        <div class="card card-primary">
+        <div class="card card-info">
             <div class="card-header">
                 <h5 class="card-title">
                     <i class="fas fa-tasks mr-1"></i>
@@ -47,7 +47,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php $j = 0 ?>
 					@foreach ($rek as $r)
 					<tr>
                             <td>
@@ -63,27 +62,30 @@
                             @if ($r->status == 0)
 							<span class="badge badge-danger p-2" style="font-size: 11px">Belum Ada Mahasiswa</span>
                             @elseif ($r->status == 1)
-							<span class="badge badge-info p-2" style="font-size: 11px">Ada Mahasiswa</span>
+							<span class="badge badge-success p-2" style="font-size: 11px">Ada Mahasiswa</span>
 							@endif
                             </td>
                             <td>
-                            @if ($r->status == 1)
-                                @if($gua[$j] == 1)
-							    <span class="badge badge-warning p-2" style="font-size: 11px">Segara Hubungi Dosen!</span>
-                                <button onclick="openModalBatal('{{ $r->id }}')" class="btn btn-sm btn-danger ml-1 mr-1">Batal</button>
+                            @if($groupgua == 1)
+                                <span class="badge badge-success p-2" style="font-size: 11px">Anda Sudah Memiliki Kelompok!</span>
+                            @else
+                                @if ($r->status == 1)
+                                    @if($r->internship_student_id == Auth::user()->InternshipStudent->id)
+                                    <span class="badge badge-warning p-2" style="font-size: 11px">Segara Hubungi Dosen!</span>
+                                    <button onclick="openModalBatal('{{ $r->id }}')" class="btn btn-sm btn-danger ml-1 mr-1">Batal</button>
+                                    @else
+                                    <span class="badge badge-success p-2" style="font-size: 11px">Telah Diambil</span>
+                                    @endif
                                 @else
-							    <span class="badge badge-info p-2" style="font-size: 11px">Telah Diambil</span>
+                                    @if($countGua == 0)
+                                    <button onclick="openModalAmbil('{{ $r->id }}')" class="btn btn-sm btn-success ml-1 mr-1">Ambil</button>
+                                    @else
+                                    <span class="badge badge-success p-2" style="font-size: 11px">Anda Telah Mengambil Topik Lain</span>
+                                    @endif
                                 @endif
-							@else
-                                @if($countGua == 0)
-                                <button onclick="openModalAmbil('{{ $r->id }}')" class="btn btn-sm btn-success ml-1 mr-1">Ambil</button>
-                                @else
-							    <span class="badge badge-info p-2" style="font-size: 11px">Anda Telah Mengambil Topik Lain</span>
-                                @endif
-							@endif
+                            @endif
                             </td>
                         </tr>
-                        <?php $j++ ?>
 					@endforeach
                     </tbody>
                 </table>
@@ -137,7 +139,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" name="rekIdBatal" id="rek_idBatal" value="">
+                    <input type="hidden" name="rekIdBatal" id="rek_idBatal" value="">
                     <p>Yakin ingin batal mengambil rekomendasi ini?</p>
                 </div>
                 <div class="modal-footer">

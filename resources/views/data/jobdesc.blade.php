@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', 'Koordinator | Data Jobdesc')
+@section('title', 'Admin | Data Jobdesc')
 @section('content')
 <section class="content">
     <div class="container-fluid">
@@ -184,11 +184,12 @@
 
 @section('ajax')
 <script>
+    const ENDPOINT = 'jobdesc';
     $("#jobdesc").DataTable({
         "processing": true,
         "order": [[ 2, "desc" ]],
         "ajax": {
-            url: "{{ url('koor/getDataTableJobdesc') }}"
+            url: "{{ route('get-job') }}"
         },
         "columns": [
             {
@@ -223,7 +224,7 @@
         $("small").remove(".text-danger");
         $("input").removeClass("is-invalid");
         $.ajax({
-            url: "jobdesc/" + id,
+            url: ENDPOINT +'/' +id,
             dataType: "json",
             success: function(result) {
                 $('#modalEdit').modal('show');
@@ -285,7 +286,7 @@
 
     function loadDataTable() {
         $.ajax({
-            url: "{{ url('koor/getDataTableJobdesc') }}",
+            url: "{{ route('get-job') }}",
             success: function(data) {
                 $('#dataTable').html(data);
             }
@@ -297,7 +298,7 @@
 
         var request = new FormData(this);
         $.ajax({
-            url: "{{ url('koor/simpanDataJobdesc') }}",
+            url: "{{ url('admin/simpanDataJobdesc') }}",
             method: "POST",
             data: request,
             contentType: false,

@@ -24,9 +24,14 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function() {
     Route::prefix('mahasiswa')->group(function () {
         Route::get('home', 'CollegeStudentController@index')->name('mahasiswa.home');
         Route::get('progress', 'CollegeStudentController@progress');
-        Route::get('seminar', 'AgendaController@index')->name('seminar.list');
+        Route::get('seminar', 'AgendaController@index')->name('agenda.list');
         Route::get('seminar/show', 'AgendaController@get');
         Route::get('mahasiswa-cek', 'GroupProjectController@show')->name('mahasiswa.index');
+        Route::get('groupEdit/{id}', 'GroupProjectController@edit')->name('mahasiswa.edit');
+        Route::get('groupEdit/editAnggota/{mhsId}', 'GroupProjectController@editAnggota')->name('mahasiswa.editAnggota');
+        Route::post('groupEdit/editAnggota/update', 'GroupProjectController@updateAnggota')->name('mahasiswa.updateAnggota');
+        Route::post('groupEdit/hapusAnggota', 'GroupProjectController@hapus')->name('mahasiswa.hapus');
+        Route::post('groupEdit/tambahAnggota', 'GroupProjectController@tambahAnggota')->name('mahasiswa.tambah');
         Route::post('daftar', 'GroupProjectController@store')->name('mahasiswa.daftar');
         Route::get('project/{id}', 'CollegeStudentController@show');
         Route::put('project/{id}/edit', 'CollegeStudentController@update');
@@ -41,6 +46,9 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function() {
         Route::get('/rekomendasi','RekomendasiController@indexStudent');
         Route::post('/rekomendasi/store','RekomendasiController@storeStudent');
         Route::post('/rekomendasi/batal','RekomendasiController@batalStudent');
+        Route::get('/sertifikat','SertifikatController@index')->name('watched-list');
+        Route::get('/cetakSertifikat/{id}/{userId}','SertifikatController@show');
+        // Route::get('/cetakSertifikat','SertifikatController@mailTest');
     });   
     
 });
@@ -49,9 +57,10 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
     Route::prefix('koor')->group(function () {
         Route::get('dashboard', 'CoordinatorController@index')->name('coordinator.home');
         Route::get('mahasiswa', 'CoordinatorController@project_team');
+
         Route::get('bimbingan', 'GroupProjectProgressController@index');
         Route::get('bimbingan/show', 'GroupProjectProgressController@show');
-        Route::get('seminar', 'CoordinatorController@seminar');
+        Route::get('seminar', 'CoordinatorController@seminar')->name('seminar.list');
         Route::get('daftarSeminar/show', 'SeminarController@get');
         Route::get('seminar/show', 'SeminarController@seminar');
         Route::get('detailDaftarSem/{id}', 'SeminarController@detailDaftar');
@@ -60,13 +69,6 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
         Route::get('arsip-pk', 'CoordinatorController@showArsip');
         Route::get('arsip-pk/show', 'AdminController@arsipKoor');
         Route::get('detailArsip/{id}', 'SeminarController@detailArsip');
-        Route::get('jobdesc', 'JobdescController@index');
-        Route::get('jobdesc/{id}', 'JobdescController@edit');
-        Route::put('jobdesc/{id}/edit', 'JobdescController@update');
-        Route::get('getDataTableJobdesc', 'JobdescController@get');
-        Route::post('simpanDataJobdesc', 'JobdescController@store');
-        Route::delete('jobdesc/{id}', 'JobdescController@destroy')->name('jobdesc.destroy');
-        Route::post('jobdesc/import', 'JobdescController@import')->name('jobdesc-import');
         Route::get('getDataTablePK', 'CoordinatorController@get');
         Route::get('getDataVerified', 'CoordinatorController@getVerified');
         Route::get('getDataTableVerif/{id}', 'CoordinatorController@getVerif');
@@ -89,24 +91,32 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
         Route::get('exportExcel', 'GroupProjectController@export');
         Route::get('observer/{id}', 'AgendaController@show');
         Route::get('absen/{id}', 'AgendaController@absen')->name('absen-seminar');
+        Route::post('batalHadir', 'AgendaController@destroy');
         //route CRUD
         Route::get('/rekomendasi','RekomendasiController@index');
         Route::post('/rekomendasi/store','RekomendasiController@store');
-        // Route::get('/rekomendasi/edit/{id}','RekomendasiController@edit');
         Route::post('/rekomendasi/update','RekomendasiController@update');
         Route::post('/rekomendasi/hapus','RekomendasiController@hapus');
         Route::post('/rekomendasi/batal','RekomendasiController@batal');
-        });
+        Route::get('/cetakSertifikat/{id}/{userId}','SertifikatController@show');
+    });
     });
 Route::group(['middleware' => ['auth', 'role:admin']], function() {  
     // admin
     Route::prefix('admin')->group(function () {
         Route::get('mahasiswa', 'AdminController@showStudent')->name('admin.home');
-        Route::get('getDataTableMhs', 'AdminController@get');
+        Route::get('getDataTableMhs', 'AdminController@get')->name('list-mhs');
         Route::post('simpanDataMhs', 'AdminController@save');
         Route::get('mahasiswa/{id}', 'AdminController@show');
         Route::put('mahasiswa/{id}/edit', 'AdminController@update');
         Route::post('mahasiswa/import', 'AdminController@import')->name('student-import');
+        Route::get('jobdesc', 'JobdescController@index')->name('list-job');
+        Route::get('jobdesc/{id}', 'JobdescController@edit')->name('pick-job');
+        Route::put('jobdesc/{id}/edit', 'JobdescController@update')->name('edit-job');
+        Route::get('getDataTableJobdesc', 'JobdescController@get')->name('get-job');
+        Route::post('simpanDataJobdesc', 'JobdescController@store')->name('save-job');
+        Route::delete('jobdesc/{id}', 'JobdescController@destroy')->name('jobdesc.destroy');
+        Route::post('jobdesc/import', 'JobdescController@import')->name('jobdesc-import');
         Route::get('dosen', 'LecturerController@showLecturer');
         Route::get('getDataTableDosen', 'LecturerController@get');
         Route::post('simpanDataDosen', 'LecturerController@save');

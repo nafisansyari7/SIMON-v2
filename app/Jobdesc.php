@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Jobdesc extends Model
 {
     protected $guarded = ['id'];
+    protected $table = 'jobdescs';
 
     public function InternshipStudents()
     {

@@ -80,7 +80,7 @@
                     </li> -->
                 </ul>
                 <div class="tab-content" id="tabContent">
-                    <div class="tab-pane fade show active" id="team" role="tabpanel" aria-labelledby="team-tab">
+                    <div class="tab-pane table-responsive fade show active" id="team" role="tabpanel" aria-labelledby="team-tab">
                         <table class="table" id="detail_verifikasi">
                             <thead>
                                 <tr>
@@ -190,16 +190,7 @@
                         <input type="hidden" name="groupProject" id="group_id" value="">
                         <input type="hidden" id="_method" value="PUT" name="_method">
                         <label>Dosen Pembimbing</label>
-                        <select name="supervisor" id="editSupervisor" class="form-control" style="width: 100%;">
-                            @foreach($lecture as $lecturer)
-                            @if($lecturer->quota >= 4)
-                            <option class="editLecturer bg-danger" value="{{$lecturer->id}}"> {{$lecturer->name}} - Banyak Bimbingan: {{$lecturer->quota}}</option>
-                            @elseif($lecturer->quota >= 2)
-                            <option class="editLecturer bg-warning" value="{{$lecturer->id}}"> {{$lecturer->name}} - Banyak Bimbingan: {{$lecturer->quota}}</option>
-                            @else
-                            <option class="editLecturer" value="{{$lecturer->id}}"> {{$lecturer->name}} - Banyak Bimbingan: {{$lecturer->quota}}</option>
-                            @endif
-                            @endforeach
+                        <select name="supervisor" id="editPembimbing" class="form-control" style="width: 100%;">
                         </select>
                     </div>
                 </div>
@@ -514,9 +505,9 @@
                         '<td>' + i.ipk + '</td>' +
                         '<td>' + i.sks_total + '</td>' +
                         '<td>' + call_job + '</td>' +
-                        '<td><a href="../berkas/transkrip/' + i.file.transcript + '" target="blank" class="btn btn-xs btn-secondary m-1 w-100">Transkrip</a><br>' +
-                        '<a href="../berkas/khs/' + i.file.khs + '" target="blank" class="btn btn-xs btn-secondary m-1 w-100">Kartu Hasil Studi</a><br>' +
-                        '<a href="../berkas/krs/' + i.file.krs + '" target="blank" class="btn btn-xs btn-secondary m-1 w-100">Kartu Rencana Studi</a></td></tr>'
+                        '<td><a href="../berkas/transkrip/' + i.file.transcript + '" target="blank" class="btn btn-sm btn-secondary m-1 w-100">Transkrip</a><br>' +
+                        '<a href="../berkas/khs/' + i.file.khs + '" target="blank" class="btn btn-sm btn-secondary m-1 w-100">Kartu Hasil Studi</a><br>' +
+                        '<a href="../berkas/krs/' + i.file.krs + '" target="blank" class="btn btn-sm btn-secondary m-1 w-100">Kartu Rencana Studi</a></td></tr>'
 
                     $('#detail_verifikasi tbody').append(modal)
                 });
@@ -524,17 +515,39 @@
             }
         })
     });
+    
     $('#mahasiswa-pk tbody').on('click', '.edit', function() {
         let id = $(this).attr('id')
         $('#updateSupervisor').modal('show');
         $.ajax({
             url: "../koor/updateSupervisor/" + id,
             success: function(result) {
-                $('#editLecturer').val(result.data.group_project_supervisor.lecturer_id)
+                $('#editPembimbing').html('')
                 $('#group_id').val(result.data.id)
+
+                let dosenId = [];
+                let dosenName = [];
+                let dosenQuota = [];
+                for(i=0; i<result.dosen.length; i++) {
+                    dosenId[i] = result.dosen[i].id
+                    dosenName[i] = result.dosen[i].name
+                    dosenQuota[i] = result.dosen[i].quota
+                    if (dosenQuota[i] >= 4) {
+                        $('#editPembimbing').append('<option class="editLecturer bg-danger" value="'+dosenId[i]+'"> '+dosenName[i]+' - Banyak Bimbingan: '+dosenQuota[i]+'</option>')
+                    }
+                    else if (dosenQuota[i] >= 2) {
+                        $('#editPembimbing').append('<option class="editLecturer bg-warning" value="'+dosenId[i]+'"> '+dosenName[i]+' - Banyak Bimbingan: '+dosenQuota[i]+'</option>')
+                    }
+                    else {
+                        $('#editPembimbing').append('<option class="editLecturer" value="'+dosenId[i]+'"> '+dosenName[i]+' - Banyak Bimbingan: '+dosenQuota[i]+'</option>')
+                    }
+                }
+
+                $('#editPembimbing').val(result.data.group_project_supervisor.lecturer_id)
             }
         })
     });
+
     $('#formEdit').submit(function(e) {
         e.preventDefault();
 

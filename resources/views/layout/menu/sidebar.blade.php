@@ -52,6 +52,12 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="{{ url ('mahasiswa/sertifikat') }}" class="{{(request()->is('mahasiswa/sertifikat')) ? 'active' : ''}} nav-link">
+            <i class="nav-icon fas fa-certificate"></i>
+              Sertifikat PKL dan PK
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="{{ url ('mahasiswa/rekomendasi') }}" class="{{(request()->is('mahasiswa/rekomendasi')) ? 'active' : ''}} nav-link">
             <i class="nav-icon fas fa-tasks"></i>
               Rekomendasi PKL dan PK
@@ -101,12 +107,12 @@
               Data PKL dan PK
           </a>
         </li>
-        <li class="nav-item">
-          <a href="{{ url ('koor/jobdesc') }}" class="{{(request()->is('koor/jobdesc')) ? 'active' : ''}} nav-link">
-            <i class="nav-icon fas fa-user-tag"></i>
-              Data Jobdesc
+        <!-- <li class="nav-item">
+          <a href="{{ url ('koor/dataMahasiswa') }}" class="{{(request()->is('koor/dataMahasiswa')) ? 'active' : ''}} nav-link">
+            <i class="nav-icon fas fa-users"></i>
+              Data Mahasiswa
           </a>
-        </li>
+        </li> -->
         @endif
         @if(Auth::user()->isAdmin())
         <li class="nav-header font-weight-bold">Data</li>
@@ -120,6 +126,12 @@
         <a href="{{ url ('admin/dosen') }}" class="{{(request()->is('admin/dosen')) ? 'active' : ''}} nav-link">
             <i class="nav-icon fas fa-user-tie"></i>
               Data Dosen
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url ('admin/jobdesc') }}" class="{{(request()->is('admin/jobdesc')) ? 'active' : ''}} nav-link">
+            <i class="nav-icon fas fa-user-tag"></i>
+              Data Jobdesc
           </a>
         </li>
         <li class="nav-item">

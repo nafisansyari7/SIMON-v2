@@ -24,9 +24,10 @@ class CollegeStudentController extends Controller
 
     public function index()
     {
-        $job = Jobdesc::get()->sortByDesc('status');
+        $job = Jobdesc::orderBy('status', 'desc')->get();
         $anggota = GroupProject::with(['Agency', 'GroupProjectSchedule', 'InternshipStudents.Jobdescs', 'InternshipStudents.User', 'GroupProjectSupervisor.Lecturer'])
             ->find(Auth::user()->InternshipStudent->getGroupProjectId());
+        // dd($anggota);
         if ($anggota !== null) {
             $fck = GroupProjectExaminer::with('Lecturer')->where('group_project_id', $anggota->id)->get();
             return view('college_student.home', compact(['job', 'anggota', 'fck']));
@@ -47,15 +48,21 @@ class CollegeStudentController extends Controller
 
     public function update(Request $request, $id)
     {
-        $project = GroupProject::findOrFail($id);
+        $project = GroupProject::with('Agency')->findOrFail($id);
         $project->title = $request->input('editJudul');
         $project->field_supervisor = $request->input('editPemLapangan');
+        $project->Agency->agency_name = $request->input('editInstansi');
+        $project->Agency->sector = $request->input('editBidang');
+        $project->Agency->address = $request->input('editAlamat');
+        $project->Agency->phone_number = $request->input('editKontak');
+        $project->Agency->update();
 
         if ($project->save()) {
             return response()->json("success");
         }
         return response()->json("failed");
     }
+
     public function upload(Request $request, $id)
     {
         $project = GroupProject::findOrFail($id);

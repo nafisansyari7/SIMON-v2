@@ -13,10 +13,13 @@ use App\InternshipStudentJobdesc;
 use App\InternshipStudent;
 use Illuminate\Http\UploadedFile;
 use Auth;
+use Mail;
 use Carbon\Carbon;
 use App\Exports\GroupProjectExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use App\Mail\ProjectCreated;
+use App\Mail\SeminarCreated;
 
 class GroupProjectController extends Controller
 {
@@ -35,9 +38,168 @@ class GroupProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function edit($id)
     {
-        //
+        $job = Jobdesc::orderBy('status', 'desc')->get();
+        $pk = GroupProject::with(['Agency', 'InternshipStudents.User', 'InternshipStudents' => function ($abc) {
+            $abc->with(['Jobdescs', 'File']);
+        }])->where('id', $id)->first();
+
+        $ini = Auth::user()->InternshipStudent->id;
+        
+        if($pk->count() != 0){
+            $mhs = $pk->InternshipStudents->count();
+            $gue = 0;
+            foreach ($pk->InternshipStudents as $s) {
+                if($s->id == $ini){
+                    $gue = 1;
+                }
+            }
+            if ($gue == 1 && $pk->is_verified != 4) {
+                return view('college_student.edit', compact(['pk', 'mhs', 'gue', 'job']));
+            } else{
+                echo '<script type="text/javascript">
+                alert("Error!!! Ini bukan kelompok Anda.")</script>';
+                return redirect(route('mahasiswa.home'));
+            }
+        }
+        else{
+            $mhs = $pk->InternshipStudents->count();
+            return view('college_student.edit', compact(['pk', 'mhs', 'job']));
+        }
+    }
+
+    public function editAnggota($id)
+    {
+        $mhs = InternshipStudent::with(['Jobdescs', 'File', 'GroupProjects'])->where('id', $id)->first();
+
+        $job = Jobdesc::orderBy('status', 'desc')->get();
+
+        return response()->json(['data' => $mhs, 'job' => $job]);
+    }
+    
+    public function updateAnggota(Request $request)
+    {
+        $student = InternshipStudent::where('nim', $request->editNim)->first();
+
+        InternshipStudentJobdesc::whereInternshipStudentId($student->id)->delete();
+
+        foreach ($request->input('editJobdesc') as $jobdesc) {
+            $student->Jobdescs()->attach($jobdesc);
+        }
+
+        $berkas = FIle::where('internship_student_id', $student->id)->first();
+        
+        if ($request->hasFile('editTranskrip')) {
+            $fileTranskrip = $request->file('editTranskrip');
+            $folderTranskrip = 'berkas/transkrip';
+            $fileNameTranskrip =  Carbon::now()->timestamp . '_' . uniqId() . '_transkrip';
+            $fileTranskrip->move($folderTranskrip, $fileNameTranskrip);
+            $berkas->transcript = $fileNameTranskrip;
+            $berkas->save();
+        }
+        if ($request->hasFile('editKrs')) {
+            $fileKrs = $request->file('editKrs');
+            $folderKrs = 'berkas/krs';
+            $fileNameKrs =  Carbon::now()->timestamp . '_' . uniqId() . '_krs';
+            $fileKrs->move($folderKrs, $fileNameKrs);
+            $berkas->krs = $fileNameKrs;
+            $berkas->save();
+        }
+        if ($request->hasFile('editKhs')) {
+            $fileKhs = $request->file('editKhs');
+            $folderKhs = 'berkas/khs';
+            $fileNameKhs =  Carbon::now()->timestamp . '_' . uniqId() . '_khs';
+            $fileKhs->move($folderKhs, $fileNameKhs);
+            $berkas->khs = $fileNameKhs;
+            $berkas->save();
+        }
+        if ($request->hasFile('editNilaiPKL')) {
+            $fileNilai = $request->file('editNilaiPKL');
+            $folderNilai = 'berkas/nilaiPKL';
+            $fileNameNilai = Carbon::now()->timestamp . '_' . uniqId() . '_nilaiPKL';
+            $fileNilai->move($folderNilai, $fileNameNilai);
+            $berkas->penilaian_pkl = $fileNameNilai;
+            $berkas->save();
+        }
+        if ($request->hasFile('editSertifikat')) {
+            $fileSertifikat = $request->file('editSertifikat');
+            $folderSertifikat = 'berkas/sertifikat';
+            $fileNameSertifikat = Carbon::now()->timestamp . '_' . uniqId() . '_sertifikat';
+            $fileSertifikat->move($folderSertifikat, $fileNameSertifikat);
+            $berkas->sertifikat = $fileNameSertifikat;
+            $berkas->save();
+        }
+        if ($request->hasFile('editBimbingPKL')) {
+            $fileBimbing = $request->file('editBimbingPKL');
+            $folderBimbing = 'berkas/bimbingPKL';
+            $fileNameBimbing = Carbon::now()->timestamp . '_' . uniqId() . '_bimbinganPKL';
+            $fileBimbing->move($folderBimbing, $fileNameBimbing);
+            $berkas->bimbingan_pkl = $fileNameBimbing;
+            $berkas->save();
+        }
+        if ($request->hasFile('editLkmm')) {
+            $fileSertifikatLKMM = $request->file('editLkmm');
+            $folderSertifikatLKMM = 'berkas/LKMM';
+            $fileNameSertifikatLKMM = Carbon::now()->timestamp . '_' . uniqId() . '_sertifikatLKMM';
+            $fileSertifikatLKMM->move($folderSertifikatLKMM, $fileNameSertifikatLKMM);
+            $berkas->sertifikat_lkmm = $fileNameSertifikatLKMM;
+            $berkas->save();
+        }
+            
+        return redirect(route('mahasiswa.edit', $request->groupIdEdit));
+    }
+
+    public function tambahAnggota(Request $request)
+    {
+        $groupProject = GroupProject::with('InternshipStudents')->where('id', $request->groupId)->first();
+        // dd($groupProject);
+        $groupProject->InternshipStudents()->attach(InternshipStudent::where('nim', $request->nim)->first()->id);
+            $student = InternshipStudent::where('nim', $request->nim)->first();
+                foreach ($request->input('jobdesc') as $jobdesc) {
+                    $student->Jobdescs()->attach($jobdesc);
+                }
+
+            if ($request->hasFile('transkrip')) {
+                $fileTranskrip = $request->file('transkrip');
+                $folderTranskrip = 'berkas/transkrip';
+                $fileNameTranskrip =  Carbon::now()->timestamp . '_' . uniqId() . '_transkrip';
+                $fileTranskrip->move($folderTranskrip, $fileNameTranskrip);
+            }
+            if ($request->hasFile('krs')) {
+                $fileKrs = $request->file('krs');
+                $folderKrs = 'berkas/krs';
+                $fileNameKrs =  Carbon::now()->timestamp . '_' . uniqId() . '_krs';
+                $fileKrs->move($folderKrs, $fileNameKrs);
+            }
+            if ($request->hasFile('khs')) {
+                $fileKhs = $request->file('khs');
+                $folderKhs = 'berkas/khs';
+                $fileNameKhs =  Carbon::now()->timestamp . '_' . uniqId() . '_khs';
+                $fileKhs->move($folderKhs, $fileNameKhs);
+            }
+
+            $berkas = new File;
+            $berkas->internship_student_id = $student->id;
+            $berkas->transcript = $fileNameTranskrip;
+            $berkas->krs = $fileNameKrs;
+            $berkas->khs = $fileNameKhs;
+            $berkas->save();
+
+        return redirect(route('mahasiswa.edit', $request->groupId));
+    }
+
+    public function hapus(Request $request)
+    {
+        $student = InternshipStudent::where('id', $request->internship_student_id)->first();
+
+        InternshipStudentJobdesc::whereInternshipStudentId($student->id)->delete();
+        File::where('internship_student_id', $student->id)->delete();
+        
+        $group = GroupProject::where('id', $request->groupProject)->first();
+        $student->GroupProjects()->detach($group->id);
+
+        return redirect(route('mahasiswa.edit', $request->groupProject));
     }
 
     /**
@@ -109,6 +271,9 @@ class GroupProjectController extends Controller
                 foreach ($request->input('jobdesc_' . $i) as $jobdesc) {
                     $student->Jobdescs()->attach($jobdesc);
                 }
+            
+            $student->status = "S";
+            $student->update();
 
             if ($request->hasFile('transkrip_' . $i)) {
                 $fileTranskrip = $request->file('transkrip_' . $i);
@@ -138,6 +303,12 @@ class GroupProjectController extends Controller
 
             $i++;
         };
+
+        $data = GroupProject::with(['InternshipStudents', 'Agency'])->where('id', $groupProject->id)->first();
+
+        Mail::to('ti@ulm.ac.id')->send(new ProjectCreated($data));
+        
+
         return redirect()->route('mahasiswa.home')->with('status', 'Berhasil Mendaftar');
     }
 
@@ -231,11 +402,13 @@ class GroupProjectController extends Controller
                 $i++;
         }
         $verif->is_verified = $request->is_verified + '1';
+        $verif->save();
 
-        if ($verif->save()) {
-            return response()->json("success");
-        }
-        return response()->json("failed");
+        $data = GroupProject::with(['InternshipStudents', 'Agency'])->where('id', $verif->id)->first();
+
+        Mail::to('ti@ulm.ac.id')->send(new SeminarCreated($data));
+
+        return redirect(route('mahasiswa.home')); 
     }
 
     /**

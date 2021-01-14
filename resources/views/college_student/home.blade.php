@@ -37,13 +37,16 @@
                             @enderror
                             <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="m-tab" data-toggle="pill" href="#m-1" role="tab" aria-controls="m-1" aria-selected="true">M-1</a>
+                                    <a class="nav-link active" id="m-tab" data-toggle="pill" href="#m-1" role="tab"
+                                        aria-controls="m-1" aria-selected="true">M-1</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="m-tab" data-toggle="pill" href="#m-2" role="tab" aria-controls="m-2" aria-selected="true">M-2</a>
+                                    <a class="nav-link" id="m-tab" data-toggle="pill" href="#m-2" role="tab"
+                                        aria-controls="m-2" aria-selected="true">M-2</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="m-tab" data-toggle="pill" href="#m-3" role="tab" aria-controls="m-3" aria-selected="true">M-3</a>
+                                    <a class="nav-link" id="m-tab" data-toggle="pill" href="#m-3" role="tab"
+                                        aria-controls="m-3" aria-selected="true">M-3</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link add-mahasiswa">+ Mahasiswa</a>
@@ -51,43 +54,56 @@
                             </ul>
                             <div class="tab-content" id="m-tabContent">
                                 <!-- Mahasiswa 1 -->
-                                <div class="tab-pane fade show active" id="m-1" role="tabpanel" aria-labelledby="m-1-tab">
+                                <div class="tab-pane fade show active" id="m-1" role="tabpanel"
+                                    aria-labelledby="m-1-tab">
                                     @csrf
                                     <div class="row mt-2">
                                         @error('nama-1')
                                         <div class="form-group col-12">
-                                            <div class="alert alert-danger alert-dismissible w-100"><i class="icon fas fa-exclamation-circle"></i> {{ $message }}</div>
+                                            <div class="alert alert-danger alert-dismissible w-100"><i
+                                                    class="icon fas fa-exclamation-circle"></i> {{ $message }}</div>
                                         </div>
                                         @enderror
                                         <div class="form-group col-12">
                                             <label for="nim">NIM</label>
                                             <div class="row">
                                                 <div class="col-9">
-                                                    <input name="internship_student_id" type="hidden" value="{{ Auth::user()->InternshipStudent->id }}" class="form-control" id="">
-                                                    <input name="nim[]" type="text" value="{{ Auth::user()->InternshipStudent->nim }}" class="form-control @error('nama-1') is-invalid @enderror @error('nim-1') is-invalid @enderror" id="nim-1" required>
+                                                    <input name="internship_student_id" type="hidden"
+                                                        value="{{ Auth::user()->InternshipStudent->id }}"
+                                                        class="form-control" id="">
+                                                    <input name="nim[]" type="text"
+                                                        value="{{ Auth::user()->InternshipStudent->nim }}"
+                                                        class="form-control @error('nama-1') is-invalid @enderror @error('nim-1') is-invalid @enderror"
+                                                        id="nim-1" required>
                                                     @error('nim-1')
                                                     <small class="text-danger">{{ $message }}</small>
                                                     @enderror
                                                 </div>
                                                 <div class="col-3">
-                                                    <button type="button" class="btn btn-primary w-100" id="cek-student-1" onclick="fetchData(1)">Cek</button>
+                                                    <button type="button" class="btn btn-primary w-100"
+                                                        id="cek-student-1" onclick="fetchData(1)">Cek</button>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group col-6">
                                             <label for="nama">Nama</label>
-                                            <input type="text" class="form-control" id="nama-1" readonly value="{{Request::old('nama-1')}}" name="nama-1">
+                                            <input type="text" class="form-control" id="nama-1" readonly
+                                                value="{{Request::old('nama-1')}}" name="nama-1">
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="ipk">IPK</label>
-                                            <input type="number" class="form-control @error('ipk-1') is-invalid @enderror" id="ipk-1" readonly value="{{Request::old('ipk-1')}}" min="2.5" name="ipk-1">
+                                            <input type="number"
+                                                class="form-control @error('ipk-1') is-invalid @enderror" id="ipk-1"
+                                                readonly value="{{Request::old('ipk-1')}}" min="2.5" name="ipk-1">
                                             @error('ipk-1')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="sks">SKS</label>
-                                            <input type="number" class="form-control @error('sks-1') is-invalid @enderror" id="sks-1" readonly value="{{Request::old('sks-1')}}" min="90" name="sks-1">
+                                            <input type="number"
+                                                class="form-control @error('sks-1') is-invalid @enderror" id="sks-1"
+                                                readonly value="{{Request::old('sks-1')}}" min="90" name="sks-1">
                                             @error('sks-1')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -96,10 +112,15 @@
                                             <label for="jobDesc">Job Description</label>
                                             <div class="row">
                                                 <div class="col-3">
-                                                    <button type="button" class="btn btn-secondary jobdesk w-100" id="jobdesk" data-toggle="modal" data-target="#job_desk"><i class="fas fa-eye"></i></button>
+                                                    <button type="button" class="btn btn-secondary jobdesk w-100"
+                                                        id="jobdesk" data-toggle="modal" data-target="#job_desk"><i
+                                                            class="fas fa-eye"></i></button>
                                                 </div>
                                                 <div class="col-9">
-                                                    <select name="jobdesc_1[]" class="select2 @error('jobdesc_1') is-invalid @enderror" multiple="multiple" style="width: 100%;" id="jobDesc-1" required>
+                                                    <select name="jobdesc_1[]"
+                                                        class="select2 @error('jobdesc_1') is-invalid @enderror"
+                                                        multiple="multiple" style="width: 100%;" id="jobDesc-1"
+                                                        required>
                                                         @foreach($job as $jobdesc)
                                                         <option value="{{$jobdesc->id}}">{{$jobdesc->jobname}}</option>
                                                         @endforeach
@@ -112,21 +133,24 @@
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="lampiran">Kartu Hasil Studi</label>
-                                            <input name="khs_1" type="file" class="form-control-file" id="khs-1" value="{{Request::old('khs_1')}}" required>
+                                            <input name="khs_1" type="file" class="form-control-file" id="khs-1"
+                                                value="{{Request::old('khs_1')}}" required>
                                             @error('khs_1')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="lampiran">Transkrip</label>
-                                            <input name="transkrip_1" type="file" class="form-control-file" id="transkrip-1" value="{{Request::old('transkrip_1')}}" required>
+                                            <input name="transkrip_1" type="file" class="form-control-file"
+                                                id="transkrip-1" value="{{Request::old('transkrip_1')}}" required>
                                             @error('transkrip_1')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="lampiran">Kartu Rencana Studi</label>
-                                            <input name="krs_1" type="file" class="form-control-file" id="krs-1" value="{{Request::old('krs_1')}}" required>
+                                            <input name="krs_1" type="file" class="form-control-file" id="krs-1"
+                                                value="{{Request::old('krs_1')}}" required>
                                             @error('krs_1')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -139,37 +163,46 @@
                                     <div class="row mt-2">
                                         @error('nama-2')
                                         <div class="form-group col-12">
-                                            <div class="alert alert-danger alert-dismissible w-100"><i class="icon fas fa-exclamation-circle"></i> {{ $message }}</div>
+                                            <div class="alert alert-danger alert-dismissible w-100"><i
+                                                    class="icon fas fa-exclamation-circle"></i> {{ $message }}</div>
                                         </div>
                                         @enderror
                                         <div class="form-group col-12">
                                             <label for="nim">NIM</label>
                                             <div class="row">
                                                 <div class=col-9>
-                                                    <input name="nim[]" type="text" class="form-control @error('nama-2') is-invalid @enderror" value="{{Request::old('nim.2')}}" id="nim-2" required>
+                                                    <input name="nim[]" type="text"
+                                                        class="form-control @error('nama-2') is-invalid @enderror"
+                                                        value="{{Request::old('nim.2')}}" id="nim-2" required>
                                                     @error('nim-2')
                                                     <small class="text-danger">{{ $message }}</small>
                                                     @enderror
                                                 </div>
                                                 <div class=col-3>
-                                                    <button type="button" class="btn btn-primary w-100" id="cek-student-2" onclick="fetchData(2)">Cek</button>
+                                                    <button type="button" class="btn btn-primary w-100"
+                                                        id="cek-student-2" onclick="fetchData(2)">Cek</button>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group col-6">
                                             <label for="nama">Nama</label>
-                                            <input type="text" class="form-control" id="nama-2" readonly value="{{Request::old('nama-2')}}" name="nama-2">
+                                            <input type="text" class="form-control" id="nama-2" readonly
+                                                value="{{Request::old('nama-2')}}" name="nama-2">
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="ipk">IPK</label>
-                                            <input type="number" class="form-control @error('ipk-2') is-invalid @enderror" id="ipk-2" readonly value="{{Request::old('ipk-2')}}" min="2.5" name="ipk-2">
+                                            <input type="number"
+                                                class="form-control @error('ipk-2') is-invalid @enderror" id="ipk-2"
+                                                readonly value="{{Request::old('ipk-2')}}" min="2.5" name="ipk-2">
                                             @error('ipk-2')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="sks">SKS</label>
-                                            <input type="number" class="form-control @error('sks-2') is-invalid @enderror" id="sks-2" readonly value="{{Request::old('sks-2')}}" min="90" name="sks-2">
+                                            <input type="number"
+                                                class="form-control @error('sks-2') is-invalid @enderror" id="sks-2"
+                                                readonly value="{{Request::old('sks-2')}}" min="90" name="sks-2">
                                             @error('sks-2')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -178,10 +211,15 @@
                                             <label for="jobDesc">Job Description</label>
                                             <div class="row">
                                                 <div class=col-3>
-                                                    <button type="button" class="btn btn-sm btn-secondary jobdesk w-100" id="jobdesk" data-toggle="modal" data-target="#job_desk"><i class="fas fa-eye"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-secondary jobdesk w-100"
+                                                        id="jobdesk" data-toggle="modal" data-target="#job_desk"><i
+                                                            class="fas fa-eye"></i></button>
                                                 </div>
                                                 <div class="col-9">
-                                                    <select name="jobdesc_2[]" class="select2 @error('jobdesc_2') is-invalid @enderror" multiple="multiple" style="width: 100%;" id="jobDesc-2" required>
+                                                    <select name="jobdesc_2[]"
+                                                        class="select2 @error('jobdesc_2') is-invalid @enderror"
+                                                        multiple="multiple" style="width: 100%;" id="jobDesc-2"
+                                                        required>
                                                         @foreach($job as $jobdesc)
                                                         <option value="{{$jobdesc->id}}">{{$jobdesc->jobname}}</option>
                                                         @endforeach
@@ -194,21 +232,24 @@
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="lampiran">Kartu Hasil Studi</label>
-                                            <input name="khs_2" type="file" class="form-control-file" id="khs-2" required>
+                                            <input name="khs_2" type="file" class="form-control-file" id="khs-2"
+                                                required>
                                             @error('khs_2')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="lampiran">Transkrip</label>
-                                            <input name="transkrip_2" type="file" class="form-control-file" id="transkrip-2" required>
+                                            <input name="transkrip_2" type="file" class="form-control-file"
+                                                id="transkrip-2" required>
                                             @error('transkrip_2')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="lampiran">Kartu Rencana Studi</label>
-                                            <input name="krs_2" type="file" class="form-control-file" id="krs-2" required>
+                                            <input name="krs_2" type="file" class="form-control-file" id="krs-2"
+                                                required>
                                             @error('krs_1')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -221,37 +262,46 @@
                                     <div class="row mt-2">
                                         @error('nama-3')
                                         <div class="form-group col-12">
-                                            <div class="alert alert-danger alert-dismissible w-100"><i class="icon fas fa-exclamation-circle"></i> {{ $message }}</div>
+                                            <div class="alert alert-danger alert-dismissible w-100"><i
+                                                    class="icon fas fa-exclamation-circle"></i> {{ $message }}</div>
                                         </div>
                                         @enderror
                                         <div class="form-group col-12">
                                             <label for="nim">NIM</label>
                                             <div class="row">
                                                 <div class=col-9>
-                                                    <input name="nim[]" type="text" class="form-control @error('nama-3') is-invalid @enderror" value="{{Request::old('nim.3')}}" id="nim-3" required>
+                                                    <input name="nim[]" type="text"
+                                                        class="form-control @error('nama-3') is-invalid @enderror"
+                                                        value="{{Request::old('nim.3')}}" id="nim-3" required>
                                                     @error('nim-3')
                                                     <small class="text-danger">{{ $message }}</small>
                                                     @enderror
                                                 </div>
                                                 <div class="col-3">
-                                                    <button type="button" class="btn btn-primary w-100" id="cek-student-3" onclick="fetchData(3)">Cek</button>
+                                                    <button type="button" class="btn btn-primary w-100"
+                                                        id="cek-student-3" onclick="fetchData(3)">Cek</button>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group col-6">
                                             <label for="nama">Nama</label>
-                                            <input type="text" class="form-control" id="nama-3" readonly value="{{Request::old('nama-3')}}" name="nama-3">
+                                            <input type="text" class="form-control" id="nama-3" readonly
+                                                value="{{Request::old('nama-3')}}" name="nama-3">
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="ipk">IPK</label>
-                                            <input type="number" class="form-control @error('ipk-3') is-invalid @enderror" id="ipk-3" readonly value="{{Request::old('ipk-3')}}" min="2.5" name="ipk-3">
+                                            <input type="number"
+                                                class="form-control @error('ipk-3') is-invalid @enderror" id="ipk-3"
+                                                readonly value="{{Request::old('ipk-3')}}" min="2.5" name="ipk-3">
                                             @error('ipk-3')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-3">
                                             <label for="sks">SKS</label>
-                                            <input type="number" class="form-control @error('sks-3') is-invalid @enderror" id="sks-3" readonly value="{{Request::old('sks-3')}}" min="90" name="sks-3">
+                                            <input type="number"
+                                                class="form-control @error('sks-3') is-invalid @enderror" id="sks-3"
+                                                readonly value="{{Request::old('sks-3')}}" min="90" name="sks-3">
                                             @error('sks-3')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -260,10 +310,15 @@
                                             <label for="jobDesc">Job Description</label>
                                             <div class="row">
                                                 <div class=col-3>
-                                                    <button type="button" class="btn btn-sm btn-secondary jobdesk w-100" id="jobdesk" data-toggle="modal" data-target="#job_desk"><i class="fas fa-eye"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-secondary jobdesk w-100"
+                                                        id="jobdesk" data-toggle="modal" data-target="#job_desk"><i
+                                                            class="fas fa-eye"></i></button>
                                                 </div>
                                                 <div class="col-9">
-                                                    <select name="jobdesc_3[]" class="select2 @error('jobdesc_3') is-invalid @enderror" multiple="multiple" style="width: 100%;" id="jobDesc-3" required>
+                                                    <select name="jobdesc_3[]"
+                                                        class="select2 @error('jobdesc_3') is-invalid @enderror"
+                                                        multiple="multiple" style="width: 100%;" id="jobDesc-3"
+                                                        required>
                                                         @foreach($job as $jobdesc)
                                                         <option value="{{$jobdesc->id}}">{{$jobdesc->jobname}}</option>
                                                         @endforeach
@@ -276,21 +331,24 @@
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="lampiran">Kartu Hasil Studi</label>
-                                            <input name="khs_3" type="file" class="form-control-file" id="khs-3" required>
+                                            <input name="khs_3" type="file" class="form-control-file" id="khs-3"
+                                                required>
                                             @error('khs_3')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="lampiran">Transkrip</label>
-                                            <input name="transkrip_3" type="file" class="form-control-file" id="transkrip-3" required>
+                                            <input name="transkrip_3" type="file" class="form-control-file"
+                                                id="transkrip-3" required>
                                             @error('transkrip_3')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="lampiran">Kartu Rencana Studi</label>
-                                            <input name="krs_3" type="file" class="form-control-file" id="krs-3" required>
+                                            <input name="krs_3" type="file" class="form-control-file" id="krs-3"
+                                                required>
                                             @error('krs_1')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -314,40 +372,56 @@
                             <div class="row">
                                 <div class="form-group col-12">
                                     <label for="instansi">Nama Instansi/Perusahaan</label>
-                                    <input name="instansi" type="text" class="form-control @error('instansi') is-invalid @enderror" value="{{Request::old('instansi')}}" id="instansi" required>
+                                    <input name="instansi" type="text"
+                                        class="form-control @error('instansi') is-invalid @enderror"
+                                        value="{{Request::old('instansi')}}" id="instansi" required>
                                 </div>
                                 <div class="form-group col-12">
                                     <label for="bidang">Bidang/Sektor Usaha</label>
-                                    <input name="bidang" type="text" class="form-control @error('bidang') is-invalid @enderror" value="{{Request::old('bidang')}}" id="bidang" required>
+                                    <input name="bidang" type="text"
+                                        class="form-control @error('bidang') is-invalid @enderror"
+                                        value="{{Request::old('bidang')}}" id="bidang" required>
                                 </div>
                                 <div class="form-group col-12">
                                     <label for="alamat">Alamat</label>
-                                    <input name="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" value="{{Request::old('alamat')}}" id="alamat" required>
+                                    <input name="alamat" type="text"
+                                        class="form-control @error('alamat') is-invalid @enderror"
+                                        value="{{Request::old('alamat')}}" id="alamat" required>
                                 </div>
                                 <div class="form-group col-12">
                                     <label for="tlp">No. Telephon/Handphone</label>
-                                    <input name="tlp" type="number" class="form-control @error('tlp') is-invalid @enderror" value="{{Request::old('tlp')}}" id="tlp" required>
+                                    <input name="tlp" type="text"
+                                        class="form-control @error('tlp') is-invalid @enderror"
+                                        value="{{Request::old('tlp')}}" id="tlp" required>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="start">Tanggal Mulai</label>
-                                    <input name="start" type="date" class="form-control @error('start') is-invalid @enderror" value="{{Request::old('start')}}" id="start" required>
+                                    <input name="start" type="date"
+                                        class="form-control @error('start') is-invalid @enderror"
+                                        value="{{Request::old('start')}}" id="start" required>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="end">Tanggal Berakhir</label>
-                                    <input name="end" type="date" class="form-control @error('end') is-invalid @enderror" value="{{Request::old('end')}}" id="end" required>
+                                    <input name="end" type="date"
+                                        class="form-control @error('end') is-invalid @enderror"
+                                        value="{{Request::old('end')}}" id="end" required>
                                 </div>
                                 <div class="form-group col-12">
                                     <label for="kak">Kerangka Acuan Kerja*</label>
                                     <input type="file" class="form-control-file" name="kak" id="kak">
-                                    <p><b>Catatan:</b> *disertai tanda tangan dan stampel dari Pembimbing Lapangan/Instansi</p>
+                                    <p><b>Catatan:</b> *disertai tanda tangan dan stampel dari Pembimbing
+                                        Lapangan/Instansi</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
-                    <input href="#reg" type="button" value="Daftarkan Kelompok" class="btn btn-primary float-right" data-toggle="modal">
-                    <a href="http://ti.ft.ulm.ac.id/download/pedoman-pkl-pk-2019/" target="blank" class="btn btn-secondary float-right mr-1"><i class="far fa-fw fa-file"></i> Pedoman PKL dan PK</a>
+                    <input href="#reg" type="button" value="Daftarkan Kelompok" class="btn btn-primary float-right"
+                        data-toggle="modal">
+                    <a href="http://ti.ft.ulm.ac.id/daftar-unduhan/" target="blank"
+                        class="btn btn-secondary float-right mr-1"><i class="far fa-fw fa-file"></i> Pedoman PKL dan
+                        PK</a>
                 </div>
             </div>
             <!-- Deskripsi Jobdesk -->
@@ -404,8 +478,10 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Yakin ingin mengirimkan pendaftaran?<br><b>Data yang diajukan tidak dapat diubah lagi</b><br>
-                            <b class="text-danger font-italic">*Pastikan seluruh anggota kelompok telah memperbarui foto profil.</b>
+                            <p>Yakin ingin mengirimkan pendaftaran?<br><b>Data yang diajukan tidak dapat diubah
+                                    lagi</b><br>
+                                <b class="text-danger font-italic">*Pastikan seluruh anggota kelompok telah memperbarui
+                                    foto profil.</b>
                             </p>
                         </div>
                         <div class="modal-footer">
@@ -426,12 +502,17 @@
                             <i class="fas fa-user-friends mr-1"></i>
                             Kelompok
                         </h3>
+                        @if(Auth::user()->isVerifiedGroupProject() != 4)
+                        <div class="card-tools">
+                            <a href="groupEdit/{{ $anggota->id }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                        </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         @if((Auth::user()->isVerifiedGroupProject() !== null) && (Auth::user()->isVerifiedGroupProject()
                         !== 0))
                         <div class="text-center">
-                            <i class="fas fa-user-graduate fa-7x mb-2"></i>
+                            <img src="/public/image/training.png" class="w-50">
                             <h2 class="lead"><b>{{$anggota->GroupProjectSupervisor->Lecturer->name}}</b></h2>
                             <b>NIP. {{$anggota->GroupProjectSupervisor->Lecturer->NIP}}</b>
                             <p class="text-muted text-sm"> Pembimbing</p>
@@ -442,7 +523,8 @@
                             @foreach($anggota->InternshipStudents as $team)
                             <li class="list-group-item">
                                 <div class="user-block">
-                                    <img class="img-circle img-bordered-sm" src="../public/image/{{ $team->User->image_profile }}" alt="user image">
+                                    <img class="img-circle img-bordered-sm"
+                                        src="../public/image/{{ $team->User->image_profile }}" alt="user image">
                                     <span class="username">
                                         <a>{{$team->name}}</a>
                                     </span>
@@ -468,14 +550,22 @@
                             <button type="button" class="btn btn-primary btn-sm project-edit" data-toggle="modal">Edit
                                 Detail Proyek</button>
                             @endif
-                            @if((Auth::user()->isVerifiedGroupProject() === 4) && ($anggota->report !== null) && ($anggota->laporan === null))
-                            <a href="../berkas/berita/{{ $anggota->report }}" target="blank" class="btn btn-danger btn-sm report"><i class="fas fa-download"></i> Catatan Revisi</a>
+                            @if((Auth::user()->isVerifiedGroupProject() === 4) &&
+                            ($anggota->laporan === null))
+                            @if ($anggota->report !== null)
+                            <a href="../berkas/berita/{{ $anggota->report }}" target="blank"
+                                class="btn btn-info btn-sm report"><i class="fas fa-download"></i> Catatan Revisi</a>
+                            @endif
                             <button type="button" id="laporan" class="btn btn-success btn-sm">
                                 <i class="fas fa-upload mr-1"></i>
                                 Upload Laporan
                             </button>
-                            @elseif((Auth::user()->isVerifiedGroupProject() === 4) && ($anggota->report !== null) && ($anggota->laporan !== null))
-                            <a href="../berkas/berita/{{ $anggota->report }}" target="blank" class="btn btn-info btn-sm report"><i class="fas fa-download"></i> Berita Acara</a>
+                            @elseif((Auth::user()->isVerifiedGroupProject() === 4) &&
+                            ($anggota->laporan !== null))
+                            @if ($anggota->report !== null)
+                            <a href="../berkas/berita/{{ $anggota->report }}" target="blank"
+                                class="btn btn-info btn-sm report"><i class="fas fa-download"></i> Berita Acara</a>
+                            @endif
                             <button type="button" id="laporan" class="btn btn-success btn-sm">
                                 <i class="fas fa-edit mr-1"></i>
                                 Edit Laporan
@@ -494,7 +584,7 @@
                                 <div class="info-box bg-light">
                                     <div class="info-box-content">
                                         <span class="info-box-text text-center text-muted">Tanggal Mulai</span>
-                                        <span class="info-box-number text-center text-muted mb-0">{{ Carbon\Carbon::parse($anggota->start_intern)->format('d F Y') }}</span>
+                                        <span class="info-box-number text-center text-muted mb-0">{{ Carbon\Carbon::parse($anggota->start_intern)->isoFormat('D MMMM Y') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -502,7 +592,7 @@
                                 <div class="info-box bg-light">
                                     <div class="info-box-content">
                                         <span class="info-box-text text-center text-muted">Tanggal Berakhir</span>
-                                        <span class="info-box-number text-center text-muted mb-0">{{ Carbon\Carbon::parse($anggota->end_intern)->format('d F Y') }}</span>
+                                        <span class="info-box-number text-center text-muted mb-0">{{ Carbon\Carbon::parse($anggota->end_intern)->isoFormat('D MMMM Y') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -550,35 +640,38 @@
                                 <div class="info-box bg-success">
                                     <div class="info-box-content">
                                         <span class="info-box-text text-center">Seminar</span>
-                                        <span class="info-box-number text-center mb-0">{{ $anggota->GroupProjectSchedule->day }}, {{ $anggota->GroupProjectSchedule->tanggal }}</span>
+                                        <span
+                                            class="info-box-number text-center mb-0">{{ $anggota->GroupProjectSchedule->day }},
+                                            {{ $anggota->GroupProjectSchedule->tanggal }}</span>
                                     </div>
                                 </div>
                             </div>
                             @else
-                                @if($anggota->laporan === null)
-                                <div class="col-12 col-sm-4">
-                                    <div class="info-box bg-warning">
-                                        <div class="info-box-content">
-                                            <span class="info-box-text text-center">Tahap Akhir</span>
-                                            <span class="info-box-number text-center mb-0">Silahkan Upload Draft Laporan Anda</span>
-                                        </div>
+                            @if($anggota->laporan === null)
+                            <div class="col-12 col-sm-4">
+                                <div class="info-box bg-warning">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center">Tahap Akhir</span>
+                                        <span class="info-box-number text-center mb-0">Silahkan Upload Draft Laporan
+                                            Anda</span>
                                     </div>
                                 </div>
-                                @else
-                                <div class="col-12 col-sm-4">
-                                    <div class="info-box bg-success">
-                                        <div class="info-box-content">
-                                            <span class="info-box-text text-center">Finish</span>
-                                            <span class="info-box-number text-center mb-0">Selesai</span>
-                                        </div>
+                            </div>
+                            @else
+                            <div class="col-12 col-sm-4">
+                                <div class="info-box bg-success">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center">Finish</span>
+                                        <span class="info-box-number text-center mb-0">Selesai</span>
                                     </div>
                                 </div>
-                                @endif
+                            </div>
+                            @endif
                             @endif
                         </div>
                         <h3 class="text-primary"><i class="fas fa-edit"></i> Judul</h3>
                         @if($anggota->title === null)
-                            <span class=" badge badge-danger">Diperlukan</span>
+                        <span class=" badge badge-danger">Harus diisi sebelum mendaftar seminar!</span>
                         @else
                         <h5 class="text-muted font-weight-bold">{{$anggota->title}}</h5>
                         @endif
@@ -597,9 +690,9 @@
                                             </p>
                                             <p class="text-sm">Tanggal & Waktu
                                                 <b class="d-block">{{ $anggota->GroupProjectSchedule->day }}, {{ $anggota->GroupProjectSchedule->tanggal }}</b>
-                                                {{ Carbon\Carbon::parse($anggota->GroupProjectSchedule->time)->format('H:i') }}
+                                                {{ Carbon\Carbon::parse($anggota->GroupProjectSchedule->time)->isoFormat('H:mm') }}
                                                 -
-                                                {{ Carbon\Carbon::parse($anggota->GroupProjectSchedule->time_end)->format('H:i') }}
+                                                {{ Carbon\Carbon::parse($anggota->GroupProjectSchedule->time_end)->isoFormat('H:mm') }}
                                                 WITA
                                             </p>
                                         </div>
@@ -608,18 +701,22 @@
                                             @if($fck->role === "Ketua Penguji")
                                             <p class="text-sm">Ketua Penguji
                                                 <b class="d-block">{{$fck->Lecturer->name}}</b>
+                                                NIP. {{$fck->Lecturer->NIP}}
                                             </p>
                                             @elseif($fck->role === "Sekretaris")
                                             <p class="text-sm">Sekretaris
                                                 <b class="d-block">{{$fck->Lecturer->name}}</b>
+                                                NIP. {{$fck->Lecturer->NIP}}
                                             </p>
                                             @elseif($fck->role === "Penguji 1")
                                             <p class="text-sm">Penguji I
                                                 <b class="d-block">{{$fck->Lecturer->name}}</b>
+                                                NIP. {{$fck->Lecturer->NIP}}
                                             </p>
                                             @elseif($fck->role === "Penguji 2")
                                             <p class="text-sm">Penguji II
                                                 <b class="d-block">{{$fck->Lecturer->name}}</b>
+                                                NIP. {{$fck->Lecturer->NIP}}
                                             </p>
                                             @endif
                                             @endforeach
@@ -638,7 +735,7 @@
                                     </p>
                                     <p class="text-sm">Pembimbing Lapangan
                                         @if($anggota->field_supervisor === null)
-                                        <span class=" badge badge-danger">Diperlukan</span>
+                                        <span class=" badge badge-danger">Harus diisi sebelum mendaftar seminar!</span>
                                         @else
                                         <b class="d-block">{{$anggota->field_supervisor}}</b>
                                         @endif
@@ -657,7 +754,8 @@
                             <div class="col-6">
                                 <h5 class="text-muted">Pedoman</h5>
                                 <hr>
-                                <a href="http://ti.ft.ulm.ac.id/download/pedoman-pkl-pk-2019/" target="blank" class="btn btn-primary"><i class="far fa-fw fa-file"></i> Pedoman PKL dan PK</a>
+                                <a href="http://ti.ft.ulm.ac.id/daftar-unduhan/" target="blank"
+                                    class="btn btn-primary"><i class="far fa-fw fa-file"></i> Pedoman PKL dan PK</a>
                             </div>
                         </div>
                     </div>
@@ -705,7 +803,9 @@
                             <tbody>
                                 <tr>
                                     <td>Laporan PKL dan PK</td>
-                                    <td><a href="../berkas/laporan/{{$anggota->laporan}}" target="blank" class="btn btn-sm btn-primary float-right"><i class="fas fa-eye"></i></a></td>
+                                    <td><a href="../berkas/laporan/{{$anggota->laporan}}" target="blank"
+                                            class="btn btn-sm btn-primary float-right"><i class="fas fa-eye"></i></a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -730,69 +830,50 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <!-- <ul class="nav nav-tabs mb-2" id="tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="team-tab" data-toggle="pill" href="#team" role="tab" aria-controls="team" aria-selected="true">Mahasiswa</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="proyek-tab" data-toggle="pill" href="#proyek" role="tab" aria-controls="proyek" aria-selected="false">Proyek</a>
-                            </li>
-                        </ul> -->
-                        <!-- <div class="tab-content" id="tabContent"> -->
-                            <!-- <div class="tab-pane fade show active" id="team" role="tabpanel" aria-labelledby="team-tab">
-                                <form id="editTeam" name="editTeam" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" id="project_id">
-                                    <input type="hidden" id="_method" value="PUT" name="_method">
-                                    @php $kesay = 1 @endphp
-                                    @foreach($anggota->InternshipStudents as $kesy)
-                                    @csrf
-                                    <div class="row">
-                                        <div class="form-group col-6">
-                                            <label for="nim">NIM</label>
-                                            <input type="text" class="form-control" id="nim" name="nim" value="{{$kesy->nim}}" readonly>
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="nama">Nama</label>
-                                            <input type="text" class="form-control" id="nama" value="{{$kesy->name}}" readonly>
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="khs">Kartu Hasil Studi</label>
-                                            <input type="file" class="form-control-file" name="khs_{{$kesay}}" id="khs_{{$kesay}}">
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="transkrip">Transkrip</label>
-                                            <input type="file" class="form-control-file" name="transkrip_{{$kesay}}" id="transkrip_{{$kesay}}">
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="krs">Kartu Rencana Studi</label>
-                                            <input type="file" class="form-control-file" name="krs_{{$kesay}}" id="krs_{{$kesay}}">
-                                        </div>
-                                    </div>
-                                    @php $kesay++ @endphp
-                                    @endforeach
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
-                                    </div>
-                                </form>
-                            </div> -->
-                            <!-- <div class="tab-pane fade" id="proyek" role="tabpanel" aria-labelledby="proyek-tab"> -->
-                                <form id="formEdit" method="POST">
-                                    @csrf
-                                    <div class="form-group col-12">
-                                        <label for="judul">Judul</label>
-                                        <textarea rows="3" name="editJudul" id="editJudul" class="form-control" value="">{{$anggota->title}}</textarea>
-                                    </div>
-                                    <div class="form-group col-12">
-                                        <label for="pemLapangan">Pembimbing Lapangan</label>
-                                        <input type="text" name="editPemLapangan" id="editPemLapangan" class="form-control" value="{{$anggota->field_supervisor}}">
-                                    </div>
-                                    <input type="hidden" id="project_id" value="{{$anggota->id}}">
-                                    <input type="hidden" id="_method" value="PUT" name="_method">
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
-                                    </div>
-                                </form>
-                            <!-- </div> -->
+                        <form id="formEdit" method="POST">
+                            @csrf
+                            <div class="form-group col-12">
+                                <label for="judul">Judul</label>
+                                <textarea rows="3" name="editJudul" id="editJudul" class="form-control" required>{{$anggota->title}}</textarea>
+                            </div>
+                            <div class="form-group col-12">
+                                <hr>
+                                <h4>
+                                    Instansi
+                                </h4>
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="Instansi">Nama Instansi</label>
+                                <input type="text" name="editInstansi" id="editInstansi" class="form-control"
+                                    value="{{$anggota->Agency->agency_name}}" required>
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="pemLapangan">Pembimbing Lapangan</label>
+                                <input type="text" name="editPemLapangan" id="editPemLapangan" class="form-control"
+                                    value="{{$anggota->field_supervisor}}" required>
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="Bidang">Bidang Usaha Instansi</label>
+                                <input type="text" name="editBidang" id="editInstansi" class="form-control"
+                                    value="{{$anggota->Agency->sector}}" required>
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="alamat">Alamat Instansi</label>
+                                <input type="text" name="editAlamat" id="editAlamat" class="form-control"
+                                    value="{{$anggota->Agency->address}}" required>
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="kontak">Kontak Instansi</label>
+                                <input type="text" name="editKontak" id="editKontak" class="form-control"
+                                    value="{{$anggota->Agency->phone_number}}" required>
+                            </div>
+                            <input type="hidden" id="project_id" value="{{$anggota->id}}">
+                            <input type="hidden" id="_method" value="PUT" name="_method">
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
+                        <!-- </div> -->
                         <!-- </div> -->
                     </div>
                 </div>
@@ -802,7 +883,8 @@
         <div class="modal fade" id="submit" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="daftarSeminar" name="daftarSeminar" method="POST" enctype="multipart/form-data">
+                    <form action="daftarSeminar/{{$anggota->id}}/edit" id="daftarSeminar" name="daftarSeminar" method="POST" enctype="multipart/form-data">
+                            @csrf
                         <div class="modal-header">
                             <h5 class="modal-title">
                                 <i class="fas fa-paper-plane mr-1"></i>
@@ -822,7 +904,8 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="bimbinganPK">Lembar Bimbingan PK</label>
-                                    <input type="file" class="form-control-file" name="bimbinganPK" id="bimbinganPK" required>
+                                    <input type="file" class="form-control-file" name="bimbinganPK" id="bimbinganPK"
+                                        required>
                                 </div>
                                 <!-- <div class="form-group col-6">
                                     <label for="kak">Kerangka Acuan Kerja</label>
@@ -838,35 +921,40 @@
                                 Anggota
                             </h6>
                             @foreach($anggota->InternshipStudents as $key => $anggota)
-                            @csrf
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="nim">NIM</label>
-                                    <input type="text" class="form-control" id="nim" name="nim" value="{{$anggota->nim}}" readonly>
+                                    <input type="text" class="form-control" id="nim" name="nim"
+                                        value="{{$anggota->nim}}" readonly>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" id="nama" value="{{$anggota->name}}" readonly>
+                                    <input type="text" class="form-control" id="nama" value="{{$anggota->name}}"
+                                        readonly>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="nilaiPKL">Kartu Rencana Studi</label>
                                     @if ($key === 0) @endif
-                                    <input type="file" class="form-control-file" name="krs_{{$key+1}}" id="krs_{{$key+1}}" required>
+                                    <input type="file" class="form-control-file" name="krs_{{$key+1}}"
+                                        id="krs_{{$key+1}}" required>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="nilaiPKL">Lembar Penilaian PKL</label>
                                     @if ($key === 0) @endif
-                                    <input type="file" class="form-control-file" name="nilaiPKL_{{$key+1}}" id="nilaiPKL_{{$key+1}}" required>
+                                    <input type="file" class="form-control-file" name="nilaiPKL_{{$key+1}}"
+                                        id="nilaiPKL_{{$key+1}}" required>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="sertifikat">Sertifikat Kehadiran Seminar</label>
                                     @if ($key === 0) @endif
-                                    <input type="file" class="form-control-file" name="sertifikat_{{$key+1}}" id="sertifikat_{{$key+1}}" required>
+                                    <input type="file" class="form-control-file" name="sertifikat_{{$key+1}}"
+                                        id="sertifikat_{{$key+1}}" required>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="bimbingPKL">Lembar Bimbingan PKL Lapangan</label>
                                     @if ($key === 0) @endif
-                                    <input type="file" class="form-control-file" name="bimbingPKL_{{$key+1}}" id="bimbingPKL_{{$key+1}}" required>
+                                    <input type="file" class="form-control-file" name="bimbingPKL_{{$key+1}}"
+                                        id="bimbingPKL_{{$key+1}}" required>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="sertifikatLkmm">Sertifikat LKMM</label>
@@ -955,10 +1043,14 @@
                     status: 'A'
                 }
             })
-            .done(function(data) {
+            .done(function (data) {
                 $('#nama-' + i).val(data.name);
                 $('#ipk-' + i).val(data.ipk);
                 $('#sks-' + i).val(data.sks_total);
+
+                $('#nim-' + i).removeClass("is-invalid");
+                $('#ipk-' + i).removeClass("is-invalid");
+                $('#sks-' + i).removeClass("is-invalid");
 
                 if (data.name === undefined) {
                     $('#nim-' + i).addClass("is-invalid");
@@ -980,18 +1072,18 @@
 
                 }
 
-            }).fail(function() {
+            }).fail(function () {
                 alert("Error");
             });
     }
 
-    $(".nav-tabs").on("click", "a", function(e) {
+    $(".nav-tabs").on("click", "a", function (e) {
             e.preventDefault();
             if (!$(this).hasClass('add-mahasiswa')) {
                 $(this).tab('show');
             }
         })
-        .on("click", "span", function() {
+        .on("click", "span", function () {
             var anchor = $(this).siblings('a');
             $(anchor.attr('href')).remove();
             $(this).parent().remove();
@@ -999,7 +1091,7 @@
             $('.add-mahasiswa').removeClass('disabled');
         });
 
-    $('.add-mahasiswa').click(function(e) {
+    $('.add-mahasiswa').click(function (e) {
         e.preventDefault();
 
         const addMahasiswa = `
@@ -1097,12 +1189,12 @@
 
         $('.select2').select2();
     });
-    $('#tools').on('click', '.project-edit', function() {
+    $('#tools').on('click', '.project-edit', function () {
         let id = $(this).attr('id');
         $('#project-edit').modal('show');
     });
 
-    $('#formEdit').submit(function(e) {
+    $('#formEdit').submit(function (e) {
         e.preventDefault();
 
         var request = new FormData(this);
@@ -1115,7 +1207,7 @@
             contentType: false,
             cache: false,
             processData: false,
-            success: function(data) {
+            success: function (data) {
                 if (data == "success") {
                     $('#modalSuccess').modal();
                     $('#formEdit')[0].reset();
@@ -1125,10 +1217,10 @@
                     $('#modalFailed').modal();
                 }
             },
-            error: function(data) {
+            error: function (data) {
                 $("small").remove(".text-danger");
                 $("input").removeClass("is-invalid");
-                $.each(data.responseJSON.errors, function(key, value) {
+                $.each(data.responseJSON.errors, function (key, value) {
                     $('#' + key + '').addClass('is-invalid');
                     $('#' + key + '').after('<small class="text-danger">' + value +
                         '</small>')
@@ -1136,7 +1228,7 @@
             }
         })
     });
-    $('#uploadLaporan').submit(function(e) {
+    $('#uploadLaporan').submit(function (e) {
         e.preventDefault();
 
         var request = new FormData(this);
@@ -1149,7 +1241,7 @@
             contentType: false,
             cache: false,
             processData: false,
-            success: function(data) {
+            success: function (data) {
                 if (data == "success") {
                     $('#modalSuccess').modal();
                     $('#uploadLaporan')[0].reset();
@@ -1159,10 +1251,10 @@
                     $('#modalFailed').modal();
                 }
             },
-            error: function(data) {
+            error: function (data) {
                 $("small").remove(".text-danger");
                 $("input").removeClass("is-invalid");
-                $.each(data.responseJSON.errors, function(key, value) {
+                $.each(data.responseJSON.errors, function (key, value) {
                     $('#' + key + '').addClass('is-invalid');
                     $('#' + key + '').after('<small class="text-danger">' + value +
                         '</small>')
@@ -1171,58 +1263,24 @@
         })
     });
 
-    $('#tools').on('click', '.daftarSem', function() {
+    $('#tools').on('click', '.daftarSem', function () {
         let id = $(this).attr('id');
         $('#submit').modal('show');
         $.ajax({
             url: "getVerif/" + id,
-            success: function(result) {
+            success: function (result) {
                 $('#is_verified').val(result.data.is_verified)
                 $('#project_id').val(result.data.id)
             }
         })
 
     });
-
-    $('#daftarSeminar').submit(function(e) {
-        e.preventDefault();
-
-        var request = new FormData(this);
-
-        const id = $('#project_id').val();
-        $.ajax({
-            url: "daftarSeminar/" + id + "/edit",
-            method: "POST",
-            data: request,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data) {
-                if (data == "success") {
-                    $('#modalSuccess').modal();
-                    $('#daftarSeminar')[0].reset();
-                    $('#submit').modal('hide');
-                    location.reload();
-
-                } else {
-                    $('#modalFailed').modal();
-                }
-            },
-            error: function(data) {
-                $("small").remove(".text-danger");
-                $("input").removeClass("is-invalid");
-                $.each(data.responseJSON.errors, function(key, value) {
-                    $('#' + key + '').addClass('is-invalid');
-                    $('#' + key + '').after('<small class="text-danger">' + value +
-                        '</small>')
-                });
-            }
-        })
-    });
+    
     $("#laporan").click(function(e) {
         e.preventDefault();
         $("#modalLaporan").modal();
     });
+
 </script>
 
 @endsection

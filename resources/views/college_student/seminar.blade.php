@@ -5,7 +5,7 @@
 <section class="content">
     <div class="container-fluid">
         <h5 class="py-2">Seminar</h5>
-        <div class="card card-primary">
+        <div class="card card-warning">
             <div class="card-header">
                 <h5 class="card-title">
                     <i class="fas fa-calendar-alt mr-1"></i>
@@ -21,7 +21,7 @@
                             <th>Instansi</th>
                             <th width='20%'>Kelompok</th>
                             <th>Kuota Pengamat</th>
-                            <th width='10%'>Tindakan</th>
+                            <th width='10%'>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,7 +29,7 @@
                         @foreach ($seminar as $s)
                         <tr>
                             <td>
-                                <b>{{ $s->GroupProjectSchedule->tanggal }}</b><br>
+                                <b>{{ Carbon\Carbon::parse($s->GroupProjectSchedule->date)->isoFormat('D MMMM Y') }}</b><br>
                                 <small>
                                     {{ $s->GroupProjectSchedule->place }}<br>
                                     {{ Carbon\Carbon::parse($s->GroupProjectSchedule->time)->isoFormat('HH:mm') }} -

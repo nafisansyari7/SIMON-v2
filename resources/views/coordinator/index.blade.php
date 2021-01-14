@@ -57,15 +57,15 @@
                             <td>
                                 @if ($r->status == 1)
                                 <button onclick="openModalLihat(['{{ $r->id }}', '{{ $r->InternshipStudent->name }}', '{{ $r->InternshipStudent->nim }}', '{{ $r->InternshipStudent->User->image_profile }}'])"
-                                    class="btn btn-primary ml-1 mr-1"><i class="fas fa-user-circle"></i></button>
+                                    class="btn btn-primary"><i class="fas fa-user-circle"></i></button>
                                 <button onclick="openModalBatal('{{ $r->id }}')"
                                     class="btn btn-warning ml-1 mr-1"><i class="fas fa-stop-circle"></i></button>
                                 @endif
                                 <button
-                                    onclick="openModalEdit(['{{ $r->id }}', '{{ $r->description }}', '{{ $r->agency }}'])"
-                                    class="btn btn-secondary ml-1 mr-1"><i class="fas fa-edit"></i></button>
+                                    onclick="openModalEdit(['{{ $r->id }}', '{{ $r->description }}', '{{ $r->agency }}', '{{ $r->Lecturer->id }}'])"
+                                    class="btn btn-secondary mr-1"><i class="fas fa-edit"></i></button>
                                 <button onclick="openModalDelete('{{ $r->id }}')"
-                                    class="btn btn-danger ml-1 mr-1"><i class="fas fa-trash"></i></button>
+                                    class="btn btn-danger"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                         @endforeach
@@ -176,7 +176,6 @@
                     <div class="form-group">
                         <label>Dosen Pembimbing</label>
                         <select name="supervisor" id="editSupervisor" class="form-control" style="width: 100%;">
-                            <option value="">Pilih Dosen</option>
                             @foreach($lecture as $lecturer)
                             <option class="editLecturer" value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
                             @endforeach
@@ -252,11 +251,12 @@
         "processing": true,
     });
 
-    function openModalEdit([id, desc, agency]) {
+    function openModalEdit([id, desc, agency, lectureId]) {
         $('#modalEdit').modal('show');
         $('#rekId').val(id);
         $('#editDeskripsi').val(desc);
-        $('#editInstansi').val(agency)
+        $('#editInstansi').val(agency);
+        $('#editSupervisor').val(lectureId)
     }
 
     function openModalDelete(id) {

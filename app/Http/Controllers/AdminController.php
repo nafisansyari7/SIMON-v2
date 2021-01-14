@@ -33,7 +33,6 @@ class adminController extends Controller
 
     public function save(Request $request)
     {
-
         $this->validate(
             $request,
             [
@@ -141,7 +140,7 @@ class adminController extends Controller
         return response()->json(['data' => $verified]);
     }
 
-    public function import()
+    public function import(Request $request)
     {
         $collegeStudent = InternshipStudent::orderby('created_at', 'desc')->first();
 
@@ -150,9 +149,9 @@ class adminController extends Controller
         if (is_null($collegeStudent)) {
             $numberOfBatch = 1;
         } else {
-            $numberOfBatch = $collegeStudent->batch + 1;
+            $numberOfBatch = $collegeStudent;
         }
-        Excel::import(new StudentsImport($numberOfBatch), request()->file('file'));
+        Excel::import(new StudentsImport($numberOfBatch), request()->file('select_file'));
 
         return back();
     }

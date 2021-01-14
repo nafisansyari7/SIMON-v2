@@ -39,7 +39,7 @@ class GroupProjectSchedule extends Model
     {
         return $this->formatDate(Carbon::parse($this->date));
     }
-    public function InternshipStudentGroupProjectsSchedule() {
-        return $this->hasMany(InternshipStudentGroupProjectsSchedule::class);
+    public function Observer() {
+        return $this->hasMany(Observer::class);
     }
 }

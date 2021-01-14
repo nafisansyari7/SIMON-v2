@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GroupProject extends Model
 {
+    protected $guarded = ['id'];
     protected $fillable = [
         'start_intern', 'end_intern', 'agency_id'
     ];

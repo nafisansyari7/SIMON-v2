@@ -18,9 +18,12 @@
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <a href="#">
-        <b>S</b>IMON PKL-PK
-      </a>
+      <div class="text-center">
+        <img src="/public/image/profile.png"><br>
+        <a href="#">
+          <b>S</b>IMON PKL-PK
+        </a>
+      </div>
     </div>
     <div class="card card-primary">
       <div class="card-header">

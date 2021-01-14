@@ -103,6 +103,8 @@ class CoordinatorController extends Controller
         foreach ($groupProject->InternshipStudents as $udin) {
             InternshipStudentJobdesc::whereInternshipStudentId($udin->id)->delete();
             File::whereInternshipStudentId($udin->id)->delete();
+            $udin->status = "A";
+            $udin->update();
         }
 
         $groupProject->delete();
@@ -127,8 +129,9 @@ class CoordinatorController extends Controller
 
     public function getSupervisor($id)
     {
-        $groupProject = GroupProject::with('GroupProjectSupervisor')->findOrFail($id);
-        return response()->json(['data' => $groupProject]);
+        $groupProject = GroupProject::with('GroupProjectSupervisor.Lecturer')->findOrFail($id);
+        $dosen = Lecturer::get();
+        return response()->json(['data' => $groupProject, 'dosen' => $dosen]);
     }
 
     public function updateSupervisor(Request $request, $id)

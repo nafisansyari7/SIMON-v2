@@ -13,7 +13,7 @@
                     Verifikasi Pendaftaran
                 </h3>
             </div>
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table id="reg_sem" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
@@ -198,6 +198,8 @@
                     <tbody>
                     </tbody>
                 </table>
+            </div>            
+            <div class="modal-footer absen">
             </div>
         </div>
     </div>
@@ -245,11 +247,8 @@
                     </div>
                     <div class="form-group">
                         <label>Ketua Penguji</label>
-                        <select id="examiner_1" name="examiner_1[lecturer_id]" class="form-control">
-                            @foreach($examiner as $lecturer)
-                            <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
-                            @endforeach
-                        </select>
+                        <input type="text" class="form-control" id="examiner_1" value="" disabled>
+                        <input type="hidden" class="form-control" id="examiner_1_id" name="examiner_1[lecturer_id]" value="">
                         <input type="hidden" id="examiner_role_1" name="examiner_1[role]" value="Ketua Penguji">
                     </div>
                     <div class="form-group">
@@ -272,9 +271,11 @@
                     </div>
                     <div class="form-group">
                         <label>Penguji II</label>
-                        <input type="text" class="form-control" id="examiner_4" value="" disabled>
-                        <input type="hidden" class="form-control" id="examiner_4_id" name="examiner_4[lecturer_id]"
-                            value="">
+                        <select id="examiner_4" name="examiner_4[lecturer_id]" class="form-control">
+                            @foreach($examiner as $lecturer)
+                            <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
+                            @endforeach
+                        </select>
                         <input type="hidden" id="examiner_role_4" name="examiner_4[role]" value="Penguji 2">
                     </div>
             </div>
@@ -348,35 +349,35 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Ketua Penguji</label>
-                        <select id="editExaminer_1" name="editExaminerId_1" class="form-control">
-                            @foreach($examiner as $lecturer)
-                            <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Sekretaris</label>
-                        <select id="editExaminer_2" name="editExaminerId_2" class="form-control">
-                            @foreach($examiner as $lecturer)
-                            <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Penguji I</label>
-                        <select id="editExaminer_3" name="editExaminerId_3" class="form-control">
-                            @foreach($examiner as $lecturer)
-                            <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Penguji II</label>
-                        <input type="text" class="form-control" id="editExaminer_4" value="" disabled>
-                        <input type="hidden" class="form-control" id="editExaminer_4_id" value="" disabled>
-                    </div>
+                <div class="form-group">
+                    <label>Ketua Penguji</label>
+                    <input type="text" class="form-control" id="editExaminer_1" value="" disabled>
+                    <input type="hidden" class="form-control" id="editExaminer_1_id" value="" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Sekretaris</label>
+                    <select id="editExaminer_2" name="editExaminerId_2" class="form-control">
+                        @foreach($examiner as $lecturer)
+                        <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Penguji I</label>
+                    <select id="editExaminer_3" name="editExaminerId_3" class="form-control">
+                        @foreach($examiner as $lecturer)
+                        <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Penguji II</label>
+                    <select id="editExaminer_4" name="editExaminerId_4" class="form-control">
+                        @foreach($examiner as $lecturer)
+                        <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary float-right">Simpan</button>
@@ -395,7 +396,7 @@
         <input type="hidden" name="is_verified" id="is_done" value="">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-success">
                     <h5 class="modal-title">
                         <i class="fas fa-check mr-1"></i>
                         Konfirmasi
@@ -406,6 +407,7 @@
                 </div>
                 <div class="modal-body">
                     <p>Seminar Proyek Kelompok telah selesai?</p>
+                    <small><strong>*jika yakin, maka daftar hadir penonton tidak bisa diubah lagi.</strong></small>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success float-right">Selesai</button>
@@ -452,6 +454,42 @@
         </div>
     </div>
 </div>
+
+<!-- Batal modal -->
+<div class="modal fade" id="batal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title">
+                    Konfirmasi Kehadiran Mahasiswa
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Apa benar mahasiswa yang bersangkutan tidak hadir?<br><br>
+                    <form action="batalHadir" id="pengamat" method="POST">
+                        @csrf
+                        <div class="form-group col-12">
+                            <div class="row">
+                                <div class="col-9">
+                                    <input name="internship_student_id" type="hidden"
+                                        value="" class="form-control" id="internship_student_id">
+                                    <input type="hidden" name="groupProject" id="group_batal" value="">
+                                </div>
+                            </div>
+                        </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button id="tombol_hide" type="submit" class="btn btn-danger float-right">Yakin</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
 @section('ajax')
 <script>
@@ -555,17 +593,17 @@
             }
         })
     });
-    $('#reg_sem tbody').on('click', '.terima', function () {
+    $('#reg_sem tbody').on('click', '.terima', function() {
         let id = $(this).attr('id')
         $('#accept').modal('show');
 
         $.ajax({
             url: "../koor/terimaSeminar/" + id,
-            success: function (result) {
+            success: function(result) {
                 $('#is_verified').val(result.data.is_verified)
                 $('#groupProject_id').val(result.data.id)
-                $('#examiner_4').val(result.data.group_project_supervisor.lecturer.name)
-                $('#examiner_4_id').val(result.data.group_project_supervisor.lecturer_id)
+                $('#examiner_1').val(result.data.group_project_supervisor.lecturer.name)
+                $('#examiner_1_id').val(result.data.group_project_supervisor.lecturer_id)
             }
         })
     });
@@ -682,7 +720,8 @@
             {
                 sortable: false,
                 "render": function (data, type, full, meta) {
-                    return full.group_project_schedule.quota
+                    let kuota = full.group_project_schedule.quota
+                    return kuota
                 }
             },
             {
@@ -776,25 +815,33 @@
     $('#seminar tbody').on('click', '.observer', function () {
         let id = $(this).attr('id')
         $('#observer').modal('show');
-
+        
         $.ajax({
             url: "../koor/observer/" + id,
             success: function (result) {
                 $('#observer tbody').html('')
+                $('.absen').html('')
                 let modal = ''
-                let absen = '<a href="../koor/absen/'+id+'" class="btn btn-sm btn-primary float-right"><i class="fas fa-print"></i> Daftar Hadir</a>'
-
-                $('.modal-body').append(absen)
+                let absen = '<a href="../koor/absen/'+id+'" target="_blank" class="btn btn-sm btn-primary float-right"><i class="fas fa-print"></i> Daftar Hadir</a>'
+                
                 result.data.forEach(function (i) {
+                    let mhsId = i.id
                     modal = '<tr><td>' + i.nim + '</td>' +
-                        '<td>' + i.name + '</td>' +
-                        '<td><a href="#" class="d-inline-block btn btn-sm btn-success mr-1" target="blank"><i class="fas fa-print"></i> Sertifikat</a></td></tr>'
-
+                    '<td>' + i.name + '</td>' +
+                    '<td><button onclick="openModalBatal(['+mhsId+', '+id+'])" class="d-inline-block btn btn-danger mr-1" title="Tidak Hadir"><i class="fas fa-times"></i></button></td></tr>'
+                    
                     $('#observer tbody').append(modal)
                 });
+                $('.absen').append(absen)
             }
         })
     });
+
+    function openModalBatal([mhsId, id]) {
+        $('#batal').modal();
+        $('#internship_student_id').val(mhsId)
+        $('#group_batal').val(id)
+    }
 
     $('#seminar tbody').on('click', '.edit', function () {
         let id = $(this).attr('id');
@@ -810,18 +857,18 @@
                 $('#editStart').val(result.data.group_project_schedule.time)
                 $('#editEnd').val(result.data.group_project_schedule.time_end)
                 $('#editKuota').val(result.data.group_project_schedule.quota)
-                result.examiner.forEach(function (examiner) {
+                result.examiner.forEach(function(examiner) {
                     let role = examiner.role;
-                    if (role === "Ketua Penguji") {
-                        $('#editExaminer_1').val(examiner.lecturer.id);
-                    } else if (role === "Sekretaris") {
+                    if (role === "Sekretaris") {
                         $('#editExaminer_2').val(examiner.lecturer.id);
                     } else if (role === "Penguji 1") {
                         $('#editExaminer_3').val(examiner.lecturer.id);
+                    } else if (role === "Penguji 2") {
+                        $('#editExaminer_4').val(examiner.lecturer.id);
                     }
                 })
-                $('#editExaminer_4').val(result.data.group_project_supervisor.lecturer.name)
-                $('#editExaminer_4_id').val(result.data.group_project_supervisor.lecturer_id)
+                $('#editExaminer_1').val(result.data.group_project_supervisor.lecturer.name)
+                $('#editExaminer_1_id').val(result.data.group_project_supervisor.lecturer_id)
             }
         })
     });
