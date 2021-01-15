@@ -126,7 +126,7 @@ class AgendaController extends Controller
         }
         else{
             echo '<script type="text/javascript">
-            alert("Error! Kuota sudah terpenuhi.");
+            alert("Pendaftaran Gagal! Kuota sudah terpenuhi.");
             window.location.href="/mahasiswa/seminar";</script>';
         }
     }

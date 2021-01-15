@@ -114,8 +114,8 @@ class GroupProjectNewsReportController extends Controller
      * @param  \App\GroupProjectNewsReport  $groupProjectNewsReport
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GroupProjectNewsReport $groupProjectNewsReport)
+    public function destroy($id)
     {
-        //
+        GroupProject::find($id)->increment('is_verified');
     }
 }

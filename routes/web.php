@@ -88,6 +88,7 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
         Route::put('isDone/{id}/edit', 'SeminarController@isDone');
         Route::get('newsReport/{id}', 'GroupProjectNewsReportController@get');
         Route::put('newsReport/{id}/edit', 'GroupProjectNewsReportController@store');
+        Route::delete('newsReport/{id}/delete', 'GroupProjectNewsReportController@destroy');
         Route::get('exportExcel', 'GroupProjectController@export');
         Route::get('observer/{id}', 'AgendaController@show');
         Route::get('absen/{id}', 'AgendaController@absen')->name('absen-seminar');
@@ -132,6 +133,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function() {
         });
     });
         // user
+    Route::get('downloads', 'DownloadController@index')->name('download-list');
+    Route::post('downloads/store', 'DownloadController@store');
+    Route::delete('downloads/deleteDownloads/{id}', 'DownloadController@destroy');
+
     Route::get('profil', 'ProfileController@index')->name('profil');
     Route::post('profilUpdate/{id}', 'ProfileController@store');
     Route::get('changePassword', 'PasswordController@index');

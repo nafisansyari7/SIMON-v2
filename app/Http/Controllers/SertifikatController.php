@@ -24,7 +24,7 @@ class SertifikatController extends Controller
             $ccd->with('Lecturer');
         }, 'InternshipStudents' => function ($abc) {
             $abc->with('User');
-        }])->where('is_verified', '4')->get();
+        }])->where('is_verified', '>=', '4')->get();
         // dd($student);
 
         return view('college_student.watched', compact('student'));

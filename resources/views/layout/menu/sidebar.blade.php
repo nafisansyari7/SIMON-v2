@@ -141,6 +141,13 @@
           </a>
         </li>
         @endif
+        <li class="nav-header font-weight-bold">Lainnya</li>
+        <li class="nav-item">
+        <a href="{{ url ('downloads') }}" class="{{(request()->is('downloads')) ? 'active' : ''}} nav-link">
+            <i class="nav-icon fas fa-cloud-download-alt"></i>
+              Unduhan
+          </a>
+        </li>
         <li class="nav-header font-weight-bold">Profil</li>
         <li class="nav-item">
         <a href="{{ url ('profil') }}" class="{{(request()->is('profil')) ? 'active' : ''}} nav-link">

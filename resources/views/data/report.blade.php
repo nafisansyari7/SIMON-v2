@@ -277,7 +277,7 @@
                     } else if ((full.report !== null) && (full.laporan === null)) {
                         return '<span class="badge badge-success p-2 m-1">Berita Acara Tersedia</span><span class="badge badge-danger p-2 m-1">Laporan Belum Dikumpul</span>'
                     } else if ((full.report === null) && (full.laporan !== null)) {
-                        return '<span class="badge badge-danger p-2 m-1">Berita Acara Belum Tersedia</span><span class="badge badge-danger p-2 m-1">Laporan Sudah Dikumpul</span>'
+                        return '<span class="badge badge-danger p-2 m-1">Berita Acara Belum Tersedia</span><span class="badge badge-sucess p-2 m-1">Laporan Sudah Dikumpul</span>'
                     } else if ((full.report !== null) && (full.laporan !== null)) {
                         return '<span class="badge badge-success p-2 m-1">Berita Acara Tersedia</span><span class="badge badge-success p-2 m-1">Laporan Sudah Dikumpul</span>'
                     }

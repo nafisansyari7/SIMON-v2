@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\GroupProject;
 use App\Lecturer;
+use App\Observer;
 use App\GroupProjectSchedule;
 use App\GroupProjectExaminer;
 use App\GroupProjectSupervisor;
@@ -75,6 +76,7 @@ class SeminarController extends Controller
         $verified = GroupProject::with(['Agency', 'GroupProjectSchedule', 'InternshipStudents' => function ($abc) {
             $abc->with('User');
         }])->where('is_verified', '3')->get();
+        
         return response()->json(['data' => $verified]);
         
     }

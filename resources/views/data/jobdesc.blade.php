@@ -248,7 +248,7 @@
         Swal.fire({
             title: 'Yakin ingin menghapus data?',
             text: "Data ini akan dihapus",
-            icon: 'warning',
+            type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -273,7 +273,7 @@
                         Swal.fire(
                                 'Deleted!',
                                 'Telah Dihapus',
-                                'Success'
+                                'success'
                             )
                             .then(function() {
                                 $('#jobdesc').DataTable().ajax.reload();

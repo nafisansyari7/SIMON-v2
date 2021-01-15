@@ -321,7 +321,7 @@
                     } else if ((full.report !== null) && (full.laporan === null)) {
                         return '<span class="badge badge-success p-2 m-1">Berita Acara Tersedia</span><span class="badge badge-danger p-2 m-1">Laporan Belum Dikumpul</span>'
                     } else if ((full.report === null) && (full.laporan !== null)) {
-                        return '<span class="badge badge-danger p-2 m-1">Berita Acara Belum Tersedia</span><span class="badge badge-danger p-2 m-1">Laporan Sudah Dikumpul</span>'
+                        return '<span class="badge badge-danger p-2 m-1">Berita Acara Belum Tersedia</span><span class="badge badge-success p-2 m-1">Laporan Sudah Dikumpul</span>'
                     } else if ((full.report !== null) && (full.laporan !== null)) {
                         return '<span class="badge badge-success p-2 m-1">Berita Acara Tersedia</span><span class="badge badge-success p-2 m-1">Laporan Sudah Dikumpul</span>'
                     }
@@ -336,7 +336,9 @@
                         '<button id="' + buttonId +
                         '" class="btn btn-info observer" title="Menghadiri"><i class="fas fa-users"></i></button>' +
                         '<button id="' + buttonId +
-                        '" class="btn btn-success news-report mx-1" title="Berita Acara"><i class="fas fa-file-alt"></i></button>'
+                        '" class="btn btn-success news-report mx-1" title="Berita Acara"><i class="fas fa-file-alt"></i></button>' +
+                        '<button id="' + buttonId +
+                        '" class="btn btn-danger delete" title="Hapus"><i class="fas fa-trash"></i></button>'
                 }
             }
         ]
@@ -504,6 +506,50 @@
         var nextSibling = e.target.nextElementSibling
         nextSibling.innerText = fileName
     })
+
+    
+    $('#report tbody').on('click', '.delete', function() {
+        let id = $(this).attr('id');
+        var token = $("meta[name='csrf-token']").attr("content");
+        Swal.fire({
+            title: 'Yakin ingin menghapus data?',
+            text: "Data ini akan dihapus",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire({
+                    title: 'Loading',
+                    timer: 60000,
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
+                $.ajax({
+                    url: "newsReport/" + id + "/delete",
+                    method: "POST",
+                    data: {
+                        _method: "DELETE",
+                        "_token": token,
+                    },
+                    success: function() {
+                        Swal.fire(
+                                'Deleted!',
+                                'Telah Dihapus',
+                                'success'
+                            )
+                            .then(function() {
+                                $('#report').DataTable().ajax.reload();
+                            }
+                        )
+                    }
+                })
+            }
+        })
+    });
 
 </script>
 @endsection

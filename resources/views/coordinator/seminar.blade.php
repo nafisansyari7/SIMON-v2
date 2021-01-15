@@ -613,7 +613,7 @@
         Swal.fire({
             title: 'Yakin ingin menolak pendaftaran seminar Proyek Kelompok?',
             text: "Data ini akan dihapus",
-            icon: 'warning',
+            type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -638,7 +638,7 @@
                         Swal.fire(
                                 'Deleted!',
                                 'Telah Dihapus',
-                                'Success'
+                                'success'
                             )
                             .then(function () {
                                 $('#reg_sem').DataTable().ajax.reload();

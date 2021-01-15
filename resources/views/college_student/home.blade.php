@@ -419,9 +419,6 @@
                 <div class="col-12">
                     <input href="#reg" type="button" value="Daftarkan Kelompok" class="btn btn-primary float-right"
                         data-toggle="modal">
-                    <a href="http://ti.ft.ulm.ac.id/daftar-unduhan/" target="blank"
-                        class="btn btn-secondary float-right mr-1"><i class="far fa-fw fa-file"></i> Pedoman PKL dan
-                        PK</a>
                 </div>
             </div>
             <!-- Deskripsi Jobdesk -->
@@ -502,15 +499,14 @@
                             <i class="fas fa-user-friends mr-1"></i>
                             Kelompok
                         </h3>
-                        @if(Auth::user()->isVerifiedGroupProject() != 4)
+                        @if(Auth::user()->isVerifiedGroupProject() < 4)
                         <div class="card-tools">
                             <a href="groupEdit/{{ $anggota->id }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
                         </div>
                         @endif
                     </div>
                     <div class="card-body">
-                        @if((Auth::user()->isVerifiedGroupProject() !== null) && (Auth::user()->isVerifiedGroupProject()
-                        !== 0))
+                        @if(Auth::user()->isVerifiedGroupProject() >= 1)
                         <div class="text-center">
                             <img src="/public/image/training.png" class="w-50">
                             <h2 class="lead"><b>{{$anggota->GroupProjectSupervisor->Lecturer->name}}</b></h2>
@@ -550,7 +546,7 @@
                             <button type="button" class="btn btn-primary btn-sm project-edit" data-toggle="modal">Edit
                                 Detail Proyek</button>
                             @endif
-                            @if((Auth::user()->isVerifiedGroupProject() === 4) &&
+                            @if((Auth::user()->isVerifiedGroupProject() >= 4) &&
                             ($anggota->laporan === null))
                             @if ($anggota->report !== null)
                             <a href="../berkas/berita/{{ $anggota->report }}" target="blank"
@@ -560,7 +556,7 @@
                                 <i class="fas fa-upload mr-1"></i>
                                 Upload Laporan
                             </button>
-                            @elseif((Auth::user()->isVerifiedGroupProject() === 4) &&
+                            @elseif((Auth::user()->isVerifiedGroupProject() >= 4) &&
                             ($anggota->laporan !== null))
                             @if ($anggota->report !== null)
                             <a href="../berkas/berita/{{ $anggota->report }}" target="blank"
@@ -677,9 +673,33 @@
                         @endif
                         <br><br>
                         <div class="row">
-                            @if(Auth::user()->isVerifiedGroupProject() === 3 || Auth::user()->isVerifiedGroupProject()
-                            === 4)
-                            <div class="col-12">
+                            <div class="col-5">
+                                <h5 class="text-muted">Instansi</h5>
+                                <hr>
+                                <div class="text-muted">
+                                    <p class="text-sm">Nama Instansi
+                                        <b class="d-block">{{$anggota->Agency->agency_name}}</b>
+                                    </p>
+                                    <p class="text-sm">Pembimbing Lapangan
+                                        @if($anggota->field_supervisor === null)
+                                        <span class=" badge badge-danger">Harus diisi sebelum mendaftar seminar!</span>
+                                        @else
+                                        <b class="d-block">{{$anggota->field_supervisor}}</b>
+                                        @endif
+                                    </p>
+                                    <p class="text-sm">Bidang
+                                        <b class="d-block">{{$anggota->Agency->sector}}</b>
+                                    </p>
+                                    <p class="text-sm">Alamat
+                                        <b class="d-block">{{$anggota->Agency->address}}</b>
+                                    </p>
+                                    <p class="text-sm">No. Hp/Telpon
+                                        <b class="d-block">{{$anggota->Agency->phone_number}}</b>
+                                    </p>
+                                </div>
+                            </div>
+                            @if(Auth::user()->isVerifiedGroupProject() >= 3)
+                            <div class="col-7">
                                 <h5 class="text-muted">Seminar</h5>
                                 <hr>
                                 <div class="text-muted">
@@ -726,37 +746,6 @@
                                 <br>
                             </div>
                             @endif
-                            <div class="col-6">
-                                <h5 class="text-muted">Instansi</h5>
-                                <hr>
-                                <div class="text-muted">
-                                    <p class="text-sm">Nama Instansi
-                                        <b class="d-block">{{$anggota->Agency->agency_name}}</b>
-                                    </p>
-                                    <p class="text-sm">Pembimbing Lapangan
-                                        @if($anggota->field_supervisor === null)
-                                        <span class=" badge badge-danger">Harus diisi sebelum mendaftar seminar!</span>
-                                        @else
-                                        <b class="d-block">{{$anggota->field_supervisor}}</b>
-                                        @endif
-                                    </p>
-                                    <p class="text-sm">Bidang
-                                        <b class="d-block">{{$anggota->Agency->sector}}</b>
-                                    </p>
-                                    <p class="text-sm">Alamat
-                                        <b class="d-block">{{$anggota->Agency->address}}</b>
-                                    </p>
-                                    <p class="text-sm">No. Hp/Telpon
-                                        <b class="d-block">{{$anggota->Agency->phone_number}}</b>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <h5 class="text-muted">Pedoman</h5>
-                                <hr>
-                                <a href="http://ti.ft.ulm.ac.id/daftar-unduhan/" target="blank"
-                                    class="btn btn-primary"><i class="far fa-fw fa-file"></i> Pedoman PKL dan PK</a>
-                            </div>
                         </div>
                     </div>
                     <div class="card-footer">
