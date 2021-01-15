@@ -56,25 +56,25 @@
                             </td>
                             <td>
                                 @if($gua[$j] == 0)
-                                @if($peserta[$j] < $s->GroupProjectSchedule->quota)
-                                    @if ($pengamat[$j] == 0)
-                                    <button onclick="openModalHadir('{{ $s->id }}')"
-                                        class="btn btn-sm btn-success hadiri ml-1 mr-1">Hadiri</button>
+                                    @if($peserta[$j] < $s->GroupProjectSchedule->quota)
+                                        @if ($pengamat[$j] == 0)
+                                            <button onclick="openModalHadir('{{ $s->id }}')"
+                                                class="btn btn-sm btn-success hadiri ml-1 mr-1">Hadiri</button>
+                                        @else
+                                        <button onclick="openModalBatal('{{ $s->id }}')"
+                                            class="btn btn-sm btn-danger batal ml-1 mr-1">Batal Hadir</button>
+                                        @endif
                                     @else
-                                    <button onclick="openModalBatal('{{ $s->id }}')"
-                                        class="btn btn-sm btn-danger batal ml-1 mr-1">Batal Hadir</button>
+                                        @if ($pengamat[$j] != 0)
+                                            <button onclick="openModalBatal('{{ $s->id }}')"
+                                                class="btn btn-sm btn-danger batal ml-1 mr-1">Batal Hadir</button>
+                                        @else
+                                            <span class="badge badge-danger p-2" style="font-size: 10px">Kuota Terpenuhi</span>
+                                        @endif
                                     @endif
-                                    @else
-                                    @if ($pengamat[$j] != 0)
-                                    <button onclick="openModalBatal('{{ $s->id }}')"
-                                        class="btn btn-sm btn-danger batal ml-1 mr-1">Batal Hadir</button>
-                                    @else
-                                    <span class="badge badge-danger p-2" style="font-size: 10px">Kuota Terpenuhi</span>
-                                    @endif
-                                    @endif
-                                    @else
+                                @else
                                     <span class="badge badge-info p-2" style="font-size: 12px">Kelompok Anda</span>
-                                    @endif
+                                @endif
                             </td>
                         </tr>
                         <?php $j++ ?>

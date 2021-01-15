@@ -118,9 +118,17 @@ class AgendaController extends Controller
         // dd($request);
         $student = InternshipStudent::where('id', $request->internship_student_id)->first();
         $group = GroupProjectSchedule::where('group_project_id', $request->groupProject)->first();
-        $student->GroupProjectSchedules()->attach($group->id);
+        $observer = Observer::where('group_project_schedule_id', $group->id)->count();
         
-        return redirect(route("agenda.list"));
+        if($observer < $group->quota){
+            $student->GroupProjectSchedules()->attach($group->id);
+            return redirect(route("agenda.list"));
+        }
+        else{
+            echo '<script type="text/javascript">
+            alert("Error! Kuota sudah terpenuhi.");
+            window.location.href="/mahasiswa/seminar";</script>';
+        }
     }
 
     /**
