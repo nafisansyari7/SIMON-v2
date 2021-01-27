@@ -53,4 +53,7 @@ class GroupProject extends Model
 
         return $groupProject->id;
     }
+    public function GroupProjectProgress() {
+        return $this->hasMany('App\GroupProjectProgress');
+    }
 }

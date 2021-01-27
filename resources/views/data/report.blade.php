@@ -24,7 +24,7 @@
                     Arsip PKL dan PK
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table id="report" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>

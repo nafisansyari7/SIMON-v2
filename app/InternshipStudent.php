@@ -66,4 +66,12 @@ class InternshipStudent extends Model
 
         return false;
     }
+    
+    public function InternProgress() {
+        return $this->hasMany('App\InternshipProgress');
+    }
+
+    public function LogAct() {
+        return $this->hasMany('App\InternshipLogActivity');
+    }
 }

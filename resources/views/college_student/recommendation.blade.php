@@ -31,7 +31,7 @@
         <div class="card card-info">
             <div class="card-header">
                 <h5 class="card-title">
-                    <i class="fas fa-tasks mr-1"></i>
+                    <i class="fab fa-get-pocket mr-1"></i>
                     Daftar Rekomendasi
                 </h5>
             </div>
@@ -39,10 +39,10 @@
                 <table id="rekomendasi" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
-                            <th width="20%">Deskripsi Proyek</th>
+                            <th width="25%">Deskripsi Proyek</th>
                             <th width="20%">Instansi</th>
                             <th width="25%">Dosen</th>
-                            <th width="15%">Status</th>
+                            <th width="10%">Status</th>
                             <th width="20%">Aksi</th>
                         </tr>
                     </thead>
@@ -60,27 +60,27 @@
                             </td>
                             <td>
                             @if ($r->status == 0)
-							<span class="badge badge-danger p-2" style="font-size: 11px">Belum Ada Mahasiswa</span>
+							<span class="badge badge-warning p-2" style="font-size: 11px">Belum Ada Mahasiswa</span>
                             @elseif ($r->status == 1)
-							<span class="badge badge-success p-2" style="font-size: 11px">Ada Mahasiswa</span>
+							<span class="badge badge-info p-2" style="font-size: 11px">Ada Mahasiswa</span>
 							@endif
                             </td>
                             <td>
                             @if($groupgua == 1)
-                                <span class="badge badge-success p-2" style="font-size: 11px">Anda Sudah Memiliki Kelompok!</span>
+                                <span class="badge badge-info p-2" style="font-size: 11px">Anda Aktif PKL-PK</span>
                             @else
                                 @if ($r->status == 1)
                                     @if($r->internship_student_id == Auth::user()->InternshipStudent->id)
-                                    <span class="badge badge-warning p-2" style="font-size: 11px">Segara Hubungi Dosen!</span>
-                                    <button onclick="openModalBatal('{{ $r->id }}')" class="btn btn-sm btn-danger ml-1 mr-1">Batal</button>
+                                    <span class="badge badge-warning p-2" style="font-size: 11px">Segara Hubungi Dosen!</span> /
+                                    <button onclick="openModalBatal('{{ $r->id }}')" class="btn btn-sm btn-danger ml-1 mr-1"><i class="fas fa-window-close"></i></button>
                                     @else
-                                    <span class="badge badge-success p-2" style="font-size: 11px">Telah Diambil</span>
+                                    <span class="badge badge-info p-2" style="font-size: 11px">Telah Diambil</span>
                                     @endif
                                 @else
                                     @if($countGua == 0)
-                                    <button onclick="openModalAmbil('{{ $r->id }}')" class="btn btn-sm btn-success ml-1 mr-1">Ambil</button>
+                                    <button onclick="openModalAmbil('{{ $r->id }}')" class="btn btn-sm btn-success ml-1 mr-1"><i class="fab fa-get-pocket"></i></button>
                                     @else
-                                    <span class="badge badge-success p-2" style="font-size: 11px">Anda Telah Mengambil Topik Lain</span>
+                                    <span class="badge badge-info p-2" style="font-size: 11px">Anda Telah Mengambil Topik Lain</span>
                                     @endif
                                 @endif
                             @endif

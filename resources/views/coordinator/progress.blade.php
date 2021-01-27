@@ -16,10 +16,11 @@
                 <table id="progress-detail" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
-                            <th>Kelompok</th>
-                            <th>Pembimbing</th>
-                            <th>Progress</th>
-                            <th>Aksi</th>
+                            <th width='20%'>Kelompok</th>
+                            <th width='30%'>Pembimbing</th>
+                            <th width='20%'>Progress</th>
+                            <th width='15%'>Lihat Progress</th>
+                            <th width='15%'>Aksi</th>
                         </tr>
                     </thead>
                 </table>
@@ -27,6 +28,37 @@
         </div>
     </div>
 </section>
+
+<div class="modal fade groupProgress" id="groupProgress" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-spinner mr-1"></i>
+                    Progress Proyek Kelompok
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body table-responsive">
+                <table id="kelompokPro" class="table table-striped w-100">
+                    <thead>
+                        <tr>
+                            <th width="25%">Tanggal</th>
+                            <th>Progress</th>
+                            <th>Status</th>
+                            <th width="10%">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade bimbingan" id="project-progress" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -56,6 +88,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="modalSuccess">
     <div class="modal-dialog">
         <div class="modal-content bg-success">
@@ -133,10 +166,95 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-info bimbingan" title="Update Progress"><i class="fas fa-spinner"></i> Update Progress</button>'
+                    return '<button id="' + buttonId + '" class="btn btn-primary btn-sm mx-1 groupProgress" title="Progress PK"><i class="fas fa-users"></i></button>' +
+                    '<a href="bimbingan/pkl/' + buttonId + '" class="btn btn-info btn-sm internProgress" title="Progress PKL"><i class="fas fa-user"></i></a>'
+                }
+            },
+            {
+                sortable: false,
+                "render": function(data, type, full, meta) {
+                    let buttonId = full.id;
+                    let button = '';
+                    if (full.is_verified == 1) {
+                        button = '<button id="' + buttonId + '" class="btn btn-success btn-sm bimbingan" title="Update Progress"><i class="fas fa-spinner"></i> Update Progress</button>'
+                    }
+                    return button
                 }
             }
         ]
+    });
+
+    $('#progress-detail tbody').on('click', '.groupProgress', function() {
+        let id = $(this).attr('id');
+
+        $.ajax({
+            url: "bimbingan/pk/" + id,
+            dataType: "json",
+            success: function(result) {
+                $('#groupProgress').modal('show')
+                $('#kelompokPro tbody').html('')
+                let modal = ''
+
+                result.data.forEach(function(i) {
+                    if(i.agreement == "N") {
+                        modal = '<tr><td>' + i.date + '</td>' +
+                            '<td>' + i.description + '</td>' +
+                            '<td><span class="badge badge-sm badge-danger p-2" style="font-size: 10px">Belum Disetujui</span></td>' +
+                            '<td><button id="'+ i.id +'" title="Setujui" class="btn btn-sm btn-success agree"><i class="fas fa-check"></i></button></td></tr>'
+                    } else{
+                        modal = '<tr><td>' + i.date + '</td>' +
+                            '<td>' + i.description + '</td>' +
+                            '<td><span class="badge badge-sm badge-success p-2" style="font-size: 10px">Disetujui</span></td>' +
+                            '<td></td></tr>'
+                    }
+
+                    $('#kelompokPro tbody').append(modal)
+                });
+            }
+        })
+    });
+
+    
+    $('#kelompokPro tbody').on('click', '.agree', function() {
+        let id = $(this).attr('id');
+        var token = $("meta[name='csrf-token']").attr("content");
+        Swal.fire({
+            title: 'Yakin ingin menyetujui progress?',
+            text: "Data tidak dapat diubah",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire({
+                    title: 'Loading',
+                    timer: 60000,
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
+                $.ajax({
+                    url: "bimbingan/agreePK/" + id,
+                    method: "POST",
+                    data: {
+                        "_token": token,
+                    },
+                    success: function() {
+                        Swal.fire(
+                                'Success!',
+                                'Progress Disetujui',
+                                'success'
+                            )
+                            .then(function() {
+                                $("#groupProgress").modal('hide');
+                            })
+                    }
+                })
+            }
+        })
+
     });
 
     $('#progress-detail tbody').on('click', '.bimbingan', function() {
@@ -152,6 +270,7 @@
             }
         })
     });
+
     $('#formUpdate').submit(function(e) {
         e.preventDefault();
 

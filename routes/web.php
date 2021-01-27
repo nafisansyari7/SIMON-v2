@@ -23,7 +23,14 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function() {
     //mahasiswa
     Route::prefix('mahasiswa')->group(function () {
         Route::get('home', 'CollegeStudentController@index')->name('mahasiswa.home');
-        Route::get('progress', 'CollegeStudentController@progress');
+        Route::get('pk', 'GroupProjectProgressController@indexPK')->name('progress-pk');
+        Route::post('pk/tambahProgress', 'GroupProjectProgressController@storePK');
+        Route::post('pk/hapusProgress', 'GroupProjectProgressController@destroyPK');
+        Route::get('pkl', 'GroupProjectProgressController@indexPKL')->name('progress-pkl');
+        Route::post('pkl/tambahProgress', 'GroupProjectProgressController@storePKL');
+        Route::post('pkl/hapusProgress', 'GroupProjectProgressController@destroyPKL');
+        Route::post('pkl/tambahLog', 'GroupProjectProgressController@storeLog');
+        Route::post('pkl/hapusLog', 'GroupProjectProgressController@destroyLog');
         Route::get('seminar', 'AgendaController@index')->name('agenda.list');
         Route::get('seminar/show', 'AgendaController@get');
         Route::get('mahasiswa-cek', 'GroupProjectController@show')->name('mahasiswa.index');
@@ -58,8 +65,14 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
         Route::get('dashboard', 'CoordinatorController@index')->name('coordinator.home');
         Route::get('mahasiswa', 'CoordinatorController@project_team');
 
-        Route::get('bimbingan', 'GroupProjectProgressController@index');
+        Route::get('bimbingan', 'GroupProjectProgressController@index')->name('bimbingan-list');
         Route::get('bimbingan/show', 'GroupProjectProgressController@show');
+        Route::get('bimbingan/pk/{id}', 'GroupProjectProgressController@showPK');
+        Route::get('bimbingan/pkl/{id}', 'GroupProjectProgressController@intern')->name('pkl-list');
+        Route::get('bimbingan/pkl/progress/{mhs_id}', 'GroupProjectProgressController@showPKL');
+        Route::post('bimbingan/pkl/agreePKL/{mhs_id}', 'GroupProjectProgressController@agreePKL');
+        Route::get('bimbingan/pkl/logact/{mhs_id}', 'GroupProjectProgressController@logact');
+        Route::post('bimbingan/agreePK/{id}', 'GroupProjectProgressController@agreePK');
         Route::get('seminar', 'CoordinatorController@seminar')->name('seminar.list');
         Route::get('daftarSeminar/show', 'SeminarController@get');
         Route::get('seminar/show', 'SeminarController@seminar');
@@ -136,6 +149,12 @@ Route::group(['middleware' => ['auth', 'role:admin']], function() {
     Route::get('downloads', 'DownloadController@index')->name('download-list');
     Route::post('downloads/store', 'DownloadController@store');
     Route::delete('downloads/deleteDownloads/{id}', 'DownloadController@destroy');
+    
+    Route::get('faq', 'QuestionController@index')->name('faq-list');
+    Route::post('faq/store', 'QuestionController@store');
+    Route::get('faq/edit/{id}', 'QuestionController@edit');
+    Route::post('faq/update', 'QuestionController@update');
+    Route::delete('faq/delete/{id}', 'QuestionController@destroy');
 
     Route::get('profil', 'ProfileController@index')->name('profil');
     Route::post('profilUpdate/{id}', 'ProfileController@store');

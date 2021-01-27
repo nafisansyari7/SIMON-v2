@@ -130,14 +130,14 @@ class GroupProjectController extends Controller
             $berkas->sertifikat = $fileNameSertifikat;
             $berkas->save();
         }
-        if ($request->hasFile('editBimbingPKL')) {
-            $fileBimbing = $request->file('editBimbingPKL');
-            $folderBimbing = 'berkas/bimbingPKL';
-            $fileNameBimbing = Carbon::now()->timestamp . '_' . uniqId() . '_bimbinganPKL';
-            $fileBimbing->move($folderBimbing, $fileNameBimbing);
-            $berkas->bimbingan_pkl = $fileNameBimbing;
-            $berkas->save();
-        }
+        // if ($request->hasFile('editBimbingPKL')) {
+        //     $fileBimbing = $request->file('editBimbingPKL');
+        //     $folderBimbing = 'berkas/bimbingPKL';
+        //     $fileNameBimbing = Carbon::now()->timestamp . '_' . uniqId() . '_bimbinganPKL';
+        //     $fileBimbing->move($folderBimbing, $fileNameBimbing);
+        //     $berkas->bimbingan_pkl = $fileNameBimbing;
+        //     $berkas->save();
+        // }
         if ($request->hasFile('editLkmm')) {
             $fileSertifikatLKMM = $request->file('editLkmm');
             $folderSertifikatLKMM = 'berkas/LKMM';
@@ -342,31 +342,31 @@ class GroupProjectController extends Controller
         $i=1;
         $verif = GroupProject::with('InternshipStudentGroupProject')->find($id);
         // dd($verif);
-        if ($request->hasFile('bimbinganPK')) {
-            $fileBimbingPK = $request->file('bimbinganPK');
-            $folderBimbingPK = 'berkas/bimbinganPK';
-            $fileNameBimbingPK =  Carbon::now()->timestamp . '_' . uniqId() . '_bimbinganPK';
-            $fileBimbingPK->move($folderBimbingPK, $fileNameBimbingPK);
-        }
+        // if ($request->hasFile('bimbinganPK')) {
+        //     $fileBimbingPK = $request->file('bimbinganPK');
+        //     $folderBimbingPK = 'berkas/bimbinganPK';
+        //     $fileNameBimbingPK =  Carbon::now()->timestamp . '_' . uniqId() . '_bimbinganPK';
+        //     $fileBimbingPK->move($folderBimbingPK, $fileNameBimbingPK);
+        // }
         if ($request->hasFile('setuju')) {
             $fileSetuju = $request->file('setuju');
             $folderSetuju = 'berkas/persetujuan';
             $fileNameSetuju =  Carbon::now()->timestamp . '_' . uniqId() . '_persetujuan';
             $fileSetuju->move($folderSetuju, $fileNameSetuju);
         }
-        $verif->bimbingan_pk = $fileNameBimbingPK;
+        // $verif->bimbingan_pk = $fileNameBimbingPK;
         $verif->persetujuan = $fileNameSetuju;
         
             
         foreach ($verif->InternshipStudentGroupProject as $udin) {
                 // dd($udin);
                 // $groupProject->InternshipStudents()->attach(InternshipStudent::where('nim', $nim)->first()->id);
-                if ($request->hasFile('krs_'.$i)) {
-                    $fileKRS = $request->file('krs_'.$i);
-                    $folderKRS = 'berkas/krs';
-                    $fileNameKRS = Carbon::now()->timestamp . '_' . uniqId() . '_krs';
-                    $fileKRS->move($folderKRS, $fileNameKRS);
-                }
+                // if ($request->hasFile('krs_'.$i)) {
+                //     $fileKRS = $request->file('krs_'.$i);
+                //     $folderKRS = 'berkas/krs';
+                //     $fileNameKRS = Carbon::now()->timestamp . '_' . uniqId() . '_krs';
+                //     $fileKRS->move($folderKRS, $fileNameKRS);
+                // }
                 if ($request->hasFile('nilaiPKL_'.$i)) {
                     $fileNilai = $request->file('nilaiPKL_'.$i);
                     $folderNilai = 'berkas/nilaiPKL';
@@ -379,12 +379,12 @@ class GroupProjectController extends Controller
                     $fileNameSertifikat = Carbon::now()->timestamp . '_' . uniqId() . '_sertifikat';
                     $fileSertifikat->move($folderSertifikat, $fileNameSertifikat);
                 }
-                if ($request->hasFile('bimbingPKL_'.$i)) {
-                    $fileBimbing = $request->file('bimbingPKL_'.$i);
-                    $folderBimbing = 'berkas/bimbingPKL';
-                    $fileNameBimbing = Carbon::now()->timestamp . '_' . uniqId() . '_bimbinganPKL';
-                    $fileBimbing->move($folderBimbing, $fileNameBimbing);
-                }
+                // if ($request->hasFile('bimbingPKL_'.$i)) {
+                //     $fileBimbing = $request->file('bimbingPKL_'.$i);
+                //     $folderBimbing = 'berkas/bimbingPKL';
+                //     $fileNameBimbing = Carbon::now()->timestamp . '_' . uniqId() . '_bimbinganPKL';
+                //     $fileBimbing->move($folderBimbing, $fileNameBimbing);
+                // }
                 if ($request->hasFile('sertifikatLkmm_'.$i)) {
                     $fileSertifikatLKMM = $request->file('sertifikatLkmm_'.$i);
                     $folderSertifikatLKMM = 'berkas/LKMM';
@@ -392,9 +392,9 @@ class GroupProjectController extends Controller
                     $fileSertifikatLKMM->move($folderSertifikatLKMM, $fileNameSertifikatLKMM);
                 }
                 $berkas = File::where('internship_student_id', $udin->internship_student_id)->first();
-                $berkas->krs = $fileNameKRS;
+                // $berkas->krs = $fileNameKRS;
                 $berkas->penilaian_pkl = $fileNameNilai;
-                $berkas->bimbingan_pkl = $fileNameBimbing;
+                // $berkas->bimbingan_pkl = $fileNameBimbing;
                 $berkas->sertifikat = $fileNameSertifikat;
                 $berkas->sertifikat_lkmm = $fileNameSertifikatLKMM;
                 $berkas->save();

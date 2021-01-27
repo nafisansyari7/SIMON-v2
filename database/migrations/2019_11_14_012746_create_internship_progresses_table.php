@@ -16,15 +16,13 @@ class CreateInternshipProgressesTable extends Migration
         Schema::create('internship_progresses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('date');
-            $table->text('description');
-            $table->integer('agreement');
+            $table->string('description', 191)->nullable();
+            $table->string('agreement', 191)->nullable();
             $table->timestamps();
 
-            $table->unsignedBigInteger('group_project_supervisor_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('internship_student_id');
             
-            $table->foreign('group_project_supervisor_id')->references('id')->on('group_projects_supervisors')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('internship_student_id')->references('id')->on('internship_students')->onDelete('cascade')->onUpdate('cascade');;
         });
     }
 

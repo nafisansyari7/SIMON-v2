@@ -20,7 +20,7 @@
         <div class="card card-primary">
             <div class="card-header">
                 <h5 class="card-title">
-                    <i class="fas fa-tasks mr-1"></i>
+                    <i class="fab fa-get-pocket mr-1"></i>
                     Daftar Rekomendasi
                 </h5>
             </div>
@@ -28,11 +28,11 @@
                 <table id="rekomendasi" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
-                            <th width="20%">Deskripsi Proyek</th>
+                            <th width="30%">Deskripsi Proyek</th>
                             <th width="20%">Instansi</th>
                             <th width="25%">Dosen</th>
-                            <th width="15%">Status</th>
-                            <th width="20%">Aksi</th>
+                            <th width="10%">Status</th>
+                            <th width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,15 +57,15 @@
                             <td>
                                 @if ($r->status == 1)
                                 <button onclick="openModalLihat(['{{ $r->id }}', '{{ $r->InternshipStudent->name }}', '{{ $r->InternshipStudent->nim }}', '{{ $r->InternshipStudent->User->image_profile }}'])"
-                                    class="btn btn-primary"><i class="fas fa-user-circle"></i></button>
+                                    class="btn btn-primary btn-sm"><i class="fas fa-user-circle"></i></button>
                                 <button onclick="openModalBatal('{{ $r->id }}')"
-                                    class="btn btn-warning ml-1 mr-1"><i class="fas fa-stop-circle"></i></button>
+                                    class="btn btn-warning btn-sm ml-1 mr-1"><i class="fas fa-stop-circle"></i></button>
                                 @endif
                                 <button
                                     onclick="openModalEdit(['{{ $r->id }}', '{{ $r->description }}', '{{ $r->agency }}', '{{ $r->Lecturer->id }}'])"
-                                    class="btn btn-secondary mr-1"><i class="fas fa-edit"></i></button>
+                                    class="btn btn-secondary btn-sm mr-1"><i class="fas fa-edit"></i></button>
                                 <button onclick="openModalDelete('{{ $r->id }}')"
-                                    class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                    class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                         @endforeach

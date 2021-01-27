@@ -557,10 +557,6 @@
                     '<td class="text-right py-0 align-middle">' +
                     '<a href="../berkas/kak/' + result.data.kak +
                     '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>' +
-                    '<tr><td>Lembar Bimbingan Proyek Kelompok</td>' +
-                    '<td class="text-right py-0 align-middle">' +
-                    '<a href="../berkas/bimbinganPK/' + result.data.bimbingan_pk +
-                    '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>' +
                     '<tr><td>Lembar Persetujuan Seminar PKL dan PK</td>' +
                     '<td class="text-right py-0 align-middle">' +
                     '<a href="../berkas/persetujuan/' + result.data.persetujuan +
@@ -577,15 +573,13 @@
 
                         '<td>' + call_job + '</td>' +
                         '<td><a href="../berkas/krs/' + i.file.krs +
-                        '" target="blank">Kartu Rencana Studi</a><br>' +
+                        '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Kartu Rencana Studi</a><br>' +
                         '<a href="../berkas/nilaiPKL/' + i.file.penilaian_pkl +
-                        '" target="blank">Lembar Penilaian PKL</a><br>' +
-                        '<a href="../berkas/bimbingPKL/' + i.file.bimbingan_pkl +
-                        '" target="blank">Lembar Bimbingan PKL</a><br>' +
+                        '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Lembar Penilaian PKL</a><br>' +
                         '<a href="../berkas/sertifikat/' + i.file.sertifikat +
-                        '" target="blank">Sertifikat Kehadiran Seminar PKL & PK</a><br>' +
+                        '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat Kehadiran Seminar PKL & PK</a><br>' +
                         '<a href="../berkas/LKMM/' + i.file.sertifikat_lkmm +
-                        '" target="blank">Sertifikat LKMM</a></td></tr>'
+                        '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat LKMM</a></td></tr>'
 
                     $('#mahasiswa tbody').append(modal)
                 });
@@ -776,10 +770,6 @@
                     '<td class="text-right py-0 align-middle">' +
                     '<a href="../berkas/kak/' + result.data.kak +
                     '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>' +
-                    '<tr><td>Lembar Bimbingan Proyek Kelompok</td>' +
-                    '<td class="text-right py-0 align-middle">' +
-                    '<a href="../berkas/bimbinganPK/' + result.data.bimbingan_pk +
-                    '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>' +
                     '<tr><td>Lembar Persetujuan Seminar PKL dan PK</td>' +
                     '<td class="text-right py-0 align-middle">' +
                     '<a href="../berkas/persetujuan/' + result.data.persetujuan +
@@ -796,15 +786,13 @@
 
                         '<td>' + call_job + '</td>' +
                         '<td><a href="../berkas/krs/' + i.file.krs +
-                        '" target="blank">Kartu Rencana Studi</a><br>' +
+                        '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Kartu Rencana Studi</a><br>' +
                         '<a href="../berkas/nilaiPKL/' + i.file.penilaian_pkl +
-                        '" target="blank">Lembar Penilaian PKL</a><br>' +
-                        '<a href="../berkas/bimbingPKL/' + i.file.bimbingan_pkl +
-                        '" target="blank">Lembar Bimbingan PKL</a><br>' +
+                        '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Lembar Penilaian PKL</a><br>' +
                         '<a href="../berkas/sertifikat/' + i.file.sertifikat +
-                        '" target="blank">Sertifikat Kehadiran Seminar PKL & PK</a><br>' +
+                        '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat Kehadiran Seminar PKL & PK</a><br>' +
                         '<a href="../berkas/LKMM/' + i.file.sertifikat_lkmm +
-                        '" target="blank">Sertifikat LKMM</a></td></tr>'
+                        '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat LKMM</a></td></tr>'
 
                     $('#mahasiswa tbody').append(modal)
                 });

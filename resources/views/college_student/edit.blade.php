@@ -22,309 +22,309 @@
                     <i class="fas fa-users mr-1"></i>
                     Anggota Kelompok
                 </h5>
-                @if ($mhs < 4) <div class="card-tools" id="tools">
+                @if ($mhs < 4 && $pk->is_verified < 2)
+                <div class="card-tools" id="tools">
                     <a href="javascript:void(0)" data-toggle="modal" data-target="#modalTambah" type="button"
-                        class="btn btn-primary btn-sm"><i class="fas fa-user-plus mr-1"></i> Tambah
-                        Anggota</a>
+                        class="btn btn-primary btn-sm"><i class="fas fa-user-plus mr-1"></i> Tambah Anggota</a>
+                </div>
+                @endif
             </div>
-            @endif
-        </div>
 
-        <!-- Modal Tambah Anggota -->
-        <div class="modal fade" id="modalTambah" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary">
-                        <h5 class="modal-title"><i class="fas fa-user-plus mr-1"></i>
-                            Tambah Anggota
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
+            <!-- Modal Tambah Anggota -->
+            <div class="modal fade" id="modalTambah" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h5 class="modal-title"><i class="fas fa-user-plus mr-1"></i>
+                                Tambah Anggota
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <form action="tambahAnggota" enctype="multipart/form-data" method="POST">
+                            <div class="modal-body">
+                                @csrf
+                                <div class="row mt-2">
+                                    @error('nama')
+                                    <div class="form-group col-12">
+                                        <div class="alert alert-danger alert-dismissible w-100"><i
+                                                class="icon fas fa-exclamation-circle"></i> {{ $message }}</div>
+                                    </div>
+                                    @enderror
+                                    <input name="groupId" type="hidden" value="{{ $pk->id }}" class="form-control"
+                                        id="group" required>
+                                    <div class="form-group col-12">
+                                        <label for="nim">NIM</label>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <input name="internship_student_id" type="hidden" value=""
+                                                    class="form-control" id="">
+                                                <input name="nim" type="text" value="" class="form-control" id="inputNim"
+                                                    required>
+                                                @error('nim')
+                                                <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="col-3">
+                                                <button type="button" class="btn btn-primary w-100" id="cek-student"
+                                                    onclick="fetchData()">Cek</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="nama">Nama</label>
+                                        <input type="text" class="form-control nama" id="nama" readonly value=""
+                                            name="nama">
+                                    </div>
+                                    <div class="form-group col-3">
+                                        <label for="ipk">IPK</label>
+                                        <input type="number" id="ipk" class="form-control ipk" readonly value="" min="2.5"
+                                            name="ipk">
+                                        @error('ipk')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-3">
+                                        <label for="sks">SKS</label>
+                                        <input type="number" id="sks" class="form-control sks" readonly min="90" name="sks">
+                                        @error('sks')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label for="jobDesc">Job Description</label>
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <button type="button" class="btn btn-secondary jobdesk w-100" id="jobdesk"
+                                                    data-toggle="modal" data-target="#job_desk"><i
+                                                        class="fas fa-eye"></i></button>
+                                            </div>
+                                            <div class="col-10">
+                                                <select name="jobdesc[]" class="select2" multiple="multiple"
+                                                    style="width: 100%;" id="jobDesc" required>
+                                                    @foreach($job as $jobdesc)
+                                                    <option value="{{ $jobdesc->id }}">{{ $jobdesc->jobname }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="lampiran">Kartu Hasil Studi</label>
+                                        <input name="khs" type="file" class="form-control-file" id="khs" value="" required>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="lampiran">Transkrip</label>
+                                        <input name="transkrip" type="file" class="form-control-file" id="transkrip"
+                                            value="" required>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="lampiran">Kartu Rencana Studi</label>
+                                        <input name="krs" type="file" class="form-control-file" id="krs" value="" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="tombol_hide" type="submit" class="btn btn-primary float-right">Simpan</button>
+                            </div>
+                        </form>
                     </div>
-                    <form action="tambahAnggota" enctype="multipart/form-data" method="POST">
+                </div>
+            </div>
+
+            <!-- Modal Edit Anggota -->
+            <div class="modal fade" id="modalEdit" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-warning">
+                            <h5 class="modal-title"><i class="fas fa-user-plus mr-1"></i>
+                                Edit Anggota
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                                <form action="editAnggota/update" id="editAnggota" enctype="multipart/form-data" method="POST">
+                                @csrf
                         <div class="modal-body">
-                            @csrf
                             <div class="row mt-2">
-                                @error('nama')
-                                <div class="form-group col-12">
-                                    <div class="alert alert-danger alert-dismissible w-100"><i
-                                            class="icon fas fa-exclamation-circle"></i> {{ $message }}</div>
-                                </div>
-                                @enderror
-                                <input name="groupId" type="hidden" value="{{ $pk->id }}" class="form-control"
-                                    id="group" required>
-                                <div class="form-group col-12">
-                                    <label for="nim">NIM</label>
-                                    <div class="row">
-                                        <div class="col-9">
-                                            <input name="internship_student_id" type="hidden" value=""
-                                                class="form-control" id="">
-                                            <input name="nim" type="text" value="" class="form-control" id="inputNim"
-                                                required>
-                                            @error('nim')
-                                            <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                        <div class="col-3">
-                                            <button type="button" class="btn btn-primary w-100" id="cek-student"
-                                                onclick="fetchData()">Cek</button>
-                                        </div>
+                                    @error('nama')
+                                    <div class="form-group col-12">
+                                        <div class="alert alert-danger alert-dismissible w-100"><i
+                                                class="icon fas fa-exclamation-circle"></i> {{ $message }}</div>
                                     </div>
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="nama">Nama</label>
-                                    <input type="text" class="form-control nama" id="nama" readonly value=""
-                                        name="nama">
-                                </div>
-                                <div class="form-group col-3">
-                                    <label for="ipk">IPK</label>
-                                    <input type="number" id="ipk" class="form-control ipk" readonly value="" min="2.5"
-                                        name="ipk">
-                                    @error('ipk')
-                                    <small class="text-danger">{{ $message }}</small>
                                     @enderror
-                                </div>
-                                <div class="form-group col-3">
-                                    <label for="sks">SKS</label>
-                                    <input type="number" id="sks" class="form-control sks" readonly min="90" name="sks">
-                                    @error('sks')
-                                    <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="jobDesc">Job Description</label>
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <button type="button" class="btn btn-secondary jobdesk w-100" id="jobdesk"
-                                                data-toggle="modal" data-target="#job_desk"><i
-                                                    class="fas fa-eye"></i></button>
-                                        </div>
-                                        <div class="col-10">
-                                            <select name="jobdesc[]" class="select2" multiple="multiple"
-                                                style="width: 100%;" id="jobDesc" required>
-                                                @foreach($job as $jobdesc)
-                                                <option value="{{ $jobdesc->id }}">{{ $jobdesc->jobname }}</option>
-                                                @endforeach
-                                            </select>
+                                    <input name="groupIdEdit" type="hidden" value="{{ $pk->id }}" class="form-control"
+                                        id="group" required>
+                                    <div class="form-group col-6">
+                                        <label for="nama">Nama</label>
+                                        <input name="nama" type="text" value="" class="form-control" id="editNama" readonly>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="nim">NIM</label>
+                                        <input type="text" class="form-control nim" id="editNim" readonly value="" name="editNim">
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label for="jobDesc">Job Description</label>
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <button type="button" class="btn btn-secondary jobdesk w-100" id="jobdesk"
+                                                    data-toggle="modal" data-target="#job_desk"><i class="fas fa-eye"></i></button>
+                                            </div>
+                                            <div class="col-10">
+                                                <select name="editJobdesc[]" class="select2 editJob" multiple="multiple" style="width: 100%;"
+                                                    id="editJobDesc" required>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="lampiran">Kartu Hasil Studi</label>
-                                    <input name="khs" type="file" class="form-control-file" id="khs" value="" required>
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="lampiran">Transkrip</label>
-                                    <input name="transkrip" type="file" class="form-control-file" id="transkrip"
-                                        value="" required>
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="lampiran">Kartu Rencana Studi</label>
-                                    <input name="krs" type="file" class="form-control-file" id="krs" value="" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="tombol_hide" type="submit" class="btn btn-primary float-right">Simpan</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Edit Anggota -->
-        <div class="modal fade" id="modalEdit" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header bg-warning">
-                        <h5 class="modal-title"><i class="fas fa-user-plus mr-1"></i>
-                            Edit Anggota
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                            <form action="editAnggota/update" id="editAnggota" enctype="multipart/form-data" method="POST">
-                            @csrf
-                    <div class="modal-body">
-                        <div class="row mt-2">
-                                @error('nama')
-                                <div class="form-group col-12">
-                                    <div class="alert alert-danger alert-dismissible w-100"><i
-                                            class="icon fas fa-exclamation-circle"></i> {{ $message }}</div>
-                                </div>
-                                @enderror
-                                <input name="groupIdEdit" type="hidden" value="{{ $pk->id }}" class="form-control"
-                                    id="group" required>
-                                <div class="form-group col-6">
-                                    <label for="nama">Nama</label>
-                                    <input name="nama" type="text" value="" class="form-control" id="editNama" readonly>
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="nim">NIM</label>
-                                    <input type="text" class="form-control nim" id="editNim" readonly value="" name="editNim">
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="jobDesc">Job Description</label>
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <button type="button" class="btn btn-secondary jobdesk w-100" id="jobdesk"
-                                                data-toggle="modal" data-target="#job_desk"><i class="fas fa-eye"></i></button>
-                                        </div>
-                                        <div class="col-10">
-                                            <select name="editJobdesc[]" class="select2 editJob" multiple="multiple" style="width: 100%;"
-                                                id="editJobDesc" required>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-12">
-                                <hr>
-                                    <h6>
-                                        Berkas Pendaftaran PKL-PK
-                                    </h6>
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="lampiran">Kartu Hasil Studi</label>
-                                    <input name="editKhs" type="file" class="form-control-file" id="editKhs" value="">
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="lampiran">Transkrip</label>
-                                    <input name="editTranskrip" type="file" class="form-control-file" id="editTranskrip" value=""
-                                    >
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="lampiran">Kartu Rencana Studi</label>
-                                    <input name="editKrs" type="file" class="form-control-file" id="editKrs" value="">
-                                </div>
-                                @if ($pk->is_verified == 3)
-                                <div class="form-group col-12">
+                                    <div class="form-group col-12">
                                     <hr>
-                                    <h6>
-                                        Berkas Pendaftaran Seminar PKL-PK
-                                    </h6>
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="lampiran">Lembar Penilaian PKL</label>
-                                    <input name="editNilaiPKL" type="file" class="form-control-file" id="editNilaiPKL" value="">
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="lampiran">Lembar Bimbingan PKL</label>
-                                    <input name="editBimbingPKL" type="file" class="form-control-file" id="editBimbingPKL" value=""
-                                    >
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="lampiran">Sertifikat Kehadiran Seminar</label>
-                                    <input name="editSertifikat" type="file" class="form-control-file" id="editSertifikat" value="">
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="lampiran">Sertifikat LKMM</label>
-                                    <input name="editLkmm" type="file" class="form-control-file" id="editLkmm" value="">
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="tombol_hide" type="submit" class="btn btn-warning float-right">Simpan</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Modal List Jobdesc -->
-        <div class="modal fade" id="job_desk" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            <i class="fas fa-info-circle mr-1"></i>
-                            Deskripsi Jobdesc
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <table class="table" id="detail_verifikasi">
-                            <thead>
-                                <tr>
-                                    <th>Jobdesc</th>
-                                    <th>Deskripsi</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($job as $jobs)
-                                <tr>
-                                    <td>{{$jobs->jobname}}</td>
-                                    <td>{{$jobs->description}}</td>
-                                    @if ($jobs->status === "wajib")
-                                    <td><span class="badge badge-primary p-2">Wajib</span></td>
-                                    @else
-                                    <td><span class="badge badge-secondary p-2">Tidak Wajib</span></td>
+                                        <h6>
+                                            Berkas Pendaftaran PKL-PK
+                                        </h6>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="lampiran">Kartu Hasil Studi</label>
+                                        <input name="editKhs" type="file" class="form-control-file" id="editKhs" value="">
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="lampiran">Transkrip</label>
+                                        <input name="editTranskrip" type="file" class="form-control-file" id="editTranskrip" value=""
+                                        >
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="lampiran">Kartu Rencana Studi</label>
+                                        <input name="editKrs" type="file" class="form-control-file" id="editKrs" value="">
+                                    </div>
+                                    @if ($pk->is_verified == 2)
+                                    <div class="form-group col-12">
+                                        <hr>
+                                        <h6>
+                                            Berkas Pendaftaran Seminar PKL-PK
+                                        </h6>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="lampiran">Lembar Penilaian PKL</label>
+                                        <input name="editNilaiPKL" type="file" class="form-control-file" id="editNilaiPKL" value="">
+                                    </div>
+                                    <!-- <div class="form-group col-6">
+                                        <label for="lampiran">Lembar Bimbingan PKL</label>
+                                        <input name="editBimbingPKL" type="file" class="form-control-file" id="editBimbingPKL" value=""
+                                        >
+                                    </div> -->
+                                    <div class="form-group col-6">
+                                        <label for="lampiran">Sertifikat Kehadiran Seminar</label>
+                                        <input name="editSertifikat" type="file" class="form-control-file" id="editSertifikat" value="">
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="lampiran">Sertifikat LKMM</label>
+                                        <input name="editLkmm" type="file" class="form-control-file" id="editLkmm" value="">
+                                    </div>
                                     @endif
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="tombol_hide" type="submit" class="btn btn-warning float-right">Simpan</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
-
-
-        <!-- Lanjut Card Body -->
-        <div class="card-body">
-            <table id="mahasiswa" class="table table-striped w-100">
-                <thead>
-                    <tr>
-                        <th>NIM</th>
-                        <th>Profil</th>
-                        <th>Nama</th>
-                        <th>Jobdesc</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($pk->InternshipStudents as $i)
-                    <tr>
-                        <td>{{ $i->nim }}</td>
-                        <td>
-                            <img src="/public/image/{{ $i->User->image_profile }}" data-toggle="tooltip"
-                                data-placement="bottom" class="img-circle table-avatar" width="40px">
-                        </td>
-                        <td>{{ $i->name }}</td>
-                        <td>
-                            @foreach ($i->Jobdescs as $job)
-                            {{ $job->jobname }}<br>
-                            @endforeach
-                        </td>
-                        <td>
-                            <button id="{{ $i->id }}" class="btn btn-warning mr-1 edit"><i
-                                    class="fas fa-edit"></i></button>
-                            @if($pk->is_verified == 0)
-                            <?php $j = 0 ?>
-                            @foreach ($i->Jobdescs as $job)
-                            @if ($job->jobname == "Project Manager")
-                            <?php $j = 1 ?>
-                            @endif
-                            @endforeach
-                            @if ($j != 1)
-                            <button onclick="openModalHapus(['{{ $pk->id }}', '{{ $i->id }}', '{{ $i->name }}'])"
-                                class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                            @endif
-                            @endif
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
         
+            <!-- Modal List Jobdesc -->
+            <div class="modal fade" id="job_desk" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Deskripsi Jobdesc
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table" id="detail_verifikasi">
+                                <thead>
+                                    <tr>
+                                        <th>Jobdesc</th>
+                                        <th>Deskripsi</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($job as $jobs)
+                                    <tr>
+                                        <td>{{$jobs->jobname}}</td>
+                                        <td>{{$jobs->description}}</td>
+                                        @if ($jobs->status === "wajib")
+                                        <td><span class="badge badge-primary p-2">Wajib</span></td>
+                                        @else
+                                        <td><span class="badge badge-secondary p-2">Tidak Wajib</span></td>
+                                        @endif
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lanjut Card Body -->
+            <div class="card-body table-responsive">
+                <table id="mahasiswa" class="table table-striped w-100">
+                    <thead>
+                        <tr>
+                            <th>NIM</th>
+                            <th>Profil</th>
+                            <th>Nama</th>
+                            <th>Jobdesc</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pk->InternshipStudents as $i)
+                        <tr>
+                            <td>{{ $i->nim }}</td>
+                            <td>
+                                <img src="/public/image/{{ $i->User->image_profile }}" data-toggle="tooltip"
+                                    data-placement="bottom" class="img-circle table-avatar" width="40px">
+                            </td>
+                            <td>{{ $i->name }}</td>
+                            <td>
+                                @foreach ($i->Jobdescs as $job)
+                                {{ $job->jobname }}<br>
+                                @endforeach
+                            </td>
+                            <td>
+                                @if($pk->is_verified < 3)
+                                <button id="{{ $i->id }}" title="Edit Anggota" class="btn btn-warning mr-1 edit"><i
+                                        class="fas fa-edit"></i></button>
+                                @endif
+                                @if($pk->is_verified < 2)
+                                <?php $j = 0 ?>
+                                @foreach ($i->Jobdescs as $job)
+                                @if ($job->jobname == "Project Manager")
+                                <?php $j = 1 ?>
+                                @endif
+                                @endforeach
+                                @if ($j != 1)
+                                <button onclick="openModalHapus(['{{ $pk->id }}', '{{ $i->id }}', '{{ $i->name }}'])"
+                                    title="Hapus Anggota" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                @endif
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</section>
 
 <!-- Modal Hapus Anggota -->
 <div class="modal fade" id="hapus" aria-hidden="true">
@@ -362,7 +362,7 @@
 </div>
 
 
-
+</section>
 @endsection
 
 @section('ajax')
@@ -375,7 +375,6 @@
     }
 
     function fetchData() {
-
         const nim = $("#inputNim").val();
 
         $.ajax({

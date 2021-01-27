@@ -19,10 +19,10 @@
                 <table id="registration" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
-                            <th>Kelompok</th>
-                            <th>Instansi</th>
-                            <th>Lihat</th>
-                            <th>Aksi</th>
+                            <th width='20%'>Kelompok</th>
+                            <th width='60%'>Instansi</th>
+                            <th width='10%'>Lihat</th>
+                            <th width='10%'>Aksi</th>
                         </tr>
                     </thead>
                 </table>
@@ -42,11 +42,11 @@
                 <table id="mahasiswa-pk" class="table table-striped projects w-100">
                     <thead>
                         <tr>
-                            <th>Kelompok</th>
-                            <th width="350px">Instansi</th>
-                            <th width="200px">Pembimbing</th>
-                            <th>Lihat</th>
-                            <th>Aksi</th>
+                            <th width='20%'>Kelompok</th>
+                            <th width="35%">Instansi</th>
+                            <th width="25%">Pembimbing</th>
+                            <th width='10%'>Lihat</th>
+                            <th width='10%'>Aksi</th>
                         </tr>
                     </thead>
                 </table>
@@ -426,7 +426,7 @@
                         Swal.fire(
                                 'Deleted!',
                                 'Telah Dihapus',
-                                'Success'
+                                'success'
                             )
                             .then(function() {
                                 $('#registration').DataTable().ajax.reload();

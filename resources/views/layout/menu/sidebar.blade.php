@@ -34,7 +34,7 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
       @if(Auth::user()->isStudent())
-        <li class="nav-header font-weight-bold">Mahasiswa</li>
+        <li class="nav-header font-weight-bold">PKL-PK</li>
         <li class="nav-item">
           <a href="{{ url('mahasiswa/home')}}" class="{{(request()->is('mahasiswa/home')) ? 'active' : ''}} nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -43,6 +43,25 @@
             </p>
           </a>
         </li>
+        @if(Auth::user()->isVerifiedGroupProject() > 0)
+        <li class="nav-item">
+          <a href="{{ url('mahasiswa/pk')}}" class="{{(request()->is('mahasiswa/pk')) ? 'active' : ''}} nav-link">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+              Proyek Kelompok
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('mahasiswa/pkl')}}" class="{{(request()->is('mahasiswa/pkl')) ? 'active' : ''}} nav-link">
+            <i class="nav-icon fas fa-user"></i>
+            <p>
+              Praktek Kerja Lapangan
+            </p>
+          </a>
+        </li>
+        @endif
+        <li class="nav-header font-weight-bold">Mahasiswa</li>
         <li class="nav-item">
           <a href="{{ url('mahasiswa/seminar')}}" class="{{(request()->is('mahasiswa/seminar')) ? 'active' : ''}} nav-link">
             <i class="nav-icon fas fa-calendar-alt"></i>
@@ -59,7 +78,7 @@
         </li>
         <li class="nav-item">
           <a href="{{ url ('mahasiswa/rekomendasi') }}" class="{{(request()->is('mahasiswa/rekomendasi')) ? 'active' : ''}} nav-link">
-            <i class="nav-icon fas fa-tasks"></i>
+            <i class="nav-icon fab fa-get-pocket"></i>
               Rekomendasi PKL dan PK
           </a>
         </li>
@@ -95,7 +114,7 @@
         </li>
         <li class="nav-item">
           <a href="{{ url ('koor/rekomendasi') }}" class="{{(request()->is('koor/rekomendasi')) ? 'active' : ''}} nav-link">
-            <i class="nav-icon fas fa-tasks"></i>
+            <i class="nav-icon fab fa-get-pocket"></i>
               Rekomendasi PKL dan PK
           </a>
         </li>
@@ -146,6 +165,12 @@
         <a href="{{ url ('downloads') }}" class="{{(request()->is('downloads')) ? 'active' : ''}} nav-link">
             <i class="nav-icon fas fa-cloud-download-alt"></i>
               Unduhan
+          </a>
+        </li>
+        <li class="nav-item">
+        <a href="{{ url ('faq') }}" class="{{(request()->is('faq')) ? 'active' : ''}} nav-link">
+            <i class="nav-icon fas fa-question-circle"></i>
+              FAQ
           </a>
         </li>
         <li class="nav-header font-weight-bold">Profil</li>

@@ -28,11 +28,11 @@
                 <table id="report" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
-                            <th>Tanggal</th>
-                            <th width="350px">Judul</th>
-                            <th>Kelompok</th>
-                            <th width="200px">Berita Acara & Laporan</th>
-                            <th>Aksi</th>
+                            <th width='15%'>Tanggal</th>
+                            <th width='35%'>Judul</th>
+                            <th width='20%'>Kelompok</th>
+                            <th width='15%'>Catatan Revisi & Laporan</th>
+                            <th width='15%'>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -174,7 +174,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title">
                         <i class="fas fa-archive mr-1"></i>
-                        Berita Acara
+                        Catatan Revisi
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -317,13 +317,13 @@
                 sortable: false,
                 "render": function (data, type, full, meta) {
                     if ((full.report === null) && (full.laporan === null)) {
-                        return '<span class="badge badge-danger p-2 m-1">Berita Acara Belum Tersedia</span><span class="badge badge-danger p-2 ml-1">Laporan Belum Dikumpul</span>'
+                        return '<span class="badge badge-danger p-2 m-1">Catatan Revisi Belum Tersedia</span><span class="badge badge-danger p-2 ml-1">Laporan Belum Dikumpul</span>'
                     } else if ((full.report !== null) && (full.laporan === null)) {
-                        return '<span class="badge badge-success p-2 m-1">Berita Acara Tersedia</span><span class="badge badge-danger p-2 m-1">Laporan Belum Dikumpul</span>'
+                        return '<span class="badge badge-success p-2 m-1">Catatan Revisi Tersedia</span><span class="badge badge-danger p-2 m-1">Laporan Belum Dikumpul</span>'
                     } else if ((full.report === null) && (full.laporan !== null)) {
-                        return '<span class="badge badge-danger p-2 m-1">Berita Acara Belum Tersedia</span><span class="badge badge-success p-2 m-1">Laporan Sudah Dikumpul</span>'
+                        return '<span class="badge badge-danger p-2 m-1">Catatan Revisi Belum Tersedia</span><span class="badge badge-success p-2 m-1">Laporan Sudah Dikumpul</span>'
                     } else if ((full.report !== null) && (full.laporan !== null)) {
-                        return '<span class="badge badge-success p-2 m-1">Berita Acara Tersedia</span><span class="badge badge-success p-2 m-1">Laporan Sudah Dikumpul</span>'
+                        return '<span class="badge badge-success p-2 m-1">Catatan Revisi Tersedia</span><span class="badge badge-success p-2 m-1">Laporan Sudah Dikumpul</span>'
                     }
                 }
             },
@@ -332,13 +332,13 @@
                 "render": function (data, type, full, meta) {
                     let buttonId = full.id;
                     return '<button id="' + buttonId +
-                        '" class="btn btn-primary detail mx-1" title="Detail"><i class="fas fa-info-circle"></i></button>' +
+                        '" class="btn btn-primary btn-sm detail mx-1" title="Detail"><i class="fas fa-info-circle"></i></button>' +
                         '<button id="' + buttonId +
-                        '" class="btn btn-info observer" title="Menghadiri"><i class="fas fa-users"></i></button>' +
+                        '" class="btn btn-info btn-sm observer" title="Menghadiri"><i class="fas fa-users"></i></button>' +
                         '<button id="' + buttonId +
-                        '" class="btn btn-success news-report mx-1" title="Berita Acara"><i class="fas fa-file-alt"></i></button>' +
+                        '" class="btn btn-success btn-sm news-report mx-1" title="Catatan Revisi"><i class="fas fa-file-alt"></i></button>' +
                         '<button id="' + buttonId +
-                        '" class="btn btn-danger delete" title="Hapus"><i class="fas fa-trash"></i></button>'
+                        '" class="btn btn-danger btn-sm delete" title="Hapus"><i class="fas fa-trash"></i></button>'
                 }
             }
         ]

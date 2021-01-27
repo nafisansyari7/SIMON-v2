@@ -36,10 +36,6 @@ class CollegeStudentController extends Controller
         return view('college_student.home', compact(['job', 'anggota']));
     }
 
-    public function progress()
-    {
-        return view('college_student.progress');
-    }
     public function show($id)
     {
         $project = GroupProject::findOrFail($id);

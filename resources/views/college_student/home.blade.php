@@ -884,6 +884,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            <p>*Semua file diupload dengan file ekstensi <b>pdf</b> dan ukuran <b>max 1mb</b></p>
+                            <hr>
                             <h6>
                                 Kelompok
                             </h6>
@@ -891,16 +893,13 @@
                             <input type="hidden" id="project_id">
                             <input type="hidden" id="_method" value="PUT" name="_method">
                             <div class="row">
-                                <div class="form-group col-6">
+                                <!-- <div class="form-group col-6">
                                     <label for="bimbinganPK">Lembar Bimbingan PK</label>
                                     <input type="file" class="form-control-file" name="bimbinganPK" id="bimbinganPK"
                                         required>
-                                </div>
-                                <!-- <div class="form-group col-6">
-                                    <label for="kak">Kerangka Acuan Kerja</label>
-                                    <input type="file" class="form-control-file" name="kak" id="kak">
                                 </div> -->
-                                <div class="form-group col-6">
+                                <!-- <div class="form-group col-6"> -->
+                                <div class="form-group col-12">
                                     <label for="setuju">Lembar Persetujuan Seminar PKL dan PK</label>
                                     <input type="file" class="form-control-file" name="setuju" id="setuju" required>
                                 </div>
@@ -921,12 +920,12 @@
                                     <input type="text" class="form-control" id="nama" value="{{$anggota->name}}"
                                         readonly>
                                 </div>
-                                <div class="form-group col-6">
+                                <!-- <div class="form-group col-6">
                                     <label for="nilaiPKL">Kartu Rencana Studi</label>
                                     @if ($key === 0) @endif
                                     <input type="file" class="form-control-file" name="krs_{{$key+1}}"
                                         id="krs_{{$key+1}}" required>
-                                </div>
+                                </div> -->
                                 <div class="form-group col-6">
                                     <label for="nilaiPKL">Lembar Penilaian PKL</label>
                                     @if ($key === 0) @endif
@@ -939,12 +938,12 @@
                                     <input type="file" class="form-control-file" name="sertifikat_{{$key+1}}"
                                         id="sertifikat_{{$key+1}}" required>
                                 </div>
-                                <div class="form-group col-6">
+                                <!-- <div class="form-group col-6">
                                     <label for="bimbingPKL">Lembar Bimbingan PKL Lapangan</label>
                                     @if ($key === 0) @endif
                                     <input type="file" class="form-control-file" name="bimbingPKL_{{$key+1}}"
                                         id="bimbingPKL_{{$key+1}}" required>
-                                </div>
+                                </div> -->
                                 <div class="form-group col-6">
                                     <label for="sertifikatLkmm">Sertifikat LKMM</label>
                                     @if ($key === 0) @endif

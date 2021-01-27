@@ -158,25 +158,6 @@
         </div>
     </div>
 </div>
-<!-- 
-@if(Auth::user()->image_profile === "default.jpg")
-<div class="modal fade show" id="modalProfil" aria-modal="true" style="display: block;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Pengaturan Profil</h4>
-            </div>
-            <div class="modal-body">
-                <p><b>Harap lengkapi profil terlebih dahulu</b><br>Disarankan mengganti password</p>
-            </div>
-            <div class="modal-footer">
-                <a href="{{ url ('../profil') }}" type="button" class="btn btn-primary">Profil Saya</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal-backdrop fade show"></div>
-@endif -->
 
 @endsection
 @section('ajax')

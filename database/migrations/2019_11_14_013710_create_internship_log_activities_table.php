@@ -16,7 +16,7 @@ class CreateInternshipLogActivitiesTable extends Migration
         Schema::create('internship_log_activities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('date');
-            $table->text('description');
+            $table->string('description', 191)->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('internship_student_id');
