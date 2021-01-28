@@ -106,6 +106,7 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
         Route::get('observer/{id}', 'AgendaController@show');
         Route::get('absen/{id}', 'AgendaController@absen')->name('absen-seminar');
         Route::post('batalHadir', 'AgendaController@destroy');
+        Route::get('news-report-document/{id}', 'NewsReportController@show');
         //route CRUD
         Route::get('/rekomendasi','RekomendasiController@index');
         Route::post('/rekomendasi/store','RekomendasiController@store');

@@ -41,11 +41,11 @@
                 <table id="seminar" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
-                            <th width="15%">Tanggal</th>
-                            <th width="40%">Judul</th>
+                            <th width="10%">Tanggal</th>
+                            <th width="25%">Judul</th>
                             <th width="20%">Kelompok</th>
                             <th width="5%">Kuota Pengamat</th>
-                            <th>Aksi</th>
+                            <th width="20%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -723,13 +723,14 @@
                 "render": function (data, type, full, meta) {
                     let buttonId = full.id;
                     return '<button id="' + buttonId +
-                        '" class="btn btn-primary detail" title="Detail"><i class="fas fa-info-circle"></i></button>' +
+                        '" class="btn btn-primary detail  mr-1" title="Detail"><i class="fas fa-info-circle"></i></button>' +
+                        '<a href="../koor/news-report-document/' + buttonId + '" target="_blank" class="btn btn-success newsreport mr-1"><i class="fas fa-download"></i></a>' +
                         '<button id="' + buttonId +
-                        '" class="btn btn-warning edit mx-1" title="Edit"><i class="fas fa-edit"></i></button>' +
+                        '" class="btn btn-warning edit mr-1" title="Edit"><i class="fas fa-edit"></i></button>' +
                         '<button id="' + buttonId +
-                        '" class="btn btn-info observer" title="Menghadiri"><i class="fas fa-users"></i></button>' +
+                        '" class="btn btn-info observer  mr-1" title="Menghadiri"><i class="fas fa-users"></i></button>' +
                         '<button id="' + buttonId +
-                        '" class="btn btn-success selesai mx-1" title="Selesai"><i class="fas fa-check"></i></button>'
+                        '" class="btn btn-success selesai mr-1" title="Selesai"><i class="fas fa-check"></i></button>'
                 }
             }
         ]
