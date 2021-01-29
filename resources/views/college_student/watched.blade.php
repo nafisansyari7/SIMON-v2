@@ -4,7 +4,7 @@
 @section('content')
 <section class="content">
     <div class="container-fluid">
-        <h5 class="py-2">Sertifikat</h5>
+        <h5 class="py-2">Riwayat</h5>
         <div class="card card-success">
             <div class="card-header">
                 <h5 class="card-title">
@@ -20,7 +20,7 @@
                             <th>Judul</th>
                             <th>Instansi</th>
                             <th width='20%'>Kelompok</th>
-                            <th width='10%'>Aksi</th>
+                            <!-- <th width='10%'>Aksi</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -51,9 +51,9 @@
                                 </a>
                                 @endforeach
                             </td>
-                            <td>
+                            <!-- <td>
                                 <a href="cetakSertifikat/{{ $s->id }}/{{ Auth::user()->InternshipStudent->id }}" target="_blank" class="btn btn-sm btn-success cetak ml-1 mr-1"><i class="fas fa-print"></i> Cetak</a>
-                            </td>
+                            </td> -->
                         </tr>
                         @endif
                         @endforeach

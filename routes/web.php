@@ -56,10 +56,10 @@ Route::group(['middleware' => ['auth', 'role:mahasiswa']], function() {
         Route::get('/sertifikat','SertifikatController@index')->name('watched-list');
         Route::get('/cetakSertifikat/{id}/{userId}','SertifikatController@show');
         // Route::get('/cetakSertifikat','SertifikatController@mailTest');
-    });   
-    
+    });
+
 });
-Route::group(['middleware' => ['auth', 'role:koordinator']], function() {  
+Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
     // koordinator
     Route::prefix('koor')->group(function () {
         Route::get('dashboard', 'CoordinatorController@index')->name('coordinator.home');
@@ -71,8 +71,10 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
         Route::get('bimbingan/pkl/{id}', 'GroupProjectProgressController@intern')->name('pkl-list');
         Route::get('bimbingan/pkl/progress/{mhs_id}', 'GroupProjectProgressController@showPKL');
         Route::post('bimbingan/pkl/agreePKL/{mhs_id}', 'GroupProjectProgressController@agreePKL');
+        Route::post('bimbingan/pkl/agreePKLAll/{id}', 'GroupProjectProgressController@agreePKLAll');
         Route::get('bimbingan/pkl/logact/{mhs_id}', 'GroupProjectProgressController@logact');
         Route::post('bimbingan/agreePK/{id}', 'GroupProjectProgressController@agreePK');
+        Route::post('bimbingan/agreePKAll/{id}', 'GroupProjectProgressController@agreePKAll');
         Route::get('seminar', 'CoordinatorController@seminar')->name('seminar.list');
         Route::get('daftarSeminar/show', 'SeminarController@get');
         Route::get('seminar/show', 'SeminarController@seminar');
@@ -105,7 +107,7 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
         Route::get('exportExcel', 'GroupProjectController@export');
         Route::get('observer/{id}', 'AgendaController@show');
         Route::get('absen/{id}', 'AgendaController@absen')->name('absen-seminar');
-        Route::post('batalHadir', 'AgendaController@destroy');
+        Route::post('batalHadir', 'AgendaController@destroyFromKoor');
         Route::get('news-report-document/{id}', 'NewsReportController@show');
         //route CRUD
         Route::get('/rekomendasi','RekomendasiController@index');
@@ -116,7 +118,7 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
         Route::get('/cetakSertifikat/{id}/{userId}','SertifikatController@show');
     });
     });
-Route::group(['middleware' => ['auth', 'role:admin']], function() {  
+Route::group(['middleware' => ['auth', 'role:admin']], function() {
     // admin
     Route::prefix('admin')->group(function () {
         Route::get('mahasiswa', 'AdminController@showStudent')->name('admin.home');
@@ -150,7 +152,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function() {
     Route::get('downloads', 'DownloadController@index')->name('download-list');
     Route::post('downloads/store', 'DownloadController@store');
     Route::delete('downloads/deleteDownloads/{id}', 'DownloadController@destroy');
-    
+
     Route::get('faq', 'QuestionController@index')->name('faq-list');
     Route::post('faq/store', 'QuestionController@store');
     Route::get('faq/edit/{id}', 'QuestionController@edit');

@@ -31,8 +31,8 @@
                             <th>Tanggal</th>
                             <th width="350px">Judul</th>
                             <th>Kelompok</th>
-                            <th width="200px">Berita Acara & Laporan</th>
-                            <th></th>
+                            <th width="200px">Laporan</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,8 +82,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                        <div class="tab-pane fade" id="team" role="tabpanel" aria-labelledby="team-tab">
-                            <table class="table table-responsive" id="mahasiswa">
+                        <div class="tab-pane table-responsive fade" id="team" role="tabpanel" aria-labelledby="team-tab">
+                            <table class="table" id="mahasiswa">
                                 <thead>
                                     <tr>
                                         <th>NIM</th>
@@ -272,14 +272,10 @@
             {
                 sortable: false,
                 "render": function(data, type, full, meta) {
-                    if((full.report === null) && (full.laporan === null)){
-                        return '<span class="badge badge-danger p-2 m-1">Berita Acara Belum Tersedia</span><span class="badge badge-danger p-2 ml-1">Laporan Belum Dikumpul</span>'
-                    } else if ((full.report !== null) && (full.laporan === null)) {
-                        return '<span class="badge badge-success p-2 m-1">Berita Acara Tersedia</span><span class="badge badge-danger p-2 m-1">Laporan Belum Dikumpul</span>'
-                    } else if ((full.report === null) && (full.laporan !== null)) {
-                        return '<span class="badge badge-danger p-2 m-1">Berita Acara Belum Tersedia</span><span class="badge badge-sucess p-2 m-1">Laporan Sudah Dikumpul</span>'
-                    } else if ((full.report !== null) && (full.laporan !== null)) {
-                        return '<span class="badge badge-success p-2 m-1">Berita Acara Tersedia</span><span class="badge badge-success p-2 m-1">Laporan Sudah Dikumpul</span>'
+                    if(full.laporan === null){
+                        return '<span class="badge badge-danger p-2 ml-1">Laporan Belum Dikumpul</span>'
+                    } else {
+                        return '<span class="badge badge-success p-2 m-1">Laporan Sudah Dikumpul</span>'
                     }
                 }
             },
@@ -287,8 +283,8 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-primary detail" title="Detail"><i class="fas fa-info-circle"></i></button>' +
-                        '<button id="' + buttonId + '" class="btn btn-success news-report mx-1" title="Berita Acara"><i class="fas fa-file-alt"></i></button>'
+                    return '<button id="' + buttonId + '" class="btn btn-primary detail" title="Detail"><i class="fas fa-info-circle"></i></button>'
+                        // '<button id="' + buttonId + '" class="btn btn-success news-report mx-1" title="Berita Acara"><i class="fas fa-file-alt"></i></button>'
                 }
             }
         ]
@@ -330,12 +326,12 @@
                 let modal = ''
                 let job = ''
                 
-                file = '<tr><td>Lembar Bimbingan Proyek Kelompok</td>' +
-                        '<td class="text-right py-0 align-middle">' +
-                        '<a href="../berkas/bimbinganPK/' + result.data.bimbingan_pk + '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>'+
-                        '<tr><td>Kerangka Acuan Kerja</td>' +
+                file =  '<tr><td>Kerangka Acuan Kerja</td>' +
                         '<td class="text-right py-0 align-middle">' +
                         '<a href="../berkas/kak/' + result.data.kak + '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>'+
+                        // '<tr><td>Lembar Bimbingan Proyek Kelompok</td>' +
+                        // '<td class="text-right py-0 align-middle">' +
+                        // '<a href="../berkas/bimbinganPK/' + result.data.bimbingan_pk + '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>'+
                         '<tr><td>Lembar Persetujuan Seminar PKL dan PK</td>' +
                         '<td class="text-right py-0 align-middle">' +
                         '<a href="../berkas/persetujuan/' + result.data.persetujuan + '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>'
@@ -350,9 +346,10 @@
                         '<td>' + i.name + '</td>' +
 
                         '<td>' + call_job + '</td>' +
-                        '<td><a href="../berkas/nilaiPKL/' + i.file.penilaian_pkl + '" target="blank">Lembar Penilaian PKL</a><br>' +
-                        '<a href="../berkas/bimbingPKL/' + i.file.bimbingan_pkl + '" target="blank">Lembar Bimbingan PKL</a><br>' +
-                        '<a href="../berkas/sertifikat/' + i.file.sertifikat + '" target="blank">Sertifikat Menghadiri Seminar PKL & PK</a></td></tr>'
+                        '<td><a href="../berkas/nilaiPKL/' + i.file.penilaian_pkl + '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Lembar Penilaian PKL</a><br>' +
+                        // '<a href="../berkas/bimbingPKL/' + i.file.bimbingan_pkl + '" target="blank">Lembar Bimbingan PKL</a><br>' +
+                        // '<a href="../berkas/sertifikat/' + i.file.sertifikat + '" target="blank">Sertifikat Menghadiri Seminar PKL & PK</a>'+
+                        '</td></tr>'
 
                     $('#mahasiswa tbody').append(modal)
                 });
@@ -360,64 +357,64 @@
         })
     });
 
-    $('#report tbody').on('click', '.news-report', function() {
-        let id = $(this).attr('id')
-        $('#news-report').modal('show');
-        $.ajax({
-            url: "newsReport/" + id,
-            success: function(result) {
-                $('#files tbody').html('')
-                $('#group_project_id').val(result.data.id)
-                file = '<tr><td>' + result.data.report +
-                        '<td class="text-right py-0 align-middle">' +
-                        '<a href="../berkas/berita/' + result.data.report + '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>'+
-                        '<tr><td>' + result.data.laporan +
-                        '<td class="text-right py-0 align-middle">' +
-                        '<a href="../berkas/laporan/' + result.data.laporan + '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>'
-                        $('#files tbody').append(file);
-            }
-        })
-    });
+    // $('#report tbody').on('click', '.news-report', function() {
+    //     let id = $(this).attr('id')
+    //     $('#news-report').modal('show');
+    //     $.ajax({
+    //         url: "newsReport/" + id,
+    //         success: function(result) {
+    //             $('#files tbody').html('')
+    //             $('#group_project_id').val(result.data.id)
+    //             file = '<tr><td>' + result.data.report +
+    //                     '<td class="text-right py-0 align-middle">' +
+    //                     '<a href="../berkas/berita/' + result.data.report + '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>'+
+    //                     '<tr><td>' + result.data.laporan +
+    //                     '<td class="text-right py-0 align-middle">' +
+    //                     '<a href="../berkas/laporan/' + result.data.laporan + '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>'
+    //                     $('#files tbody').append(file);
+    //         }
+    //     })
+    // });
 
-    $('#news_report').submit(function(e) {
-        e.preventDefault();
+    // $('#news_report').submit(function(e) {
+    //     e.preventDefault();
 
-        var request = new FormData(this);
+    //     var request = new FormData(this);
 
-        const id = $('#group_project_id').val();
-        $.ajax({
-            url: "newsReport/" + id + "/edit",
-            method: "POST",
-            data: request,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data) {
-                if (data == "success") {
-                    $('#modalSuccess').modal();
-                    $('#news_report')[0].reset();
-                    $('#news-report').modal('hide');
-                    $('#report').DataTable().ajax.reload();
+    //     const id = $('#group_project_id').val();
+    //     $.ajax({
+    //         url: "newsReport/" + id + "/edit",
+    //         method: "POST",
+    //         data: request,
+    //         contentType: false,
+    //         cache: false,
+    //         processData: false,
+    //         success: function(data) {
+    //             if (data == "success") {
+    //                 $('#modalSuccess').modal();
+    //                 $('#news_report')[0].reset();
+    //                 $('#news-report').modal('hide');
+    //                 $('#report').DataTable().ajax.reload();
 
-                } else {
-                    $('#modalFailed').modal();
-                }
-            },
-            error: function(data) {
-                $("small").remove(".text-danger");
-                $("input").removeClass("is-invalid");
-                $.each(data.responseJSON.errors, function(key, value) {
-                    $('#' + key + '').addClass('is-invalid');
-                    $('#' + key + '').after('<small class="text-danger">' + value + '</small>')
-                });
-            }
-        })
-    })
+    //             } else {
+    //                 $('#modalFailed').modal();
+    //             }
+    //         },
+    //         error: function(data) {
+    //             $("small").remove(".text-danger");
+    //             $("input").removeClass("is-invalid");
+    //             $.each(data.responseJSON.errors, function(key, value) {
+    //                 $('#' + key + '').addClass('is-invalid');
+    //                 $('#' + key + '').after('<small class="text-danger">' + value + '</small>')
+    //             });
+    //         }
+    //     })
+    // })
 
-    document.querySelector('.custom-file-input').addEventListener('change', function(e) {
-        var fileName = document.getElementById("file-arsip").data[0].name;
-        var nextSibling = e.target.nextElementSibling
-        nextSibling.innerText = fileName
-    })
+    // document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+    //     var fileName = document.getElementById("file-arsip").data[0].name;
+    //     var nextSibling = e.target.nextElementSibling
+    //     nextSibling.innerText = fileName
+    // })
 </script>
 @endsection

@@ -73,7 +73,7 @@
         <li class="nav-item">
           <a href="{{ url ('mahasiswa/sertifikat') }}" class="{{(request()->is('mahasiswa/sertifikat')) ? 'active' : ''}} nav-link">
             <i class="nav-icon fas fa-certificate"></i>
-              Sertifikat PKL dan PK
+              Riwayat Seminar PKL dan PK
           </a>
         </li>
         <li class="nav-item">
@@ -113,18 +113,17 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="{{ url ('koor/arsip-pk') }}" class="{{(request()->is('koor/arsip-pk')) ? 'active' : ''}} nav-link">
+            <i class="nav-icon fas fa-book"></i>
+              Pasca Seminar PKL dan PK
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="{{ url ('koor/rekomendasi') }}" class="{{(request()->is('koor/rekomendasi')) ? 'active' : ''}} nav-link">
             <i class="nav-icon fab fa-get-pocket"></i>
               Rekomendasi PKL dan PK
           </a>
         </li>
-        </li>
-        <li class="nav-header font-weight-bold">Data</li>
-        <li class="nav-item">
-          <a href="{{ url ('koor/arsip-pk') }}" class="{{(request()->is('koor/arsip-pk')) ? 'active' : ''}} nav-link">
-            <i class="nav-icon fas fa-book"></i>
-              Data PKL dan PK
-          </a>
         </li>
         <!-- <li class="nav-item">
           <a href="{{ url ('koor/dataMahasiswa') }}" class="{{(request()->is('koor/dataMahasiswa')) ? 'active' : ''}} nav-link">

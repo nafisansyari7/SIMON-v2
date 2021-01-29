@@ -19,7 +19,7 @@
         table {
             border-collapse: collapse;
         }
-        
+
         table td {
             vertical-align: top;
         }
@@ -43,7 +43,7 @@
         .subpage {
             height: 256mm;
         }
-        
+
         .page-body {
             padding: 0cm 1cm;
         }
@@ -83,11 +83,11 @@
             padding: 5px 15px
         }
 
-        .table-signature th, 
+        .table-signature th,
         .table-signature td {
             padding: 5px 15px
         }
-        
+
         .page-title {
             text-align:center;
             font-weight:600;
@@ -108,7 +108,7 @@
         .w-100 {
             width:100%
         }
-        
+
     </style>
 </head>
 
@@ -865,7 +865,7 @@
 
 
 
-    <!-- 
+    <!--
     <script>
         window.print();
     </script> -->

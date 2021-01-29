@@ -136,7 +136,7 @@ class adminController extends Controller
     {
         $verified = GroupProject::with(['Agency', 'GroupProjectSchedule', 'InternshipStudents' => function($abc) {
             $abc->with('User');
-        }])->where('is_verified', '4')->get();
+        }])->where('is_verified', '>=', '4')->get();
         return response()->json(['data' => $verified]);
     }
 

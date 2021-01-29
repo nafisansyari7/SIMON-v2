@@ -187,4 +187,14 @@ class AgendaController extends Controller
         
         return redirect(route("agenda.list"));
     }
+
+    public function destroyFromKoor(Request $request)
+    {
+        $student = InternshipStudent::where('id', $request->internship_student_id)->first();
+        // dd($student);
+        $group = GroupProjectSchedule::where('group_project_id', $request->groupProject)->first();
+        $student->GroupProjectSchedules()->detach($group->id);
+        
+        return redirect(route("seminar.list"));
+    }
 }

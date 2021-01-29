@@ -72,13 +72,13 @@
                                 @if ($r->status == 1)
                                     @if($r->internship_student_id == Auth::user()->InternshipStudent->id)
                                     <span class="badge badge-warning p-2" style="font-size: 11px">Segara Hubungi Dosen!</span> /
-                                    <button onclick="openModalBatal('{{ $r->id }}')" class="btn btn-sm btn-danger ml-1 mr-1"><i class="fas fa-window-close"></i></button>
+                                    <button onclick="openModalBatal('{{ $r->id }}')" class="btn btn-sm btn-danger ml-1 mr-1">Batal</button>
                                     @else
                                     <span class="badge badge-info p-2" style="font-size: 11px">Telah Diambil</span>
                                     @endif
                                 @else
                                     @if($countGua == 0)
-                                    <button onclick="openModalAmbil('{{ $r->id }}')" class="btn btn-sm btn-success ml-1 mr-1"><i class="fab fa-get-pocket"></i></button>
+                                    <button onclick="openModalAmbil('{{ $r->id }}')" class="btn btn-sm btn-success ml-1 mr-1">Ambil</button>
                                     @else
                                     <span class="badge badge-info p-2" style="font-size: 11px">Anda Telah Mengambil Topik Lain</span>
                                     @endif

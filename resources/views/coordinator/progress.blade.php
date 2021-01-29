@@ -54,6 +54,8 @@
                     <tbody>
                     </tbody>
                 </table>
+            </div>            
+            <div class="modal-footer modalBim">
             </div>
         </div>
     </div>
@@ -193,28 +195,76 @@
             success: function(result) {
                 $('#groupProgress').modal('show')
                 $('#kelompokPro tbody').html('')
+                $('.modalBim').html('')
                 let modal = ''
+                let semua = '<button id="'+ id +'" title="Setujui Semua" class="btn btn-sm btn-success agreeAll float-right">Setujui Semua</a>'
+                let belum = 0
 
                 result.data.forEach(function(i) {
-                    if(i.agreement == "N") {
+                    if (i.agreement == "N") {
                         modal = '<tr><td>' + i.date + '</td>' +
-                            '<td>' + i.description + '</td>' +
-                            '<td><span class="badge badge-sm badge-danger p-2" style="font-size: 10px">Belum Disetujui</span></td>' +
-                            '<td><button id="'+ i.id +'" title="Setujui" class="btn btn-sm btn-success agree"><i class="fas fa-check"></i></button></td></tr>'
+                        '<td>' + i.description + '</td>' +
+                        '<td><span class="badge badge-sm badge-danger p-2" style="font-size: 10px">Belum Disetujui</span></td>' +
+                        '<td><button id="'+ i.id +'" title="Setujui" class="btn btn-sm btn-success agree"><i class="fas fa-check"></i></button></td></tr>'
+                        belum += 1
                     } else{
                         modal = '<tr><td>' + i.date + '</td>' +
-                            '<td>' + i.description + '</td>' +
-                            '<td><span class="badge badge-sm badge-success p-2" style="font-size: 10px">Disetujui</span></td>' +
-                            '<td></td></tr>'
+                        '<td>' + i.description + '</td>' +
+                        '<td><span class="badge badge-sm badge-success p-2" style="font-size: 10px">Disetujui</span></td>' +
+                        '<td></td></tr>'
                     }
-
                     $('#kelompokPro tbody').append(modal)
                 });
+                if (belum > 0) {
+                    $('.modalBim').append(semua)
+                }
             }
         })
     });
 
     
+    $('.modalBim').on('click', '.agreeAll', function() {
+        let id = $(this).attr('id');
+        var token = $("meta[name='csrf-token']").attr("content");
+        Swal.fire({
+            title: 'Yakin ingin menyetujui semua progress?',
+            text: "Data tidak dapat diubah",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yakin!'
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire({
+                    title: 'Loading',
+                    timer: 60000,
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
+                $.ajax({
+                    url: "bimbingan/agreePKAll/" + id,
+                    method: "POST",
+                    data: {
+                        "_token": token,
+                    },
+                    success: function() {
+                        Swal.fire(
+                                'Success!',
+                                'Progress Disetujui',
+                                'success'
+                            )
+                            .then(function() {
+                                $("#groupProgress").modal('hide');
+                            })
+                    }
+                })
+            }
+        })
+
+    });
+
     $('#kelompokPro tbody').on('click', '.agree', function() {
         let id = $(this).attr('id');
         var token = $("meta[name='csrf-token']").attr("content");
@@ -225,7 +275,7 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Yakin!'
         }).then((result) => {
             if (result.value) {
                 Swal.fire({

@@ -52,7 +52,11 @@
                                 @endforeach
                             </td>
                             <td>
-                                {{ $s->GroupProjectSchedule->quota }}
+                                @if($peserta[$j] == $s->GroupProjectSchedule->quota)
+                                    {{ $s->GroupProjectSchedule->quota }} <span class="badge badge-sm badge-success p-2" style="font-size: 10px">Penuh</span>
+                                @else
+                                    {{ $s->GroupProjectSchedule->quota }}
+                                @endif
                             </td>
                             <td>
                                 @if($gua[$j] == 0)
@@ -68,8 +72,6 @@
                                         @if ($pengamat[$j] != 0)
                                             <button onclick="openModalBatal('{{ $s->id }}')"
                                                 class="btn btn-sm btn-danger batal ml-1 mr-1">Batal Hadir</button>
-                                        @else
-                                            <span class="badge badge-danger p-2" style="font-size: 10px">Kuota Terpenuhi</span>
                                         @endif
                                     @endif
                                 @else

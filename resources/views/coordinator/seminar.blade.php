@@ -41,11 +41,11 @@
                 <table id="seminar" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
-                            <th width="10%">Tanggal</th>
-                            <th width="25%">Judul</th>
+                            <th width="15%">Tanggal</th>
+                            <th width="40%">Judul</th>
                             <th width="20%">Kelompok</th>
                             <th width="5%">Kuota Pengamat</th>
-                            <th width="20%">Aksi</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -102,13 +102,14 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="tab-pane fade" id="team" role="tabpanel" aria-labelledby="team-tab">
-                            <table class="table table-responsive" id="mahasiswa">
+                        <div class="tab-pane table-responsive fade" id="team" role="tabpanel" aria-labelledby="team-tab">
+                            <table class="table" id="mahasiswa">
                                 <thead>
                                     <tr>
                                         <th>NIM</th>
                                         <th>Nama</th>
                                         <th>Job Description</th>
+                                        <th>Riwayat Seminar</th>
                                         <th>Kelengkapan</th>
                                     </tr>
                                 </thead>
@@ -198,7 +199,7 @@
                     <tbody>
                     </tbody>
                 </table>
-            </div>            
+            </div>
             <div class="modal-footer absen">
             </div>
         </div>
@@ -524,10 +525,10 @@
                 "render": function (data, type, full, meta) {
                     let buttonId = full.id;
                     return '<button id="' + buttonId +
-                        '" class="btn btn-primary detail" title="Detail"><i class="fas fa-info-circle"></i></button>' +
+                        '" class="btn btn-sm btn-primary detail" title="Detail"><i class="fas fa-info-circle"></i></button>' +
                         '<button id="' + buttonId +
-                        '" class="btn btn-success terima ml-1 mr-1" title="Terima"><i class="fas fa-check"></i></button>' +
-                        '<button id="' + buttonId + '" class="btn btn-danger tolak" title="Tolak"><i class="fas fa-stop-circle"></i></button>'
+                        '" class="btn btn-sm btn-success terima ml-1 mr-1" title="Terima"><i class="fas fa-check"></i></button>' +
+                        '<button id="' + buttonId + '" class="btn btn-sm btn-danger tolak" title="Tolak"><i class="fas fa-stop-circle"></i></button>'
                 }
             }
         ]
@@ -570,14 +571,14 @@
                     })
                     modal = '<tr><td>' + i.nim + '</td>' +
                         '<td>' + i.name + '</td>' +
-
                         '<td>' + call_job + '</td>' +
+                        '<td class="text-center">' + i.observer.length + '</td>' +
                         '<td><a href="../berkas/krs/' + i.file.krs +
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Kartu Rencana Studi</a><br>' +
                         '<a href="../berkas/nilaiPKL/' + i.file.penilaian_pkl +
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Lembar Penilaian PKL</a><br>' +
-                        '<a href="../berkas/sertifikat/' + i.file.sertifikat +
-                        '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat Kehadiran Seminar PKL & PK</a><br>' +
+                        // '<a href="../berkas/sertifikat/' + i.file.sertifikat +
+                        // '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat Kehadiran Seminar PKL & PK</a><br>' +
                         '<a href="../berkas/LKMM/' + i.file.sertifikat_lkmm +
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat LKMM</a></td></tr>'
 
@@ -712,9 +713,14 @@
                 }
             },
             {
-                sortable: false,
+                sortable: true,
                 "render": function (data, type, full, meta) {
-                    let kuota = full.group_project_schedule.quota
+                    let kuota = ''
+                    if (full.group_project_schedule.quota == full.group_project_schedule.observer.length){
+                        kuota = full.group_project_schedule.quota + ' <span class="badge badge-sm badge-success p-2" style="font-size: 10px">Penuh</span>'
+                    } else {
+                        kuota = full.group_project_schedule.quota
+                    }
                     return kuota
                 }
             },
@@ -784,14 +790,14 @@
                     })
                     modal = '<tr><td>' + i.nim + '</td>' +
                         '<td>' + i.name + '</td>' +
-
                         '<td>' + call_job + '</td>' +
+                        '<td class="text-center">' + i.observer.length + '</td>' +
                         '<td><a href="../berkas/krs/' + i.file.krs +
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Kartu Rencana Studi</a><br>' +
                         '<a href="../berkas/nilaiPKL/' + i.file.penilaian_pkl +
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Lembar Penilaian PKL</a><br>' +
-                        '<a href="../berkas/sertifikat/' + i.file.sertifikat +
-                        '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat Kehadiran Seminar PKL & PK</a><br>' +
+                        // '<a href="../berkas/sertifikat/' + i.file.sertifikat +
+                        // '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat Kehadiran Seminar PKL & PK</a><br>' +
                         '<a href="../berkas/LKMM/' + i.file.sertifikat_lkmm +
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat LKMM</a></td></tr>'
 
@@ -804,7 +810,7 @@
     $('#seminar tbody').on('click', '.observer', function () {
         let id = $(this).attr('id')
         $('#observer').modal('show');
-        
+
         $.ajax({
             url: "../koor/observer/" + id,
             success: function (result) {
@@ -812,13 +818,13 @@
                 $('.absen').html('')
                 let modal = ''
                 let absen = '<a href="../koor/absen/'+id+'" target="_blank" class="btn btn-sm btn-primary float-right"><i class="fas fa-print"></i> Daftar Hadir</a>'
-                
+
                 result.data.forEach(function (i) {
                     let mhsId = i.id
                     modal = '<tr><td>' + i.nim + '</td>' +
                     '<td>' + i.name + '</td>' +
                     '<td><button onclick="openModalBatal(['+mhsId+', '+id+'])" class="d-inline-block btn btn-danger mr-1" title="Tidak Hadir"><i class="fas fa-times"></i></button></td></tr>'
-                    
+
                     $('#observer tbody').append(modal)
                 });
                 $('.absen').append(absen)

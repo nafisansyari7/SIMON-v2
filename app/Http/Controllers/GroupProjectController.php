@@ -373,12 +373,12 @@ class GroupProjectController extends Controller
                     $fileNameNilai = Carbon::now()->timestamp . '_' . uniqId() . '_nilaiPKL';
                     $fileNilai->move($folderNilai, $fileNameNilai);
                 }
-                if ($request->hasFile('sertifikat_'.$i)) {
-                    $fileSertifikat = $request->file('sertifikat_'.$i);
-                    $folderSertifikat = 'berkas/sertifikat';
-                    $fileNameSertifikat = Carbon::now()->timestamp . '_' . uniqId() . '_sertifikat';
-                    $fileSertifikat->move($folderSertifikat, $fileNameSertifikat);
-                }
+                // if ($request->hasFile('sertifikat_'.$i)) {
+                //     $fileSertifikat = $request->file('sertifikat_'.$i);
+                //     $folderSertifikat = 'berkas/sertifikat';
+                //     $fileNameSertifikat = Carbon::now()->timestamp . '_' . uniqId() . '_sertifikat';
+                //     $fileSertifikat->move($folderSertifikat, $fileNameSertifikat);
+                // }
                 // if ($request->hasFile('bimbingPKL_'.$i)) {
                 //     $fileBimbing = $request->file('bimbingPKL_'.$i);
                 //     $folderBimbing = 'berkas/bimbingPKL';
@@ -395,7 +395,7 @@ class GroupProjectController extends Controller
                 // $berkas->krs = $fileNameKRS;
                 $berkas->penilaian_pkl = $fileNameNilai;
                 // $berkas->bimbingan_pkl = $fileNameBimbing;
-                $berkas->sertifikat = $fileNameSertifikat;
+                // $berkas->sertifikat = $fileNameSertifikat;
                 $berkas->sertifikat_lkmm = $fileNameSertifikatLKMM;
                 $berkas->save();
             

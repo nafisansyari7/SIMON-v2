@@ -63,7 +63,7 @@ class NewsReportController extends Controller
                 $q->where('jobdesc_id', '=', 1);
             });
         }])->find($id);
-        
+
         // dd(['groupProject' => $groupProject, 'examiner' => $examiner, 'supervisor' => $supervisor]);
 
         return view('document.newsreport', compact('groupProject', 'examiners', 'supervisors', 'count', 'projectManager'));

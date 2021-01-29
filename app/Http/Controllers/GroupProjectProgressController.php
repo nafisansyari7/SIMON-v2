@@ -162,8 +162,16 @@ class GroupProjectProgressController extends Controller
         $pk = GroupProjectProgress::where('id', $id)->first();
         $pk->agreement = "Y";
         $pk->update();
+    }
 
-        return redirect(route('bimbingan-list'));
+    public function agreePKAll($id)
+    {
+        $pk = GroupProjectProgress::where('group_project_id', $id)->get();
+        // dd($pk);
+        foreach ($pk as $p) {
+            $p->agreement = "Y";
+            $p->update();
+        }
     }
 
     public function intern($id)
@@ -187,6 +195,16 @@ class GroupProjectProgressController extends Controller
         $pkl = InternshipProgress::where('id', $mhsId)->first();
         $pkl->agreement = "Y";
         $pkl->update();
+    }
+
+    public function agreePKLAll($id)
+    {
+        $pk = InternshipProgress::where('internship_student_id', $id)->get();
+        // dd($pk);
+        foreach ($pk as $p) {
+            $p->agreement = "Y";
+            $p->update();
+        }
     }
     
     public function logact($id)

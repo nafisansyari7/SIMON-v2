@@ -508,7 +508,7 @@
                     <div class="card-body">
                         @if(Auth::user()->isVerifiedGroupProject() >= 1)
                         <div class="text-center">
-                            <img src="/public/image/training.png" class="w-50">
+                            <i class="fas fa-user-graduate fa-7x mb-2"></i>
                             <h2 class="lead"><b>{{$anggota->GroupProjectSupervisor->Lecturer->name}}</b></h2>
                             <b>NIP. {{$anggota->GroupProjectSupervisor->Lecturer->NIP}}</b>
                             <p class="text-muted text-sm"> Pembimbing</p>
@@ -932,12 +932,12 @@
                                     <input type="file" class="form-control-file" name="nilaiPKL_{{$key+1}}"
                                         id="nilaiPKL_{{$key+1}}" required>
                                 </div>
-                                <div class="form-group col-6">
+                                <!-- <div class="form-group col-6">
                                     <label for="sertifikat">Sertifikat Kehadiran Seminar</label>
                                     @if ($key === 0) @endif
                                     <input type="file" class="form-control-file" name="sertifikat_{{$key+1}}"
                                         id="sertifikat_{{$key+1}}" required>
-                                </div>
+                                </div> -->
                                 <!-- <div class="form-group col-6">
                                     <label for="bimbingPKL">Lembar Bimbingan PKL Lapangan</label>
                                     @if ($key === 0) @endif
@@ -1263,7 +1263,7 @@
         })
 
     });
-    
+
     $("#laporan").click(function(e) {
         e.preventDefault();
         $("#modalLaporan").modal();

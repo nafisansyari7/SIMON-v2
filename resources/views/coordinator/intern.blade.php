@@ -50,9 +50,9 @@
                             </td>
                             <td>
                                 <button id="{{ $i->id }}" title="Progress PKL" class="btn btn-primary mr-1 intern"><i
-                                        class="fas fa-spinner"></i></button>
-                                <button id="{{ $i->id }}" title="Log Activity" class="btn btn-secondary mr-1 logact"><i
                                         class="fas fa-tasks"></i></button>
+                                <button id="{{ $i->id }}" title="Log Activity" class="btn btn-secondary mr-1 logact"><i
+                                        class="fas fa-list"></i></button>
                             </td>
                         </tr>
                         @endforeach
@@ -87,6 +87,8 @@
                     <tbody>
                     </tbody>
                 </table>
+            </div>          
+            <div class="modal-footer modalBim">
             </div>
         </div>
     </div>
@@ -109,7 +111,7 @@
                     <thead>
                         <tr>
                             <th>Tanggal</th>
-                            <th>Progress</th>
+                            <th>Activity</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -135,7 +137,10 @@
             success: function(result) {
                 $('#internProgress').modal('show')
                 $('#internPro tbody').html('')
+                $('.modalBim').html('')
                 let modal = ''
+                let semua = '<button id="'+ id +'" title="Setujui Semua" class="btn btn-sm btn-success agreeAll float-right">Setujui Semua</a>'
+                let belum = 0
 
                 result.data.forEach(function(i) {
                     if(i.agreement == "N") {
@@ -143,6 +148,7 @@
                             '<td>' + i.description + '</td>' +
                             '<td><span class="badge badge-sm badge-danger p-2" style="font-size: 10px">Belum Disetujui</span></td>' +
                             '<td><button id="'+ i.id +'" title="Setujui" class="btn btn-sm btn-success agree"><i class="fas fa-check"></i></button></td></tr>'
+                        belum += 1
                     } else{
                         modal = '<tr><td>' + i.date + '</td>' +
                             '<td>' + i.description + '</td>' +
@@ -152,6 +158,9 @@
 
                     $('#internPro tbody').append(modal)
                 });
+                if (belum > 0) {
+                    $('.modalBim').append(semua)
+                }
             }
         })
     });
@@ -166,7 +175,7 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Yakin!'
         }).then((result) => {
             if (result.value) {
                 Swal.fire({
@@ -195,6 +204,49 @@
                 })
             }
         })
+    });
+
+    
+    $('.modalBim').on('click', '.agreeAll', function() {
+        let id = $(this).attr('id');
+        var token = $("meta[name='csrf-token']").attr("content");
+        Swal.fire({
+            title: 'Yakin ingin menyetujui semua progress?',
+            text: "Data tidak dapat diubah",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yakin!'
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire({
+                    title: 'Loading',
+                    timer: 60000,
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
+                $.ajax({
+                    url: "agreePKLAll/" + id,
+                    method: "POST",
+                    data: {
+                        "_token": token,
+                    },
+                    success: function() {
+                        Swal.fire(
+                                'Success!',
+                                'Progress Disetujui',
+                                'success'
+                            )
+                            .then(function() {
+                                $("#internProgress").modal('hide');
+                            })
+                    }
+                })
+            }
+        })
+
     });
 
     $('#mahasiswa tbody').on('click', '.logact', function() {

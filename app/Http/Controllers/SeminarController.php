@@ -47,7 +47,7 @@ class SeminarController extends Controller
     public function detailDaftar($id)
     {
         $Anggota = GroupProject::with(['Agency', 'InternshipStudents' => function ($abc) {
-            $abc->with(['Jobdescs', 'File']);
+            $abc->with(['Jobdescs', 'File', 'Observer']);
         }])->find($id);
         $fck = GroupProjectExaminer::with('Lecturer')->where('group_project_id', $Anggota->id)->get();
         $supervisor = GroupProjectSupervisor::with('Lecturer')->where('group_project_id', $Anggota->id)->first();
@@ -73,7 +73,7 @@ class SeminarController extends Controller
     }
     public function seminar()
     {
-        $verified = GroupProject::with(['Agency', 'GroupProjectSchedule', 'InternshipStudents' => function ($abc) {
+        $verified = GroupProject::with(['Agency', 'GroupProjectSchedule.Observer', 'InternshipStudents' => function ($abc) {
             $abc->with('User');
         }])->where('is_verified', '3')->get();
         

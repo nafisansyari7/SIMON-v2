@@ -6,22 +6,22 @@
     <div class="container-fluid">
         <div class="row py-2">
             <div class="col-6">
-                <h5>Data PKL dan PK</h5>
+                <h5>Pengumpulan Laporan PKL dan PK</h5>
             </div>
-            <div class="col-6">
+            <!-- <div class="col-6">
                 <div class="float-right">
                     <a href="../koor/exportExcel" type="button" class="btn btn-success btn-sm">
                         <i class="fas fa-download mr-1"></i>
                         Eksport Data
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="card card-primary">
             <div class="card-header">
                 <h5 class="card-title">
-                    <i class="fas fa-archive mr-1"></i>
-                    Arsip PKL dan PK
+                    <i class="fas fa-book mr-1"></i>
+                    Pasca Seminar PKL dan PK
                 </h5>
             </div>
             <div class="card-body table-responsive">
@@ -86,8 +86,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="tab-pane fade" id="team" role="tabpanel" aria-labelledby="team-tab">
-                            <table class="table table-responsive" id="mahasiswa">
+                        <div class="tab-pane table-responsive fade" id="team" role="tabpanel" aria-labelledby="team-tab">
+                            <table class="table" id="mahasiswa">
                                 <thead>
                                     <tr>
                                         <th>NIM</th>
@@ -265,7 +265,7 @@
                             <tr>
                                 <th width="20%">NIM</th>
                                 <th>Nama</th>
-                                <th width="20%">Aksi</th>
+                                <!-- <th width="20%">Aksi</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -336,9 +336,9 @@
                         '<button id="' + buttonId +
                         '" class="btn btn-info btn-sm observer" title="Menghadiri"><i class="fas fa-users"></i></button>' +
                         '<button id="' + buttonId +
-                        '" class="btn btn-success btn-sm news-report mx-1" title="Catatan Revisi"><i class="fas fa-file-alt"></i></button>' +
+                        '" class="btn btn-warning btn-sm news-report mx-1" title="Catatan Revisi"><i class="fas fa-file-upload"></i></button>' +
                         '<button id="' + buttonId +
-                        '" class="btn btn-danger btn-sm delete" title="Hapus"><i class="fas fa-trash"></i></button>'
+                        '" class="btn btn-success btn-sm delete" title="Arsipkan"><i class="fas fa-archive"></i></button>'
                 }
             }
         ]
@@ -383,11 +383,7 @@
                 let modal = ''
                 let job = ''
 
-                file = '<tr><td>Lembar Bimbingan Proyek Kelompok</td>' +
-                    '<td class="text-right py-0 align-middle">' +
-                    '<a href="../berkas/bimbinganPK/' + result.data.bimbingan_pk +
-                    '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>' +
-                    '<tr><td>Kerangka Acuan Kerja</td>' +
+                file = '<tr><td>Kerangka Acuan Kerja</td>' +
                     '<td class="text-right py-0 align-middle">' +
                     '<a href="../berkas/kak/' + result.data.kak +
                     '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>' +
@@ -407,11 +403,12 @@
 
                         '<td>' + call_job + '</td>' +
                         '<td><a href="../berkas/nilaiPKL/' + i.file.penilaian_pkl +
-                        '" target="blank">Lembar Penilaian PKL</a><br>' +
-                        '<a href="../berkas/bimbingPKL/' + i.file.bimbingan_pkl +
-                        '" target="blank">Lembar Bimbingan PKL</a><br>' +
-                        '<a href="../berkas/sertifikat/' + i.file.sertifikat +
-                        '" target="blank">Sertifikat Menghadiri Seminar PKL & PK</a></td></tr>'
+                        '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Lembar Penilaian PKL</a><br>' +
+                        // '<a href="../berkas/bimbingPKL/' + i.file.bimbingan_pkl +
+                        // '" target="blank">Lembar Bimbingan PKL</a><br>' +
+                        // '<a href="../berkas/sertifikat/' + i.file.sertifikat +
+                        // '" target="blank">Sertifikat Menghadiri Seminar PKL & PK</a>'+
+                        '</td></tr>'
 
                     $('#mahasiswa tbody').append(modal)
                 });
@@ -436,7 +433,8 @@
                     let mhsId = i.id
                     modal = '<tr><td>' + i.nim + '</td>' +
                         '<td>' + i.name + '</td>' +
-                        '<td><a href="cetakSertifikat/'+ id + '/ ' + mhsId +'" target="_blank" class="d-inline-block btn btn-success mr-1" title="Cetak Sertifikat"><i class="fas fa-certificate"></i></a></td></tr>'
+                        // '<td><a href="cetakSertifikat/'+ id + '/ ' + mhsId +'" target="_blank" class="d-inline-block btn btn-success mr-1" title="Cetak Sertifikat"><i class="fas fa-certificate"></i></a></td>'+
+                        '</tr>'
 
                     $('#observer tbody').append(modal)
                 });
@@ -453,11 +451,11 @@
             success: function (result) {
                 $('#files tbody').html('')
                 $('#group_project_id').val(result.data.id)
-                file = '<tr><td>' + result.data.report +
+                file = '<tr><td> Catatan Revisi (' + result.data.report +')' +
                     '<td class="text-right py-0 align-middle">' +
                     '<a href="../berkas/berita/' + result.data.report +
                     '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>' +
-                    '<tr><td>' + result.data.laporan +
+                    '<tr><td> Laporan (' + result.data.laporan +')' +
                     '<td class="text-right py-0 align-middle">' +
                     '<a href="../berkas/laporan/' + result.data.laporan +
                     '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>'
@@ -512,13 +510,13 @@
         let id = $(this).attr('id');
         var token = $("meta[name='csrf-token']").attr("content");
         Swal.fire({
-            title: 'Yakin ingin menghapus data?',
-            text: "Data ini akan dihapus",
+            title: 'Yakin ingin mengarsipkan data?',
+            text: "Data ini akan diarsipkan",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Yakin!'
         }).then((result) => {
             if (result.value) {
                 Swal.fire({
@@ -537,8 +535,8 @@
                     },
                     success: function() {
                         Swal.fire(
-                                'Deleted!',
-                                'Telah Dihapus',
+                                'Berhasil!',
+                                'Data PKL-PK Telah Diarsipkan',
                                 'success'
                             )
                             .then(function() {

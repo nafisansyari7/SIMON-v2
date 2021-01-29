@@ -1,12 +1,12 @@
 @extends('layout.master')
 
-@section('title', 'Mahasiswa | Praktik Kerja Lapangan')
+@section('title', 'Mahasiswa | Praktek Kerja Lapangan')
 @section('content')
 <section class="content">
     <div class="container-fluid">
         <div class="row py-2">
             <div class="col-6">
-                <h5>Praktik Kerja Lapangan</h5>
+                <h5>Praktek Kerja Lapangan a.n {{ Auth::user()->InternshipStudent->name }}</h5>
             </div>
             <div class="col-6">
                 <div class="float-right">
