@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth', 'role:koordinator']], function() {
         Route::get('terimaSeminar/{id}', 'SeminarController@terima');
         Route::get('updateSeminar/{id}', 'SeminarController@show');
         Route::get('arsip-pk', 'CoordinatorController@showArsip');
+        Route::post('arsipAll', 'CoordinatorController@arsipAll');
         Route::get('arsip-pk/show', 'AdminController@arsipKoor');
         Route::get('detailArsip/{id}', 'SeminarController@detailArsip');
         Route::get('getDataTablePK', 'CoordinatorController@get');
@@ -146,6 +147,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function() {
         Route::get('newsReport/{id}', 'GroupProjectNewsReportController@getNews');
         Route::put('newsReport/{id}/edit', 'GroupProjectNewsReportController@storeNews');
         Route::get('exportExcel', 'GroupProjectController@export');
+        Route::get('exportMhs', 'AdminController@exportMhs');
+        Route::get('exportDosen', 'AdminController@exportDosen');
+        Route::get('exportJobdesc', 'AdminController@exportJobdesc');
         });
     });
         // user

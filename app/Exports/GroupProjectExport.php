@@ -20,7 +20,7 @@ class GroupProjectExport implements FromView
     public function view(): View
     {
         $groupProject = GroupProject::with(['GroupProjectSchedule', 'InternshipStudents.Jobdescs', 'GroupProjectExaminer.Lecturer', 'GroupProjectSupervisor.Lecturer'])
-        ->where('is_verified', '4')->get();
+        ->where('is_verified', '>=', '4')->get();
         return view('exports.datapkmerge', [
             'datas' => $groupProject
         ]);

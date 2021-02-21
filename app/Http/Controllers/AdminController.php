@@ -10,6 +10,9 @@ use App\User;
 use App\Role;
 use App\GroupProject;
 use Dotenv\Validator;
+use App\Exports\InternshipStudentExport;
+use App\Exports\LecturerExport;
+use App\Exports\JobdescExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class adminController extends Controller
@@ -127,14 +130,14 @@ class adminController extends Controller
 
     public function arsipKoor()
     {
-        $verified = GroupProject::with(['Agency', 'GroupProjectSchedule', 'InternshipStudents' => function($abc) {
+        $verified = GroupProject::with(['Agency', 'GroupProjectExaminer.Lecturer', 'GroupProjectSchedule', 'InternshipStudents' => function($abc) {
             $abc->with('User');
         }])->where('is_verified', '4')->get();
         return response()->json(['data' => $verified]);
     }
     public function arsipAdmin()
     {
-        $verified = GroupProject::with(['Agency', 'GroupProjectSchedule', 'InternshipStudents' => function($abc) {
+        $verified = GroupProject::with(['Agency', 'GroupProjectExaminer.Lecturer', 'GroupProjectSchedule', 'InternshipStudents' => function($abc) {
             $abc->with('User');
         }])->where('is_verified', '>=', '4')->get();
         return response()->json(['data' => $verified]);
@@ -154,5 +157,20 @@ class adminController extends Controller
         Excel::import(new StudentsImport($numberOfBatch), request()->file('select_file'));
 
         return back();
+    }
+
+    public function exportMhs()
+    {
+        return Excel::download(new InternshipStudentExport, 'MahasiswaPKL-PK.xlsx');
+    }
+    
+    public function exportDosen()
+    {
+        return Excel::download(new LecturerExport, 'Data Dosen PKL-PK.xlsx');
+    }
+
+    public function exportJobdesc()
+    {
+        return Excel::download(new JobdescExport, 'Data Jobdesc PKL-PK.xlsx');
     }
 }

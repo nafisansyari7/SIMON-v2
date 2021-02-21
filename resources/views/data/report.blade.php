@@ -12,7 +12,7 @@
                 <div class="float-right">
                     <a href="../admin/exportExcel" type="button" class="btn btn-success btn-sm">
                         <i class="fas fa-download mr-1"></i>
-                        Eksport Data
+                        Export Data
                     </a>
                 </div>
             </div>
@@ -28,11 +28,11 @@
                 <table id="report" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
-                            <th>Tanggal</th>
-                            <th width="350px">Judul</th>
-                            <th>Kelompok</th>
-                            <th width="200px">Laporan</th>
-                            <th>Aksi</th>
+                            <th width="13%">Tanggal Seminar</th>
+                            <th width="32%">Judul & Kelompok</th>
+                            <th width="30%">Penguji</th>
+                            <th width="15%">Status Laporan</th>
+                            <th width="10%">Lihat</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,9 +65,9 @@
                         <li class="nav-item">
                             <a class="nav-link" id="instansi-tab" data-toggle="pill" href="#instansi" role="tab" aria-controls="instansi" aria-selected="false">Instansi/Perusahaan</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" id="seminar-tab" data-toggle="pill" href="#seminar" role="tab" aria-controls="seminar" aria-selected="false">Seminar</a>
-                        </li>
+                        </li> -->
                     </ul>
                     <div class="tab-content" id="tabContent">
                         <div class="tab-pane fade show active" id="group" role="tabpanel" aria-labelledby="group-tab">
@@ -124,7 +124,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="seminar" role="tabpanel" aria-labelledby="seminar-tab">
+                        <!-- <div class="tab-pane fade" id="seminar" role="tabpanel" aria-labelledby="seminar-tab">
                             <div class="form-group">
                                 <label>Tempat</label>
                                 <input type="text" name="tempat" id="tempat" class="form-control" disabled>
@@ -156,7 +156,7 @@
                                 <label>Penguji II</label>
                                 <input id="pem3" type="text" class="form-control" disabled>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -246,6 +246,7 @@
 <script>
     $("#report").DataTable({
         "processing": true,
+        "order": [[ 0, "desc" ]],
         "ajax": {
             url: "{{ url('../admin/arsip-pk/show') }}"
         },
@@ -257,16 +258,28 @@
                 }
             },
             {
-                data: "title"
+                sortable: false,
+                "render": function (data, type, full, meta) {
+                    let img = ''
+                    for (let i = 0; i < full.internship_students.length; i++) {
+                        img += '<a href=../public/image/' + full.internship_students[i].user
+                            .image_profile + ' target="_blank"><img src="../public/image/' + full
+                            .internship_students[i].user.image_profile +
+                            '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' +
+                            full.internship_students[i].name + '"></a>'
+                    }
+                    return full.title + '<br><br>' +img
+                }
             },
             {
                 sortable: false,
-                "render": function(data, type, full, meta) {
-                    let img = ''
-                    for (let i = 0; i < full.internship_students.length; i++) {
-                        img += '<img src="../public/image/' + full.internship_students[i].user.image_profile + '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' + full.internship_students[i].name + '"><p hidden>' + full.internship_students[i].nim + full.internship_students[i].name + '</p>'
+                "render": function (data, type, full, meta) {
+                    let penguji = '<table class="table-borderless table-light">'
+                    for (let i = 0; i < full.group_project_examiner.length; i++) {
+                        penguji += '<tr><th width="20%">'+full.group_project_examiner[i].role+'</th><td>'+full.group_project_examiner[i].lecturer.name+'</td></tr>'
                     }
-                    return img
+                    let end = '</table>'
+                    return penguji + end
                 }
             },
             {
@@ -283,8 +296,8 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-primary detail" title="Detail"><i class="fas fa-info-circle"></i></button>'
-                        // '<button id="' + buttonId + '" class="btn btn-success news-report mx-1" title="Berita Acara"><i class="fas fa-file-alt"></i></button>'
+                    return '<button id="' + buttonId + '" class="btn btn-block btn-primary detail" title="Detail">Detail</button>'
+                        // '<button id="' + buttonId + '" class="btn btn-block btn-success news-report" title="Berita Acara">Berita</button>'
                 }
             }
         ]
@@ -305,23 +318,23 @@
                 $('#tlp').val(result.data.agency.phone_number)
                 $('#start').val(result.data.start_intern)
                 $('#end').val(result.data.end_intern)
-                $('#tempat').val(result.schedule.group_project_schedule.place)
-                $('#tanggal').val(moment(result.schedule.group_project_schedule.date).format('D MMMM YYYY'))
-                $('#waktuMulai').val(moment(result.schedule.group_project_schedule.time, 'HH:mm:ss').format('HH:mm A'))
-                $('#waktuSelesai').val(moment(result.schedule.group_project_schedule.time_end, 'HH:mm:ss').format('HH:mm A'))
-                $('#pem3').val(result.supervisor.lecturer.name)
-                result.fck.forEach(function(mmk) {
-                    let role = mmk.role;
-                    if (role === "Ketua Penguji") {
-                        $('#ketuapem').val(mmk.lecturer.name);
-                    } else if (role === "Sekretaris") {
-                        $('#pem1').val(mmk.lecturer.name);
-                    } else if (role === "Penguji 1") {
-                        $('#pem2').val(mmk.lecturer.name);
-                    } else if (role === "Penguji 2") {
-                        $('#pem3').val(mmk.lecturer.name);
-                    }
-                });
+                // $('#tempat').val(result.schedule.group_project_schedule.place)
+                // $('#tanggal').val(moment(result.schedule.group_project_schedule.date).format('D MMMM YYYY'))
+                // $('#waktuMulai').val(moment(result.schedule.group_project_schedule.time, 'HH:mm:ss').format('HH:mm A'))
+                // $('#waktuSelesai').val(moment(result.schedule.group_project_schedule.time_end, 'HH:mm:ss').format('HH:mm A'))
+                // $('#pem3').val(result.supervisor.lecturer.name)
+                // result.fck.forEach(function(mmk) {
+                //     let role = mmk.role;
+                //     if (role === "Ketua Penguji") {
+                //         $('#ketuapem').val(mmk.lecturer.name);
+                //     } else if (role === "Sekretaris") {
+                //         $('#pem1').val(mmk.lecturer.name);
+                //     } else if (role === "Penguji 1") {
+                //         $('#pem2').val(mmk.lecturer.name);
+                //     } else if (role === "Penguji 2") {
+                //         $('#pem3').val(mmk.lecturer.name);
+                //     }
+                // });
 
                 let modal = ''
                 let job = ''

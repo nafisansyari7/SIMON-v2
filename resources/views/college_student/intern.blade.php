@@ -18,10 +18,12 @@
                 <div class="card card-primary">
                     <div class="card-header">
                         <h5 class="card-title">
-                            <i class="fas fa-spinner mr-1"></i>
+                            <i class="fas fa-tasks mr-1"></i>
                             Progress
                         </h5>
-                        <button onclick="openModalProgres('{{Auth::user()->InternshipStudent->id}}')" class="btn btn-primary btn-sm progresKel float-right"><i class="fas fa-plus"></i></button>
+                        @if(Auth::user()->isVerifiedGroupProject() < 4)
+                        <button onclick="openModalProgres('{{Auth::user()->InternshipStudent->id}}')" class="btn btn-primary btn-sm progresKel float-right"><i class="fas fa-plus"></i> Tambah</button>
+                        @endif
                     </div>
                     <div class="card-body table-responsive">
                         <table id="internPro" class="table table-striped w-100">       
@@ -50,7 +52,7 @@
                                     <td>
                                         @if ($p->agreement == 'N')
                                         <button onclick="openModalHapus('{{$p->id}}')"
-                                            title="Hapus Progress" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            title="Hapus Progress" class="btn btn-sm btn-danger">Hapus</button>
                                         @endif
                                     </td>
                                 </tr>
@@ -64,10 +66,12 @@
                 <div class="card card-secondary">
                     <div class="card-header">
                         <h5 class="card-title">
-                            <i class="fas fa-tasks mr-1"></i>
+                            <i class="fas fa-list mr-1"></i>
                             Log Activity
                         </h5>
-                        <button onclick="openModalLog('{{Auth::user()->InternshipStudent->id}}')" class="btn btn-secondary btn-sm progresKel float-right"><i class="fas fa-plus"></i></button>
+                        @if(Auth::user()->isVerifiedGroupProject() < 4)
+                        <button onclick="openModalLog('{{Auth::user()->InternshipStudent->id}}')" class="btn btn-secondary btn-sm progresKel float-right"><i class="fas fa-plus"></i> Tambah</button>
+                        @endif
                     </div>
                     <div class="card-body table-responsive">
                         <table id="logAct" class="table table-striped w-100">       
@@ -86,8 +90,10 @@
                                     <td>{{ Carbon\Carbon::parse($p->date)->isoFormat('DD/MM/YY') }}</td>
                                     <td>{{ $p->description }}</td>
                                     <td>
+                                    @if(Auth::user()->isVerifiedGroupProject() < 4)
                                         <button onclick="openModalLogHapus('{{$p->id}}')"
-                                            title="Hapus Progress" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            title="Hapus Progress" class="btn btn-sm btn-danger">Hapus</button>
+                                    @endif
                                     </td>
                                 </tr>
                             @endforeach

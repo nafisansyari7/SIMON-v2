@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\GroupProject;
 use App\GroupProjectNewsReport;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class GroupProjectNewsReportController extends Controller
 {
@@ -34,13 +35,13 @@ class GroupProjectNewsReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function storeNews(Request $request, $id)
     {
         $groupProject = GroupProject::findOrFail($id);
         if ($request->hasFile('berita')) {
             $fileBerita = $request->file('berita');
             $folderBerita = 'berkas/berita';
-            $fileNameBerita = $fileBerita->getClientOriginalName();
+            $fileNameBerita = Carbon::now()->timestamp . '_' . uniqId() . 'BeritaAcara';
             $fileBerita->move($folderBerita, $fileNameBerita);
         }
         $groupProject->report = $fileNameBerita;
@@ -50,16 +51,16 @@ class GroupProjectNewsReportController extends Controller
         }
         return response()->json('failed');
     }
-    public function storeNews(Request $request, $id)
+    public function store(Request $request, $id)
     {
         $groupProject = GroupProject::findOrFail($id);
         if ($request->hasFile('berita')) {
-            $fileBerita = $request->file('berita');
-            $folderBerita = 'berkas/berita';
-            $fileNameBerita = $fileBerita->getClientOriginalName();
-            $fileBerita->move($folderBerita, $fileNameBerita);
+            $fileRevisi = $request->file('berita');
+            $folderRevisi = 'berkas/revisi';
+            $fileNameRevisi = Carbon::now()->timestamp . '_' . uniqId() . '_CatatanRevisi';
+            $fileRevisi->move($folderRevisi, $fileNameRevisi);
         }
-        $groupProject->report = $fileNameBerita;
+        $groupProject->revisi = $fileNameRevisi;
 
         if ($groupProject->save()) {
             return response()->json('success');
@@ -116,6 +117,11 @@ class GroupProjectNewsReportController extends Controller
      */
     public function destroy($id)
     {
-        GroupProject::find($id)->increment('is_verified');
+        $groupProject = GroupProject::with('InternshipStudents')->find($id);
+        $groupProject->increment('is_verified');
+        foreach ($groupProject->InternshipStudents as $i) {
+            $i->status = "L";
+            $i->update();
+        }
     }
 }

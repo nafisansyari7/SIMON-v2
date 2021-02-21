@@ -73,7 +73,7 @@ class SeminarController extends Controller
     }
     public function seminar()
     {
-        $verified = GroupProject::with(['Agency', 'GroupProjectSchedule.Observer', 'InternshipStudents' => function ($abc) {
+        $verified = GroupProject::with(['Agency', 'GroupProjectExaminer.Lecturer', 'GroupProjectSchedule.Observer', 'InternshipStudents' => function ($abc) {
             $abc->with('User');
         }])->where('is_verified', '3')->get();
         
@@ -129,11 +129,11 @@ class SeminarController extends Controller
                 'lecturer_id' => $request->examiner_3['lecturer_id'],
                 'group_project_id' => $id
             ],
-            [
-                'role' => $request->examiner_4['role'],
-                'lecturer_id' => $request->examiner_4['lecturer_id'],
-                'group_project_id' => $id
-            ]
+            // [
+            //     'role' => $request->examiner_4['role'],
+            //     'lecturer_id' => $request->examiner_4['lecturer_id'],
+            //     'group_project_id' => $id
+            // ]
         ]);
         foreach ($penguji as $data) {
             $examiners = new GroupProjectExaminer([

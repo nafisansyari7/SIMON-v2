@@ -16,8 +16,12 @@
                     </button>
                     <button type="button" id="import" class="btn btn-success btn-sm">
                         <i class="fas fa-upload mr-1"></i>
-                        Import
+                        Import Data
                     </button>
+                    <a href="exportJobdesc" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-download mr-1"></i>
+                        Export Data
+                    </a>
                 </div>
             </div>
         </div>
@@ -212,8 +216,8 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-warning update m-1" title="Edit"><i class="fas fa-edit"></i></button>'+
-                    '<button id="' + buttonId + '" class="btn btn-danger delete" title="Hapus"><i class="fas fa-trash"></i></button>';
+                    return '<button id="' + buttonId + '" class="btn btn-warning update m-1" title="Edit">Edit</button>'+
+                    '<button id="' + buttonId + '" class="btn btn-danger delete" title="Hapus">Hapus</button>'
                 }
             }
         ]

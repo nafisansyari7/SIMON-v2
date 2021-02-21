@@ -196,8 +196,8 @@
                         </table>
                     </div>
                     <div class="mt-10">
-                        <div>Setelah diadakan Pengujian dan Rapat Tim Penguji, diambil kesimpulan bahwa Seminar Proyek Kelompok tersebut di atas dinyatakan#)</div>
-                        <ul>
+                        <div>Setelah diadakan Pengujian dan Rapat Tim Penguji, diambil kesimpulan bahwa Seminar Proyek Kelompok tersebut di atas dinyatakan<sup>#</sup>)</div>
+                        <ul style="list-style-type:circle">
                             <li>Diterima tanpa perbaikan;</li>
                             <li>Diterima dengan perbaikan (Catatan Revisi terlampir);</li>
                             <li>Ditolak (seminar proyek kelompok berikutnya paling lambat ......... hari sejak hari ini).</li>
@@ -285,7 +285,7 @@
                             <tr>
                                 <th colspan="2">
                                     Tim Pembahas <br> <br>
-                                    Ketua Penguji/ Penguji I
+                                    Ketua Penguji / Penguji I
                                     <br> <br> <br> <br> <br>
                                     {{ $examiners[0]->Lecturer->name }} <br>
                                     NIP. {{ $examiners[0]->Lecturer->NIP }}
@@ -295,14 +295,13 @@
                             </tr>
                             <tr>
                                 <th width="50%">
-                                    Pembimbing/ Sekretaris
+                                    Penguji II
                                     <br> <br> <br> <br> <br>
                                     {{ $examiners[1]->Lecturer->name }} <br>
                                     NIP. {{ $examiners[1]->Lecturer->NIP }}
                                 </th>
                                 <th width="50%">
-                                    <br>
-                                    Penguji II
+                                    Penguji III
                                     <br> <br> <br> <br> <br>
                                     {{ $examiners[2]->Lecturer->name }} <br>
                                     NIP. {{ $examiners[2]->Lecturer->NIP }}
@@ -415,7 +414,7 @@
                             <td>{{ $member->name }}</td>
                             <td>
                                 @foreach($member->Jobdescs as $jobdesc)
-                                {{ $jobdesc->jobname }}/
+                                    - {{ $jobdesc->jobname }}<br>
                                 @endforeach
                             </td>
                             <td></td>
@@ -436,7 +435,7 @@
                             </td>
                             <td width="50%">
                                 Banjarmasin, {{ $groupProject->GroupProjectSchedule->tanggal }} <br>
-                                Ketua Tim Penguji/ Penguji I,
+                                Ketua Tim Penguji / Penguji I,
                             </td>
                         </tr>
                         <tr>
@@ -562,7 +561,7 @@
                                 <td>{{ $member->name }}</td>
                                 <td>
                                     @foreach($member->Jobdescs as $jobdesc)
-                                    {{ $jobdesc->jobname }}/
+                                    - {{ $jobdesc->jobname }}<br>
                                     @endforeach
                                 </td>
                                 <td></td>
@@ -583,7 +582,7 @@
                             </td>
                             <td width="50%">
                                 Banjarmasin, {{ $groupProject->GroupProjectSchedule->tanggal }} <br>
-                                Pembimbing/ Sekretaris,
+                                Penguji II,
                             </td>
                         </tr>
                         <tr>
@@ -709,7 +708,7 @@
                             <td>{{ $member->name }}</td>
                             <td>
                                 @foreach($member->Jobdescs as $jobdesc)
-                                {{ $jobdesc->jobname }}/
+                                - {{ $jobdesc->jobname }}<br>
                                 @endforeach
                             </td>
                             <td></td>
@@ -730,7 +729,7 @@
                             </td>
                             <td width="50%">
                                 Banjarmasin, {{ $groupProject->GroupProjectSchedule->tanggal }} <br>
-                                Penguji II,
+                                Penguji III,
                             </td>
                         </tr>
                         <tr>

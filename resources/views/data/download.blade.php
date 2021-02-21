@@ -30,7 +30,7 @@
                 <table id="downloads" class="table table-striped w-100">
                     <thead>
                         <tr>
-                            <th>Nama Berkas</th>
+                            <th width="50%">Nama Berkas</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -39,9 +39,9 @@
                         <tr>
                             <td>{{ $d->file_name }}</td>
                             <td>
-                                <a href="../berkas/unduhan/{{ $d->file }}" target="_blank" class="btn btn-primary mr-1"><i class="fas fa-download"></i></a>
+                                <a href="../berkas/unduhan/{{ $d->file }}" target="_blank" class="btn btn-primary mr-1">Download</a>
                                 @if(Auth::user()->isCoordinator() || Auth::user()->isAdmin())
-                                <button id="{{$d->id}}" class="btn btn-danger delete"><i class="fas fa-trash"></i></button>
+                                <button id="{{$d->id}}" class="btn btn-danger delete">Hapus</button>
                                 @endif
                             </td>
                         </tr>
@@ -61,7 +61,7 @@
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="fas fa-user-plus mr-1"></i>
+                        <i class="fas fa-plus mr-1"></i>
                         Tambah Berkas Unduhan
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

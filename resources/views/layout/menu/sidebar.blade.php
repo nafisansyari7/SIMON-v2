@@ -125,12 +125,6 @@
           </a>
         </li>
         </li>
-        <!-- <li class="nav-item">
-          <a href="{{ url ('koor/dataMahasiswa') }}" class="{{(request()->is('koor/dataMahasiswa')) ? 'active' : ''}} nav-link">
-            <i class="nav-icon fas fa-users"></i>
-              Data Mahasiswa
-          </a>
-        </li> -->
         @endif
         @if(Auth::user()->isAdmin())
         <li class="nav-header font-weight-bold">Data</li>

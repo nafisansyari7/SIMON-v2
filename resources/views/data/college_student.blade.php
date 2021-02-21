@@ -18,8 +18,12 @@
                     </button>
                     <button type="button" id="import" class="btn btn-success btn-sm">
                         <i class="fas fa-upload mr-1"></i>
-                        Import
+                        Import Data
                     </button>
+                    <a href="exportMhs" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-download mr-1"></i>
+                        Export Data
+                    </a>
                 </div>
             </div>
             @endif
@@ -91,8 +95,20 @@
                         <div class="form-group col-6">
                             <label>Status</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="status" name="status" value="A">
+                                <input class="form-check-input" type="radio" id="status" name="status" value="A">
                                 <label for="Status" class="form-check-label">Aktif</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="status" name="status" value="S">
+                                <label for="Status" class="form-check-label">Aktif PKL-PK</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="status" name="status" value="L">
+                                <label for="Status" class="form-check-label">Lulus PKL-PK</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="status" name="status" value="">
+                                <label for="Status" class="form-check-label">Tidak Aktif</label>
                             </div>
                         </div>
                         <div class="form-group col-6">
@@ -166,9 +182,24 @@
                         <div class="form-group col-6">
                             <label>Status</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="editstatus" name="editstatus"
+                                <input class="form-check-input" type="radio" id="statusAktif" name="editstatus"
                                     value="A">
                                 <label for="editStatus" class="form-check-label">Aktif</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="statusPK" name="editstatus"
+                                    value="S">
+                                <label for="editStatus" class="form-check-label">Aktif PKL-PK</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="statusLulus" name="editstatus"
+                                    value="L">
+                                <label for="editStatus" class="form-check-label">Lulus PKL-PK</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="statusNon" name="editstatus"
+                                    value="">
+                                <label for="editStatus" class="form-check-label">Tidak Aktif</label>
                             </div>
                         </div>
                         <div class="form-group col-6">
@@ -220,6 +251,7 @@
                         <label>Upload File Excel</label>
                         <input type="file" name="select_file" id="file" class="form-control">
                     </div>
+                    <p><b>*harap perhatikan kembali data sebelum diimport, terkhusus pada data NIM. Karena kesalahan import data akan sangat fatal bagi sistem.<b></p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary float-right">Import Data</button>
@@ -298,6 +330,8 @@
                         return '<span class="badge badge-success p-2">Aktif</span>';
                     } else if (full.status == "S") {
                         return '<span class="badge badge-primary p-2">Aktif PKL-PK</span>';
+                    } else if (full.status == "L") {
+                        return '<span class="badge badge-info p-2">Lulus PKL-PK</span>';
                     } else {
                         return '<span class="badge badge-danger p-2">Tidak Aktif</span>';
                     }
@@ -343,9 +377,16 @@
                 }
 
                 if (status === "A") {
-                    $('#editstatus').prop('checked', true);
-                } else {
-                    $('#editstatus').prop('checked', false);
+                    $('#statusAktif').prop('checked', true);
+                } 
+                else if (status === "S") {
+                    $('#statusPK').prop('checked', true);
+                } 
+                else if (status === "L") {
+                    $('#statusLulus').prop('checked', true);
+                } 
+                else {
+                    $('#statusNon').prop('checked', true);
                 }
             }
         })

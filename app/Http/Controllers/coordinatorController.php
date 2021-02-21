@@ -137,8 +137,6 @@ class CoordinatorController extends Controller
     public function updateSupervisor(Request $request, $id)
     {
         $groupProject = GroupProject::findOrFail($id);
-        // dd($supervisor);
-        // $supervisor->lecturer_id => $request->supervisor;
         $bimbingan = \DB::table('lecturers')
             ->join('group_projects_supervisors', 'lecturers.id', '=', 'group_projects_supervisors.lecturer_id')
             ->where('group_projects_supervisors.group_project_id', '=', $groupProject->id)
@@ -157,5 +155,20 @@ class CoordinatorController extends Controller
     public function showArsip()
     {
         return view('coordinator.report');
+    }
+
+    public function arsipAll()
+    {
+        $verified = GroupProject::with(['Agency', 'GroupProjectSchedule', 'InternshipStudents' => function($abc) {
+            $abc->with('User');
+        }])->where('is_verified', '4')->get();
+        
+        foreach ($verified as $v){
+            $v->increment('is_verified');
+            foreach ($v->InternshipStudents as $i) {
+                $i->status = "L";
+                $i->update();
+            }
+        }
     }
 }

@@ -39,7 +39,6 @@ class AgendaController extends Controller
             }
             $res = [
                 'seminar' => $seminar,
-                // 'seminarGua' => $seminarGua,
                 'pengamat' => $pengamat,
                 'peserta' => $peserta,
                 'gua' => $gua
@@ -85,16 +84,18 @@ class AgendaController extends Controller
     
     public function absen($id)
     {
-        $Anggota = GroupProject::with(['Agency', 'GroupProjectSchedule', 'GroupProjectSupervisor' => function ($ccd) {
-            $ccd->with('Lecturer');
-        }, 'InternshipStudents' => function ($abc) {
+        $groupProject = GroupProject::with(['Agency', 'GroupProjectSchedule', 'InternshipStudents' => function ($abc) {
             $abc->with(['Jobdescs', 'File']);
         }])->find($id);
+        $supervisors = GroupProjectSupervisor::with('Lecturer')->where('group_project_id', $groupProject->id)->first();
+        $projectManager = GroupProject::with(['InternshipStudents'  => function ($abc) {
+            $abc->whereHas('Jobdescs', function($q) {
+                $q->where('jobdesc_id', '=', 1);
+            });
+        }])->find($id);
 
-        // dd($Anggota);
-        // $pdf = PDF::loadView('document.absen', compact('Anggota'));
-        return view('document.absen', compact('Anggota'));
-        // return $pdf->stream();;
+
+        return view('document.absen', compact('groupProject', 'supervisors', 'projectManager'));
     }
 
     /**
@@ -144,7 +145,6 @@ class AgendaController extends Controller
         ->join('internship_students', 'observers.internship_student_id', '=', 'internship_students.id')
         ->where('group_project_id', '=', $id)
         ->get();
-        // dd($student);
 
         return response()->json(['data' => $student]);
     }
@@ -181,7 +181,6 @@ class AgendaController extends Controller
     public function destroy(Request $request)
     {
         $student = InternshipStudent::where('id', $request->internship_student_id)->first();
-        // dd($student);
         $group = GroupProjectSchedule::where('group_project_id', $request->groupProject)->first();
         $student->GroupProjectSchedules()->detach($group->id);
         
@@ -191,7 +190,6 @@ class AgendaController extends Controller
     public function destroyFromKoor(Request $request)
     {
         $student = InternshipStudent::where('id', $request->internship_student_id)->first();
-        // dd($student);
         $group = GroupProjectSchedule::where('group_project_id', $request->groupProject)->first();
         $student->GroupProjectSchedules()->detach($group->id);
         

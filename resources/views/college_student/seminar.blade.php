@@ -17,10 +17,10 @@
                     <thead>
                         <tr>
                             <th width='15%'>Tanggal</th>
-                            <th>Judul</th>
-                            <th>Instansi</th>
+                            <th width='35%'>Judul</th>
+                            <th width='15%'>Instansi</th>
                             <th width='20%'>Kelompok</th>
-                            <th>Kuota Pengamat</th>
+                            <th width='5%'>Kuota Pengamat</th>
                             <th width='10%'>Aksi</th>
                         </tr>
                     </thead>
@@ -66,12 +66,12 @@
                                                 class="btn btn-sm btn-success hadiri ml-1 mr-1">Hadiri</button>
                                         @else
                                         <button onclick="openModalBatal('{{ $s->id }}')"
-                                            class="btn btn-sm btn-danger batal ml-1 mr-1">Batal Hadir</button>
+                                            class="btn btn-sm btn-danger batal ml-1 mr-1" title="Batal Hadir">Batal</button>
                                         @endif
                                     @else
                                         @if ($pengamat[$j] != 0)
                                             <button onclick="openModalBatal('{{ $s->id }}')"
-                                                class="btn btn-sm btn-danger batal ml-1 mr-1">Batal Hadir</button>
+                                                class="btn btn-sm btn-danger batal ml-1 mr-1">Batal</button>
                                         @endif
                                     @endif
                                 @else

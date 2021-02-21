@@ -75,9 +75,6 @@
                     <li class="nav-item">
                         <a class="nav-link" id="instansi-tab" data-toggle="pill" href="#instansi" role="tab" aria-controls="instansi" aria-selected="false">Instansi/Perusahaan</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" id="files-tab" data-toggle="pill" href="#files" role="tab" aria-controls="files" aria-selected="false">Files</a>
-                    </li> -->
                 </ul>
                 <div class="tab-content" id="tabContent">
                     <div class="tab-pane table-responsive fade show active" id="team" role="tabpanel" aria-labelledby="team-tab">
@@ -284,16 +281,16 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<a href="../berkas/kak/'+full.kak+'" target="_blank" class="btn btn-sm btn-primary m-1" title="Kerangka Acuan Kerja"><i class="fas fa-file-alt"></i></a>' +
-                    '<button id="' + buttonId + '" class="btn btn-sm btn-info detail m-1" title="Detail"><i class="fas fa-info-circle"></i></button>'
+                    return '<a href="../berkas/kak/'+full.kak+'" target="_blank" class="btn btn-block btn-sm btn-primary m-1" title="Kerangka Acuan Kerja">Kerangka</a>' +
+                    '<button id="' + buttonId + '" class="btn btn-block btn-sm btn-info detail m-1" title="Detail">Detail</button>'
                 }
             },
             {
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-sm btn-success terima m-1" title="Terima"><i class="fas fa-check"></i></button>' +
-                        '<button id="' + buttonId + '" class="btn btn-sm btn-danger tolak m-1" title="Tolak"><i class="fas fa-stop-circle"></i></button>'
+                    return '<button id="' + buttonId + '" class="btn btn-block btn-sm btn-success terima m-1" title="Terima">Terima</button>' +
+                        '<button id="' + buttonId + '" class="btn btn-block btn-sm btn-danger tolak m-1" title="Tolak">Tolak</button>'
                 }
             }
         ]
@@ -462,16 +459,16 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<a href="../berkas/kak/'+full.kak+'" target="_blank" class="btn btn-sm btn-primary m-1" title="Kerangka Acuan Kerja"><i class="fas fa-file-alt"></i></a>' +
-                    '<button id="' + buttonId + '" class="btn btn-sm btn-info detail m-1" title="Detail"><i class="fas fa-info-circle"></i></button>'
+                    return '<a href="../berkas/kak/'+full.kak+'" target="_blank" class="btn btn-block btn-sm btn-primary m-1" title="Kerangka Acuan Kerja">Kerangka</a>' +
+                    '<button id="' + buttonId + '" class="btn btn-block btn-sm btn-info detail m-1" title="Detail">Detail</button>'
                 }
             },
             {
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     let buttonId = full.id;
-                    return '<button id="' + buttonId + '" class="btn btn-sm btn-warning edit m-1" title="Edit"><i class="fas fa-edit"></i></button>' +
-                        '<button id="' + buttonId + '" class="btn btn-sm btn-danger hapus m-1" title="Hapus"><i class="fas fa-trash"></i></button>'
+                    return '<button id="' + buttonId + '" class="btn btn-block btn-sm btn-warning edit m-1" title="Edit">Edit</button>' +
+                        '<button id="' + buttonId + '" class="btn btn-block btn-sm btn-danger hapus m-1" title="Hapus">Hapus</button>'
                 }
             }
         ]

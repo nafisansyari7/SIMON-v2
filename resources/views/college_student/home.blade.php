@@ -501,7 +501,7 @@
                         </h3>
                         @if(Auth::user()->isVerifiedGroupProject() < 4)
                         <div class="card-tools">
-                            <a href="groupEdit/{{ $anggota->id }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                            <a href="groupEdit/{{ $anggota->id }}" type="button" class="btn btn-primary btn-sm">Edit</a>
                         </div>
                         @endif
                     </div>
@@ -548,8 +548,8 @@
                             @endif
                             @if((Auth::user()->isVerifiedGroupProject() >= 4) &&
                             ($anggota->laporan === null))
-                            @if ($anggota->report !== null)
-                            <a href="../berkas/berita/{{ $anggota->report }}" target="blank"
+                            @if ($anggota->revisi !== null)
+                            <a href="../berkas/revisi/{{ $anggota->revisi }}" target="blank"
                                 class="btn btn-info btn-sm report"><i class="fas fa-download"></i> Catatan Revisi</a>
                             @endif
                             <button type="button" id="laporan" class="btn btn-success btn-sm">
@@ -558,9 +558,9 @@
                             </button>
                             @elseif((Auth::user()->isVerifiedGroupProject() >= 4) &&
                             ($anggota->laporan !== null))
-                            @if ($anggota->report !== null)
-                            <a href="../berkas/berita/{{ $anggota->report }}" target="blank"
-                                class="btn btn-info btn-sm report"><i class="fas fa-download"></i> Berita Acara</a>
+                            @if ($anggota->revisi !== null)
+                            <a href="../berkas/revisi/{{ $anggota->revisi }}" target="blank"
+                                class="btn btn-info btn-sm report"><i class="fas fa-download"></i> Catatan Revisi</a>
                             @endif
                             <button type="button" id="laporan" class="btn btn-success btn-sm">
                                 <i class="fas fa-edit mr-1"></i>
@@ -718,27 +718,10 @@
                                         </div>
                                         <div class="col-6">
                                             @foreach($fck as $fck)
-                                            @if($fck->role === "Ketua Penguji")
-                                            <p class="text-sm">Ketua Penguji
+                                            <p class="text-sm">{{$fck->role}}
                                                 <b class="d-block">{{$fck->Lecturer->name}}</b>
                                                 NIP. {{$fck->Lecturer->NIP}}
                                             </p>
-                                            @elseif($fck->role === "Sekretaris")
-                                            <p class="text-sm">Sekretaris
-                                                <b class="d-block">{{$fck->Lecturer->name}}</b>
-                                                NIP. {{$fck->Lecturer->NIP}}
-                                            </p>
-                                            @elseif($fck->role === "Penguji 1")
-                                            <p class="text-sm">Penguji I
-                                                <b class="d-block">{{$fck->Lecturer->name}}</b>
-                                                NIP. {{$fck->Lecturer->NIP}}
-                                            </p>
-                                            @elseif($fck->role === "Penguji 2")
-                                            <p class="text-sm">Penguji II
-                                                <b class="d-block">{{$fck->Lecturer->name}}</b>
-                                                NIP. {{$fck->Lecturer->NIP}}
-                                            </p>
-                                            @endif
                                             @endforeach
                                         </div>
                                     </div>
@@ -770,7 +753,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-
+                    <p>*Laporan diupload dengan file ekstensi <b>pdf</b> dan ukuran <b>max 2mb</b></p>
                         <form method="POST" enctype="multipart/form-data" id="uploadLaporan">
                             @csrf
                             <input type="hidden" id="group_id" value="{{$anggota->id}}">
@@ -862,8 +845,6 @@
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </form>
-                        <!-- </div> -->
-                        <!-- </div> -->
                     </div>
                 </div>
             </div>
@@ -893,12 +874,6 @@
                             <input type="hidden" id="project_id">
                             <input type="hidden" id="_method" value="PUT" name="_method">
                             <div class="row">
-                                <!-- <div class="form-group col-6">
-                                    <label for="bimbinganPK">Lembar Bimbingan PK</label>
-                                    <input type="file" class="form-control-file" name="bimbinganPK" id="bimbinganPK"
-                                        required>
-                                </div> -->
-                                <!-- <div class="form-group col-6"> -->
                                 <div class="form-group col-12">
                                     <label for="setuju">Lembar Persetujuan Seminar PKL dan PK</label>
                                     <input type="file" class="form-control-file" name="setuju" id="setuju" required>
@@ -920,30 +895,12 @@
                                     <input type="text" class="form-control" id="nama" value="{{$anggota->name}}"
                                         readonly>
                                 </div>
-                                <!-- <div class="form-group col-6">
-                                    <label for="nilaiPKL">Kartu Rencana Studi</label>
-                                    @if ($key === 0) @endif
-                                    <input type="file" class="form-control-file" name="krs_{{$key+1}}"
-                                        id="krs_{{$key+1}}" required>
-                                </div> -->
                                 <div class="form-group col-6">
                                     <label for="nilaiPKL">Lembar Penilaian PKL</label>
                                     @if ($key === 0) @endif
                                     <input type="file" class="form-control-file" name="nilaiPKL_{{$key+1}}"
                                         id="nilaiPKL_{{$key+1}}" required>
                                 </div>
-                                <!-- <div class="form-group col-6">
-                                    <label for="sertifikat">Sertifikat Kehadiran Seminar</label>
-                                    @if ($key === 0) @endif
-                                    <input type="file" class="form-control-file" name="sertifikat_{{$key+1}}"
-                                        id="sertifikat_{{$key+1}}" required>
-                                </div> -->
-                                <!-- <div class="form-group col-6">
-                                    <label for="bimbingPKL">Lembar Bimbingan PKL Lapangan</label>
-                                    @if ($key === 0) @endif
-                                    <input type="file" class="form-control-file" name="bimbingPKL_{{$key+1}}"
-                                        id="bimbingPKL_{{$key+1}}" required>
-                                </div> -->
                                 <div class="form-group col-6">
                                     <label for="sertifikatLkmm">Sertifikat LKMM</label>
                                     @if ($key === 0) @endif

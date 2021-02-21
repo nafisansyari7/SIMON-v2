@@ -16,8 +16,12 @@
                     </button>
                     <button type="button" id="import" class="btn btn-success btn-sm">
                         <i class="fas fa-upload mr-1"></i>
-                        Import
+                        Import Data
                     </button>
+                    <a href="exportDosen" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-download mr-1"></i>
+                        Export Data
+                    </a>
                 </div>
             </div>
         </div>
@@ -34,6 +38,7 @@
                         <tr>
                             <th>NIP</th>
                             <th>Nama</th>
+                            <th>Bimbingan</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -163,17 +168,17 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
+            <form action="{{ route('lecturer-import') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="modal-body">
-
-                <form action="{{ route('lecturer-import') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="file" name="file" class="form-control">
-                    <br>
-                    <button type="submit" class="btn btn-primary float-right">Import Data</button>
-                </form>
+                <input type="file" name="file" class="form-control"><br>
+                <p><b>*harap perhatikan kembali data sebelum diimport, terkhusus pada data NIP Dosen. Karena kesalahan import data akan sangat fatal bagi sistem.<b></p>
             </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary float-right">Import Data</button>
+            </div>
+            </form>
         </div>
-
     </div>
 </div>
 <div class="modal fade" id="modalSuccess">
@@ -224,6 +229,9 @@
             },
             {
                 data: "name"
+            },
+            {
+                data: "quota"
             },
             {
                 sortable: false,

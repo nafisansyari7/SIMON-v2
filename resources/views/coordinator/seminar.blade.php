@@ -17,10 +17,11 @@
                 <table id="reg_sem" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
-                            <th width="45%">Judul</th>
+                            <th width="40%">Judul</th>
                             <th width="20%">Kelompok</th>
                             <th width="20%">Pembimbing</th>
-                            <th>Aksi</th>
+                            <th width="5%">Lihat</th>
+                            <th width="5%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,10 +43,12 @@
                     <thead>
                         <tr>
                             <th width="15%">Tanggal</th>
-                            <th width="40%">Judul</th>
-                            <th width="20%">Kelompok</th>
+                            <th width="30%">Judul & Kelompok</th>
+                            <th width="30%">Penguji</th>
                             <th width="5%">Kuota Pengamat</th>
-                            <th>Aksi</th>
+                            <th width="5%">Lihat</th>
+                            <th width="5%">Aksi</th>
+                            <th width="5%"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,10 +85,6 @@
                     <li class="nav-item">
                         <a class="nav-link" id="instansi-tab" data-toggle="pill" href="#instansi" role="tab"
                             aria-controls="instansi" aria-selected="false">Instansi/Perusahaan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="seminar-tab" data-toggle="pill" href="#detailsm" role="tab"
-                            aria-controls="seminar" aria-selected="false">Penguji</a>
                     </li>
                 </ul>
                 <form id="form_detail">
@@ -149,16 +148,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="detailsm" role="tabpanel" aria-labelledby="seminar-tab">
+                        <!-- <div class="tab-pane fade" id="detailsm" role="tabpanel" aria-labelledby="seminar-tab">
                             <div class="form-group">
                                 <label>Ketua Penguji</label>
                                 <input type="text" class="form-control" id="ketuapem" value="" disabled>
-                            </div>
-                            <div class="form-group">
+                            </div> -->
+                            <!-- <div class="form-group">
                                 <label>Sekretaris</label>
                                 <input type="text" class="form-control" id="pem1" value="" disabled>
-                            </div>
-                            <div class="form-group">
+                            </div> -->
+                            <!-- <div class="form-group">
                                 <label>Penguji I</label>
                                 <input type="text" class="form-control" id="pem2" value="" disabled>
                             </div>
@@ -166,7 +165,7 @@
                                 <label>Penguji II</label>
                                 <input type="text" class="form-control" id="pem3" value="" disabled>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </form>
             </div>
@@ -187,7 +186,9 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body table-responsive">
+            <div class="modal-body absen">
+            </div>
+            <div class="modal-footer table-responsive">
                 <table class="table" id="observer">
                     <thead>
                         <tr>
@@ -199,8 +200,6 @@
                     <tbody>
                     </tbody>
                 </table>
-            </div>
-            <div class="modal-footer absen">
             </div>
         </div>
     </div>
@@ -248,29 +247,35 @@
                     </div>
                     <div class="form-group">
                         <label>Ketua Penguji</label>
-                        <input type="text" class="form-control" id="examiner_1" value="" disabled>
-                        <input type="hidden" class="form-control" id="examiner_1_id" name="examiner_1[lecturer_id]" value="">
+                        <select id="examiner_1" name="examiner_1[lecturer_id]" class="form-control">
+                            <option value="">Pilih Penguji</option>
+                            @foreach($examiner as $lecturer)
+                            <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
+                            @endforeach
+                        </select>
                         <input type="hidden" id="examiner_role_1" name="examiner_1[role]" value="Ketua Penguji">
                     </div>
                     <div class="form-group">
-                        <label>Sekretaris</label>
+                        <label>Penguji II</label>
                         <select id="examiner_2" name="examiner_2[lecturer_id]" class="form-control">
+                            <option value="">Pilih Penguji</option>
                             @foreach($examiner as $lecturer)
                             <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
                             @endforeach
                         </select>
-                        <input type="hidden" id="examiner_role_2" name="examiner_2[role]" value="Sekretaris">
+                        <input type="hidden" id="examiner_role_2" name="examiner_2[role]" value="Penguji II">
                     </div>
                     <div class="form-group">
-                        <label>Penguji I</label>
+                        <label>Penguji III</label>
                         <select id="examiner_3" name="examiner_3[lecturer_id]" class="form-control">
+                            <option value="">Pilih Penguji</option>
                             @foreach($examiner as $lecturer)
                             <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
                             @endforeach
                         </select>
-                        <input type="hidden" id="examiner_role_3" name="examiner_3[role]" value="Penguji 1">
+                        <input type="hidden" id="examiner_role_3" name="examiner_3[role]" value="Penguji III">
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>Penguji II</label>
                         <select id="examiner_4" name="examiner_4[lecturer_id]" class="form-control">
                             @foreach($examiner as $lecturer)
@@ -278,7 +283,7 @@
                             @endforeach
                         </select>
                         <input type="hidden" id="examiner_role_4" name="examiner_4[role]" value="Penguji 2">
-                    </div>
+                    </div> -->
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success float-right">Terima</button>
@@ -350,22 +355,14 @@
                             </div>
                         </div>
                     </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label>Ketua Penguji</label>
                     <input type="text" class="form-control" id="editExaminer_1" value="" disabled>
                     <input type="hidden" class="form-control" id="editExaminer_1_id" value="" disabled>
-                </div>
+                </div> -->
                 <div class="form-group">
-                    <label>Sekretaris</label>
-                    <select id="editExaminer_2" name="editExaminerId_2" class="form-control">
-                        @foreach($examiner as $lecturer)
-                        <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Penguji I</label>
-                    <select id="editExaminer_3" name="editExaminerId_3" class="form-control">
+                    <label>Ketua Penguji</label>
+                    <select id="editExaminer_1" name="editExaminerId_1" class="form-control">
                         @foreach($examiner as $lecturer)
                         <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
                         @endforeach
@@ -373,7 +370,15 @@
                 </div>
                 <div class="form-group">
                     <label>Penguji II</label>
-                    <select id="editExaminer_4" name="editExaminerId_4" class="form-control">
+                    <select id="editExaminer_2" name="editExaminerId_2" class="form-control">
+                        @foreach($examiner as $lecturer)
+                        <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Penguji III</label>
+                    <select id="editExaminer_3" name="editExaminerId_3" class="form-control">
                         @foreach($examiner as $lecturer)
                         <option value="{{$lecturer->id}}"> {{$lecturer->name}}</option>
                         @endforeach
@@ -519,16 +524,21 @@
             {
                 data: "group_project_supervisor.lecturer.name"
             },
-
             {
                 sortable: false,
                 "render": function (data, type, full, meta) {
                     let buttonId = full.id;
                     return '<button id="' + buttonId +
-                        '" class="btn btn-sm btn-primary detail" title="Detail"><i class="fas fa-info-circle"></i></button>' +
-                        '<button id="' + buttonId +
-                        '" class="btn btn-sm btn-success terima ml-1 mr-1" title="Terima"><i class="fas fa-check"></i></button>' +
-                        '<button id="' + buttonId + '" class="btn btn-sm btn-danger tolak" title="Tolak"><i class="fas fa-stop-circle"></i></button>'
+                        '" class="btn btn-block btn-sm btn-primary detail" title="Detail">Detail</button>'
+                }
+            },
+            {
+                sortable: false,
+                "render": function (data, type, full, meta) {
+                    let buttonId = full.id;
+                    return '<button id="' + buttonId +
+                        '" class="btn btn-block btn-sm btn-success terima" title="Terima">Terima</button>' +
+                        '<button id="' + buttonId + '" class="btn btn-block btn-sm btn-danger tolak" title="Tolak">Tolak</button>'
                 }
             }
         ]
@@ -577,8 +587,6 @@
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Kartu Rencana Studi</a><br>' +
                         '<a href="../berkas/nilaiPKL/' + i.file.penilaian_pkl +
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Lembar Penilaian PKL</a><br>' +
-                        // '<a href="../berkas/sertifikat/' + i.file.sertifikat +
-                        // '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat Kehadiran Seminar PKL & PK</a><br>' +
                         '<a href="../berkas/LKMM/' + i.file.sertifikat_lkmm +
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat LKMM</a></td></tr>'
 
@@ -597,8 +605,8 @@
             success: function(result) {
                 $('#is_verified').val(result.data.is_verified)
                 $('#groupProject_id').val(result.data.id)
-                $('#examiner_1').val(result.data.group_project_supervisor.lecturer.name)
-                $('#examiner_1_id').val(result.data.group_project_supervisor.lecturer_id)
+                // $('#examiner_1').val(result.data.group_project_supervisor.lecturer.name)
+                // $('#examiner_1_id').val(result.data.group_project_supervisor.lecturer_id)
             }
         })
     });
@@ -664,7 +672,7 @@
                     $('#accept').modal('hide');
                     $('#reg_sem').DataTable().ajax.reload();
                     $('#seminar').DataTable().ajax.reload();
-
+                    location.reload();
                 } else {
                     $('#modalFailed').modal();
                 }
@@ -682,6 +690,7 @@
     })
     $("#seminar").DataTable({
         "processing": true,
+        "order": [[ 0, "desc" ]],
         "ajax": {
             url: "{{ url('../koor/seminar/show') }}"
         },
@@ -696,9 +705,6 @@
                 }
             },
             {
-                data: "title"
-            },
-            {
                 sortable: false,
                 "render": function (data, type, full, meta) {
                     let img = ''
@@ -709,7 +715,18 @@
                             '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' +
                             full.internship_students[i].name + '"></a>'
                     }
-                    return img
+                    return full.title + '<br><br>' +img
+                }
+            },
+            {
+                sortable: false,
+                "render": function (data, type, full, meta) {
+                    let penguji = '<table class="table-borderless table-light">'
+                    for (let i = 0; i < full.group_project_examiner.length; i++) {
+                        penguji += '<tr><th width="20%">'+full.group_project_examiner[i].role+'</th><td>'+full.group_project_examiner[i].lecturer.name+'</td></tr>'
+                    }
+                    let end = '</table>'
+                    return penguji + end
                 }
             },
             {
@@ -729,16 +746,29 @@
                 "render": function (data, type, full, meta) {
                     let buttonId = full.id;
                     return '<button id="' + buttonId +
-                        '" class="btn btn-primary detail  mr-1" title="Detail"><i class="fas fa-info-circle"></i></button>' +
-                        '<a href="../koor/news-report-document/' + buttonId + '" target="_blank" class="btn btn-success newsreport mr-1"><i class="fas fa-download"></i></a>' +
-                        '<button id="' + buttonId +
-                        '" class="btn btn-warning edit mr-1" title="Edit"><i class="fas fa-edit"></i></button>' +
-                        '<button id="' + buttonId +
-                        '" class="btn btn-info observer  mr-1" title="Menghadiri"><i class="fas fa-users"></i></button>' +
-                        '<button id="' + buttonId +
-                        '" class="btn btn-success selesai mr-1" title="Selesai"><i class="fas fa-check"></i></button>'
+                        '" class="btn btn-block btn-sm btn-primary detail" title="Detail">Detail</button>'
                 }
-            }
+            },
+            {
+                sortable: false,
+                "render": function (data, type, full, meta) {
+                    let buttonId = full.id;
+                    return '<button id="' + buttonId +
+                        '" class="btn btn-block btn-sm btn-warning edit" title="Edit">Edit</button>' +
+                        '<button id="' + buttonId +
+                        '" class="btn btn-block btn-sm btn-success selesai" title="Selesai">Selesai</button>'
+                }
+            },
+            {
+                sortable: false,
+                "render": function (data, type, full, meta) {
+                    let buttonId = full.id;
+                    return '<a href="../koor/news-report-document/' + buttonId + 
+                        '" target="_blank" title="Unduh Berita Acara" class="btn btn-block btn-sm btn-secondary newsreport">Berita</a>' +
+                        '<button id="' + buttonId +
+                        '" class="btn btn-block btn-sm btn-dark observer" title="Lihat Daftar Pengamat">Pengamat</button>'
+                }
+            },
         ]
     });
     $('#seminar tbody').on('click', '.detail', function () {
@@ -757,19 +787,17 @@
                 $('#tlp').val(result.data.agency.phone_number)
                 $('#start').val(result.data.start_intern)
                 $('#end').val(result.data.end_intern)
-                $('#pem3').val(result.supervisor.lecturer.name)
-                result.fck.forEach(function (mmk) {
-                    let role = mmk.role;
-                    if (role === "Ketua Penguji") {
-                        $('#ketuapem').val(mmk.lecturer.name);
-                    } else if (role === "Sekretaris") {
-                        $('#pem1').val(mmk.lecturer.name);
-                    } else if (role === "Penguji 1") {
-                        $('#pem2').val(mmk.lecturer.name);
-                    } else if (role === "Penguji 2") {
-                        $('#pem3').val(mmk.lecturer.name);
-                    }
-                });
+                // $('#pem3').val(result.supervisor.lecturer.name)
+                // result.fck.forEach(function (mmk) {
+                //     let role = mmk.role;
+                //     if (role === "Ketua Penguji") {
+                //         $('#ketuapem').val(mmk.lecturer.name);
+                //     } else if (role === "Penguji II") {
+                //         $('#pem2').val(mmk.lecturer.name);
+                //     } else if (role === "Penguji III") {
+                //         $('#pem3').val(mmk.lecturer.name);
+                //     }
+                // });
                 let modal = ''
                 let job = ''
 
@@ -796,8 +824,6 @@
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Kartu Rencana Studi</a><br>' +
                         '<a href="../berkas/nilaiPKL/' + i.file.penilaian_pkl +
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Lembar Penilaian PKL</a><br>' +
-                        // '<a href="../berkas/sertifikat/' + i.file.sertifikat +
-                        // '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat Kehadiran Seminar PKL & PK</a><br>' +
                         '<a href="../berkas/LKMM/' + i.file.sertifikat_lkmm +
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Sertifikat LKMM</a></td></tr>'
 
@@ -817,8 +843,9 @@
                 $('#observer tbody').html('')
                 $('.absen').html('')
                 let modal = ''
-                let absen = '<a href="../koor/absen/'+id+'" target="_blank" class="btn btn-sm btn-primary float-right"><i class="fas fa-print"></i> Daftar Hadir</a>'
+                let absen = '<a href="../koor/absen/'+id+'" target="_blank" class="btn btn-block btn-sm btn-primary"><i class="fas fa-print"></i> Daftar Hadir</a>'
 
+                $('.absen').append(absen)
                 result.data.forEach(function (i) {
                     let mhsId = i.id
                     modal = '<tr><td>' + i.nim + '</td>' +
@@ -827,7 +854,6 @@
 
                     $('#observer tbody').append(modal)
                 });
-                $('.absen').append(absen)
             }
         })
     });
@@ -854,16 +880,16 @@
                 $('#editKuota').val(result.data.group_project_schedule.quota)
                 result.examiner.forEach(function(examiner) {
                     let role = examiner.role;
-                    if (role === "Sekretaris") {
+                    if (role === "Ketua Penguji") {
+                        $('#editExaminer_1').val(examiner.lecturer.id);
+                    } else if (role === "Penguji II") {
                         $('#editExaminer_2').val(examiner.lecturer.id);
-                    } else if (role === "Penguji 1") {
+                    } else if (role === "Penguji III") {
                         $('#editExaminer_3').val(examiner.lecturer.id);
-                    } else if (role === "Penguji 2") {
-                        $('#editExaminer_4').val(examiner.lecturer.id);
                     }
                 })
-                $('#editExaminer_1').val(result.data.group_project_supervisor.lecturer.name)
-                $('#editExaminer_1_id').val(result.data.group_project_supervisor.lecturer_id)
+                // $('#editExaminer_1').val(result.data.group_project_supervisor.lecturer.name)
+                // $('#editExaminer_1_id').val(result.data.group_project_supervisor.lecturer_id)
             }
         })
     });

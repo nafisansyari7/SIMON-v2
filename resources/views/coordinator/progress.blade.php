@@ -13,7 +13,7 @@
                 </h3>
             </div>
             <div class="card-body table-responsive">
-                <table id="progress-detail" class="table table-striped projects dataTable w-100">
+                <table id="progress-detail" class="table table-striped table-light projects dataTable w-100">
                     <thead>
                         <tr>
                             <th width='20%'>Kelompok</th>
@@ -45,6 +45,7 @@
                 <table id="kelompokPro" class="table table-striped w-100">
                     <thead>
                         <tr>
+                            <th>No.</th>
                             <th width="25%">Tanggal</th>
                             <th>Progress</th>
                             <th>Status</th>
@@ -153,11 +154,11 @@
                 sortable: false,
                 "render": function(data, type, full, meta) {
                     if(full.progress == 100){
-                        return '<span class="badge badge-success p-2">Siap Seminar</span>'
+                        return '<span class="badge badge-success p-2">Siap / Sedang Seminar</span>'
                     }
                     else {
                         return '<div class="progress progress-sm">' +
-                            '<div class="progress-bar bg-success" role="progressbar" aria-volumenow="' + full.progress + '" aria-volumemin="0" aria-volumemax="100" style="width:' + full.progress + '%">' +
+                            '<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-volumenow="' + full.progress + '" aria-volumemin="0" aria-volumemax="100" style="width:' + full.progress + '%">' +
                             '</div>' +
                             '</div>' +
                             '<small>' + full.progress + '% Complete</small>'
@@ -199,19 +200,24 @@
                 let modal = ''
                 let semua = '<button id="'+ id +'" title="Setujui Semua" class="btn btn-sm btn-success agreeAll float-right">Setujui Semua</a>'
                 let belum = 0
+                let iteration = 1
 
                 result.data.forEach(function(i) {
                     if (i.agreement == "N") {
-                        modal = '<tr><td>' + i.date + '</td>' +
+                        modal = '<tr><td>' + iteration + '</td>' +
+                        '<td>' + i.date + '</td>' +
                         '<td>' + i.description + '</td>' +
                         '<td><span class="badge badge-sm badge-danger p-2" style="font-size: 10px">Belum Disetujui</span></td>' +
                         '<td><button id="'+ i.id +'" title="Setujui" class="btn btn-sm btn-success agree"><i class="fas fa-check"></i></button></td></tr>'
                         belum += 1
+                        iteration += 1
                     } else{
-                        modal = '<tr><td>' + i.date + '</td>' +
+                        modal = '<tr><td>' + iteration + '</td>' +
+                        '<td>' + i.date + '</td>' +
                         '<td>' + i.description + '</td>' +
                         '<td><span class="badge badge-sm badge-success p-2" style="font-size: 10px">Disetujui</span></td>' +
                         '<td></td></tr>'
+                        iteration += 1
                     }
                     $('#kelompokPro tbody').append(modal)
                 });

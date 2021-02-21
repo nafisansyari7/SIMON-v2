@@ -15,10 +15,6 @@
                         <i class="fas fa-plus-circle mr-1"></i>
                         Tambah FAQ
                     </button>
-                    <!-- <button type="button" id="import" class="btn btn-success btn-sm">
-                        <i class="fas fa-upload mr-1"></i>
-                        Import
-                    </button> -->
                 </div>
             </div>
             @endif
@@ -38,7 +34,7 @@
                             <th width="30%">Pertanyaan</th>
                             <th width="50%">Jawaban</th>
                             <th width="10%">Tipe</th>
-                            <th width="10%">Aksi</th>
+                            <th width="5%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,8 +44,8 @@
                             <td>{{$f->answer}}</td>
                             <td><span class="badge badge-info p-2" style="font-size: 11px">{{$f->type}}</span></td>
                             <td>
-                                <button id="{{ $f->id }}" class="btn btn-sm btn-warning mr-1 edit"><i class="fas fa-edit"></i></button>
-                                <button id="{{ $f->id }}" class="btn btn-sm btn-danger mr-1 hapus"><i class="fas fa-trash"></i></button>
+                                <button id="{{ $f->id }}" class="btn btn-block btn-sm btn-warning edit">Edit</button>
+                                <button id="{{ $f->id }}" class="btn btn-block btn-sm btn-danger hapus">Hapus</button>
                             </td>
                         </tr>
                     @endforeach
@@ -66,9 +62,9 @@
                 </h5>
             </div>
             <div class="card-body">
+                @foreach ($faq->where('type', 'Publish') as $key => $f)
                 <div class="accordion" id="accordionExample">
                     <div class="card">
-                        @foreach ($faq->where('type', 'Publish') as $key => $f)
                         <div class="card-header" id="heading{{$key+1}}">
                             <h2 class="mb-0">
                                 <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$key+1}}"><h5>{{ $loop->iteration }}. {{ $f->question }}</h5></button>									
@@ -79,9 +75,9 @@
                                 <p>{{ $f->answer }}</p>
                             </div>
                         </div>
-                        @endforeach
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>

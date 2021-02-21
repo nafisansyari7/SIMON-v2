@@ -1,83 +1,202 @@
+<!DOCTYPE html>
 <html>
-<head><meta http-equiv=Content-Type content="text/html; charset=UTF-8">
-<style type="text/css">
-<!--
-span.cls_004{font-family:Times,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
-div.cls_004{font-family:Times,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
-span.cls_002{font-family:Times,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
-div.cls_002{font-family:Times,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
-span.cls_009{font-family:Times,serif;font-size:12.1px;color:rgb(4,98,193);font-weight:normal;font-style:normal;text-decoration: underline}
-div.cls_009{font-family:Times,serif;font-size:12.1px;color:rgb(4,98,193);font-weight:normal;font-style:normal;text-decoration: none}
--->
-</style>
-<script type="text/javascript" src="../../document/b84fd118-4919-11eb-8b25-0cc47a792c0a_id_b84fd118-4919-11eb-8b25-0cc47a792c0a_files/wz_jsgraphics.js"></script>
-</head>
-<body>
-<div style="position:absolute;left:50%;margin-left:-306px;top:0px;width:612px;height:792px;border-style:outset;overflow:hidden">
-<div style="position:absolute;left:0px;top:0px">
-<img src="../../document/b84fd118-4919-11eb-8b25-0cc47a792c0a_id_b84fd118-4919-11eb-8b25-0cc47a792c0a_files/background1.jpg" width=612 height=792></div>
-<div style="position:absolute;left:207.27px;top:34.03px" class="cls_004"><span class="cls_004">PROGRAM STUDI TEKNOLOGI INFORMASI</span></div>
-<div style="position:absolute;left:276.07px;top:47.83px" class="cls_004"><span class="cls_004">FAKULTAS TEKNIK</span></div>
-<div style="position:absolute;left:218.08px;top:61.62px" class="cls_004"><span class="cls_004">UNIVERSITAS LAMBUNG MANGKURAT</span></div>
-<div style="position:absolute;left:219.88px;top:75.42px" class="cls_002"><span class="cls_002">Jl. Brigjend H. Hasan Basri Banjarmasin 70123</span></div>
-<div style="position:absolute;left:165.05px;top:89.22px" class="cls_002"><span class="cls_002">Telp (024) 3517261, 3520165, 3567010, 3560582, Fax (024) 3569684</span></div>
-<div style="position:absolute;left:241.47px;top:103.03px" class="cls_002"><span class="cls_002">Homepage : </span><A HREF="http://www.ft.unlam.ac.id/">http://www.ft.unlam.ac.id</A> </span></div>
-<div style="position:absolute;left:230.27px;top:141.05px" class="cls_004"><span class="cls_004">DAFTAR HADIR PESERTA</span></div>
-<div style="position:absolute;left:111.62px;top:163.85px" class="cls_004"><span class="cls_004">SEMINAR PRAKTIK KERJA LAPANGAN DAN PROYEK KELOMPOK</span></div>
-<div style="position:absolute;left:77.43px;top:201.65px" class="cls_002"><span class="cls_002">Hari / Tanggal</span></div>
-<div style="position:absolute;left:204.68px;top:201.65px" class="cls_002"><span class="cls_002">:</span></div>
-<div style="position:absolute;left:226.08px;top:201.65px" class="cls_002"><span class="cls_002">{{ $Anggota->GroupProjectSchedule->day }}, {{ $Anggota->GroupProjectSchedule->tanggal }}</span></div>
-<div style="position:absolute;left:77.43px;top:217.45px" class="cls_002"><span class="cls_002">Jam / Ruang</span></div>
-<div style="position:absolute;left:204.68px;top:217.45px" class="cls_002"><span class="cls_002">:</span></div>
-<div style="position:absolute;left:226.08px;top:217.45px" class="cls_002"><span class="cls_002">{{ Carbon\Carbon::parse($Anggota->GroupProjectSchedule->time)->isoFormat('HH.mm') }} -
-                                    {{ Carbon\Carbon::parse($Anggota->GroupProjectSchedule->time_end)->isoFormat('HH.mm') }}
-                                    WITA / {{ $Anggota->GroupProjectSchedule->place }}</span></div>
-<div style="position:absolute;left:77.43px;top:233.47px" class="cls_002"><span class="cls_002">Mahasiswa / NIM</span></div>
-<div style="position:absolute;left:204.68px;top:233.47px" class="cls_002"><span class="cls_002">:</span></div>
-<?php $j = 0 ?>
-@foreach ($Anggota->InternshipStudents as $student)
-@if ($j == 0)
-<div style="position:absolute;left:226.08px;top:233.47px" class="cls_002"><span class="cls_002">{{ $student->name }} / {{ $student->nim }}</span></div>
-@elseif ($j == 1)
-<div style="position:absolute;left:226.08px;top:249.28px" class="cls_002"><span class="cls_002">{{ $student->name }} /{{ $student->nim }}</span></div>
-@elseif ($j == 2)
-<div style="position:absolute;left:226.08px;top:265.08px" class="cls_002"><span class="cls_002">{{ $student->name }} / {{ $student->nim }}</span></div>
-@elseif ($j == 3)
-<div style="position:absolute;left:226.08px;top:281.08px" class="cls_002"><span class="cls_002">{{ $student->name }} / {{ $student->nim }}</span></div>
-@endif
-<?php $j++ ?>
-@endforeach
-<div style="position:absolute;left:77.43px;top:296.87px" class="cls_002"><span class="cls_002">Pembimbing</span></div>
-<div style="position:absolute;left:204.68px;top:296.87px" class="cls_002"><span class="cls_002">:</span></div>
-<div style="position:absolute;left:226.08px;top:296.87px" class="cls_002"><span class="cls_002">{{ $Anggota->GroupProjectSupervisor->Lecturer->name }}</span></div>
-<div style="position:absolute;left:77.43px;top:312.68px" class="cls_002"><span class="cls_002">Judul</span></div>
-<div style="position:absolute;left:204.68px;top:312.68px" class="cls_002"><span class="cls_002">:</span></div>
-<div style="position:absolute;left:226.08px;top:312.68px" class="cls_002"><span class="cls_002">{{ $Anggota->title }}</span></div>
-<div style="position:absolute;left:78.82px;top:414.33px" class="cls_002"><span class="cls_002">No</span></div>
-<div style="position:absolute;left:178.25px;top:414.33px" class="cls_002"><span class="cls_002">Nama</span></div>
-<div style="position:absolute;left:341.90px;top:414.33px" class="cls_002"><span class="cls_002">NIM</span></div>
-<div style="position:absolute;left:446.75px;top:414.33px" class="cls_002"><span class="cls_002">Tanda Tangan</span></div>
-<div style="position:absolute;left:428.13px;top:434.52px" class="cls_002"><span class="cls_002">1</span></div>
-<div style="position:absolute;left:83.22px;top:440.33px" class="cls_002"><span class="cls_002">1</span></div>
-<div style="position:absolute;left:83.22px;top:466.32px" class="cls_002"><span class="cls_002">2</span></div>
-<div style="position:absolute;left:478.15px;top:466.32px" class="cls_002"><span class="cls_002">2</span></div>
-<div style="position:absolute;left:428.13px;top:486.52px" class="cls_002"><span class="cls_002">3</span></div>
-<div style="position:absolute;left:83.22px;top:492.32px" class="cls_002"><span class="cls_002">3</span></div>
-<div style="position:absolute;left:83.22px;top:518.35px" class="cls_002"><span class="cls_002">4</span></div>
-<div style="position:absolute;left:478.15px;top:518.35px" class="cls_002"><span class="cls_002">4</span></div>
-<div style="position:absolute;left:428.13px;top:538.55px" class="cls_002"><span class="cls_002">5</span></div>
-<div style="position:absolute;left:83.22px;top:544.35px" class="cls_002"><span class="cls_002">5</span></div>
-<div style="position:absolute;left:83.22px;top:570.35px" class="cls_002"><span class="cls_002">6</span></div>
-<div style="position:absolute;left:478.15px;top:570.35px" class="cls_002"><span class="cls_002">6</span></div>
-<div style="position:absolute;left:428.13px;top:590.55px" class="cls_002"><span class="cls_002">7</span></div>
-<div style="position:absolute;left:83.22px;top:596.35px" class="cls_002"><span class="cls_002">7</span></div>
-<div style="position:absolute;left:83.22px;top:622.37px" class="cls_002"><span class="cls_002">8</span></div>
-<div style="position:absolute;left:478.15px;top:622.37px" class="cls_002"><span class="cls_002">8</span></div>
-<div style="position:absolute;left:428.13px;top:642.57px" class="cls_002"><span class="cls_002">9</span></div>
-<div style="position:absolute;left:83.22px;top:648.37px" class="cls_002"><span class="cls_002">9</span></div>
-<div style="position:absolute;left:80.22px;top:674.38px" class="cls_002"><span class="cls_002">10</span></div>
-<div style="position:absolute;left:475.15px;top:674.38px" class="cls_002"><span class="cls_002">10</span></div>
-</div>
 
+<head>
+    <title>Daftar Hadir Seminar PKL dan PK</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+            font: 12pt "Times New Roman";
+        }
+
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table td {
+            vertical-align: top;
+        }
+
+        .score td {
+            vertical-align: middle;
+        }
+
+        .page {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 1cm;
+            padding-top: 0.2cm;
+            margin: 1cm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .subpage {
+            height: 256mm;
+        }
+
+        .page-body {
+            padding: 0cm 1cm;
+        }
+
+        .page-header {
+            padding-top: 0cm;
+            padding-bottom: 1cm;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+            .page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+        }
+
+        .table-info table,
+        .table-info th,
+        .table-info td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .table-info th,
+        .table-info td {
+            padding: 5px 15px
+        }
+
+        .table-signature th,
+        .table-signature td {
+            padding: 5px 15px
+        }
+
+        .page-title {
+            text-align:center;
+            font-weight:600;
+            font-size:14pt
+        }
+        .mt-50 {
+            margin-top:50px
+        }
+        .mt-25 {
+            margin-top:25px
+        }
+        .mt-10 {
+            margin-top:5px
+        }
+        ul {
+            margin:5px
+        }
+        .w-100 {
+            width:100%
+        }
+
+    </style>
+</head>
+
+<body id="body">
+    <div class="book">
+        <div class="page">
+            <div class="subpage">
+                <div class="page-header">
+                    <table style="border-bottom: 5px solid black;">
+                        <tr>
+                            <td width="15%"><img src="{{ asset('image/ulm.png') }}" alt="" class="w-100"></td>
+                            <td align="center">
+                                <div style="font-size:16pt">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN</div>
+                                <div style="font-size:14pt">UNIVERSITAS LAMBUNG MANGKURAT</div>
+                                <div style="font-size:14pt">FAKULTAS TEKNIK</div>
+                                <div style="font-size:14pt"><b>PROGRAM STUDI TEKNOLOGI INFORMASI</b></div>
+                                <div>Alamat  Jl. Achmad Yani Km. 35,5 Banjarbaru-Kalimantan Selatan 70714</div>
+                                <div>Telepon/Fax. : (0511) 4773858-4773868</div>
+                                <div>Laman: http://www.ft.ulm.ac.id</div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="page-body">
+                    <div class="page-title">DAFTAR HADIR PESERTA<br>SEMINAR PRAKTIK KERJA LAPANGAN DAN PROYEK KELOMPOK</div>
+                    <div class="mt-25">
+                        <table width="100%">
+                            <tr>
+                                <td width="20%">Hari / Tanggal</td>
+                                <td width="5%">:</td>
+                                <td>{{ $groupProject->GroupProjectSchedule->day }}, {{ $groupProject->GroupProjectSchedule->tanggal }}</td>
+                            </tr>
+                            <tr>
+                                <td width="20%">Jam / Ruang</td>
+                                <td width="5%">:</td>
+                                <td>{{ Carbon\Carbon::parse($groupProject->GroupProjectSchedule->time)->isoFormat('HH.mm') }} -
+                                    {{ Carbon\Carbon::parse($groupProject->GroupProjectSchedule->time_end)->isoFormat('HH.mm') }} WITA / {{ $groupProject->GroupProjectSchedule->place }}</td>
+                            </tr>
+                            <tr>
+                                <td width="20%">Mahasiswa / NIM</td>
+                                <td width="5%">:</td>
+                                <td>
+                                    @foreach ($groupProject->InternshipStudents as $i)
+                                    {{ $i->name }} / {{ $i->nim }}<br>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="20%">Pembimbing</td>
+                                <td width="5%">:</td>
+                                <td>{{ $supervisors->Lecturer->name }}</td>
+                            </tr>
+                            <tr>
+                                <td width="20%">Judul</td>
+                                <td width="5%">:</td>
+                                <td>{{ $groupProject->title }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="mt-25">
+                        <table class="table-info" style="margin-top:5px">
+                            <tr>
+                                <th width="5%">No.</th>
+                                <th width="50%">NAMA</th>
+                                <th width="25%">NIM</th>
+                                <th width="20%">TANDA TANGAN</th>
+                            </tr>
+                            @for ($i=1; $i < 16; $i++)
+                            <tr>
+                                <td align="center">{{ $i }}</td>
+                                <td></td>
+                                <td></td>
+                                <td @if ($i%2 == 0) align="center" @endif>{{ $i }}</td>
+                            </tr>
+                            @endfor
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--
+    <script>
+        window.print();
+    </script> -->
 </body>
+
 </html>

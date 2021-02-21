@@ -49,10 +49,8 @@
                                 @endforeach
                             </td>
                             <td>
-                                <button id="{{ $i->id }}" title="Progress PKL" class="btn btn-primary mr-1 intern"><i
-                                        class="fas fa-tasks"></i></button>
-                                <button id="{{ $i->id }}" title="Log Activity" class="btn btn-secondary mr-1 logact"><i
-                                        class="fas fa-list"></i></button>
+                                <button id="{{ $i->id }}" title="Progress PKL" class="btn btn-primary mr-1 intern">Bimbingan</button>
+                                <button id="{{ $i->id }}" title="Log Activity" class="btn btn-secondary mr-1 logact">Log Activity</i></button>
                             </td>
                         </tr>
                         @endforeach
@@ -78,6 +76,7 @@
                 <table id="internPro" class="table table-striped w-100">
                     <thead>
                         <tr>
+                            <th>No.</th>
                             <th width="25%">Tanggal</th>
                             <th>Progress</th>
                             <th>Status</th>
@@ -110,6 +109,7 @@
                 <table id="logActIntern" class="table table-striped w-100">
                     <thead>
                         <tr>
+                            <th>No.</th>
                             <th>Tanggal</th>
                             <th>Activity</th>
                         </tr>
@@ -141,19 +141,24 @@
                 let modal = ''
                 let semua = '<button id="'+ id +'" title="Setujui Semua" class="btn btn-sm btn-success agreeAll float-right">Setujui Semua</a>'
                 let belum = 0
+                let iteration = 1
 
                 result.data.forEach(function(i) {
-                    if(i.agreement == "N") {
-                        modal = '<tr><td>' + i.date + '</td>' +
-                            '<td>' + i.description + '</td>' +
-                            '<td><span class="badge badge-sm badge-danger p-2" style="font-size: 10px">Belum Disetujui</span></td>' +
-                            '<td><button id="'+ i.id +'" title="Setujui" class="btn btn-sm btn-success agree"><i class="fas fa-check"></i></button></td></tr>'
+                    if (i.agreement == "N") {
+                        modal = '<tr><td>' + iteration + '</td>' +
+                                '<td>' + i.date + '</td>' +
+                                '<td>' + i.description + '</td>' +
+                                '<td><span class="badge badge-sm badge-danger p-2" style="font-size: 10px">Belum Disetujui</span></td>' +
+                                '<td><button id="'+ i.id +'" title="Setujui" class="btn btn-sm btn-success agree"><i class="fas fa-check"></i></button></td></tr>'
                         belum += 1
+                        iteration += 1
                     } else{
-                        modal = '<tr><td>' + i.date + '</td>' +
-                            '<td>' + i.description + '</td>' +
-                            '<td><span class="badge badge-sm badge-success p-2" style="font-size: 10px">Disetujui</span></td>' +
-                            '<td></td></tr>'
+                        modal = '<tr><td>' + iteration + '</td>' +
+                                '<td>' + i.date + '</td>' +
+                                '<td>' + i.description + '</td>' +
+                                '<td><span class="badge badge-sm badge-success p-2" style="font-size: 10px">Disetujui</span></td>' +
+                                '<td></td></tr>'
+                        iteration += 1
                     }
 
                     $('#internPro tbody').append(modal)
@@ -259,10 +264,13 @@
                 $('#logAct').modal('show')
                 $('#logActIntern tbody').html('')
                 let modal = ''
+                let iteration = 1
 
                 result.data.forEach(function(i) {
-                    modal = '<tr><td>' + i.date + '</td>' +
-                        '<td>' + i.description + '</td></tr>'
+                    modal = '<tr><td>' + iteration + '</td>' +
+                            '<td>' + i.date + '</td>' +
+                            '<td>' + i.description + '</td></tr>'
+                    iteration += 1
 
                     $('#logActIntern tbody').append(modal)
                 });

@@ -209,11 +209,6 @@
                                         <label for="lampiran">Lembar Penilaian PKL</label>
                                         <input name="editNilaiPKL" type="file" class="form-control-file" id="editNilaiPKL" value="">
                                     </div>
-                                    <!-- <div class="form-group col-6">
-                                        <label for="lampiran">Lembar Bimbingan PKL</label>
-                                        <input name="editBimbingPKL" type="file" class="form-control-file" id="editBimbingPKL" value=""
-                                        >
-                                    </div> -->
                                     <div class="form-group col-6">
                                         <label for="lampiran">Sertifikat Kehadiran Seminar</label>
                                         <input name="editSertifikat" type="file" class="form-control-file" id="editSertifikat" value="">

@@ -20,7 +20,6 @@
                             <th>Judul</th>
                             <th>Instansi</th>
                             <th width='20%'>Kelompok</th>
-                            <!-- <th width='10%'>Aksi</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -51,9 +50,6 @@
                                 </a>
                                 @endforeach
                             </td>
-                            <!-- <td>
-                                <a href="cetakSertifikat/{{ $s->id }}/{{ Auth::user()->InternshipStudent->id }}" target="_blank" class="btn btn-sm btn-success cetak ml-1 mr-1"><i class="fas fa-print"></i> Cetak</a>
-                            </td> -->
                         </tr>
                         @endif
                         @endforeach

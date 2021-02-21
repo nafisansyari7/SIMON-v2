@@ -27,7 +27,6 @@ class CollegeStudentController extends Controller
         $job = Jobdesc::orderBy('status', 'desc')->get();
         $anggota = GroupProject::with(['Agency', 'GroupProjectSchedule', 'InternshipStudents.Jobdescs', 'InternshipStudents.User', 'GroupProjectSupervisor.Lecturer'])
             ->find(Auth::user()->InternshipStudent->getGroupProjectId());
-        // dd($anggota);
         if ($anggota !== null) {
             $fck = GroupProjectExaminer::with('Lecturer')->where('group_project_id', $anggota->id)->get();
             return view('college_student.home', compact(['job', 'anggota', 'fck']));
@@ -65,7 +64,7 @@ class CollegeStudentController extends Controller
         if ($request->hasFile('laporan')) {
             $fileLaporan = $request->file('laporan');
             $folderLaporan = 'berkas/laporan';
-            $fileNameLaporan =  Carbon::now()->timestamp . '_' . uniqId() . '_' .$fileLaporan->getClientOriginalName();
+            $fileNameLaporan =  Carbon::now()->timestamp . '_' . uniqId() . 'LaporanPK';
             $fileLaporan->move($folderLaporan, $fileNameLaporan);
         }
         $project->laporan = $fileNameLaporan;

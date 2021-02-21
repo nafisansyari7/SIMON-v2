@@ -31,8 +31,9 @@
                             <th width="30%">Deskripsi Proyek</th>
                             <th width="20%">Instansi</th>
                             <th width="25%">Dosen</th>
-                            <th width="10%">Status</th>
-                            <th width="15%">Aksi</th>
+                            <th width="15%">Status</th>
+                            <th width="5%">Mahasiswa</th>
+                            <th width="5%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,15 +58,17 @@
                             <td>
                                 @if ($r->status == 1)
                                 <button onclick="openModalLihat(['{{ $r->id }}', '{{ $r->InternshipStudent->name }}', '{{ $r->InternshipStudent->nim }}', '{{ $r->InternshipStudent->User->image_profile }}'])"
-                                    class="btn btn-primary btn-sm"><i class="fas fa-user-circle"></i></button>
+                                    class="btn btn-block btn-primary btn-sm">Lihat</button>
                                 <button onclick="openModalBatal('{{ $r->id }}')"
-                                    class="btn btn-warning btn-sm ml-1 mr-1"><i class="fas fa-stop-circle"></i></button>
+                                    class="btn btn-block btn-warning btn-sm">Batalkan</button>
                                 @endif
+                            </td>
+                            <td>
                                 <button
                                     onclick="openModalEdit(['{{ $r->id }}', '{{ $r->description }}', '{{ $r->agency }}', '{{ $r->Lecturer->id }}'])"
-                                    class="btn btn-secondary btn-sm mr-1"><i class="fas fa-edit"></i></button>
+                                    class="btn btn-block btn-secondary btn-sm">Edit</button>
                                 <button onclick="openModalDelete('{{ $r->id }}')"
-                                    class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                    class="btn btn-block btn-danger btn-sm">Hapus</button>
                             </td>
                         </tr>
                         @endforeach

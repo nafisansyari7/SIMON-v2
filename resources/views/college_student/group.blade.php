@@ -8,16 +8,18 @@
             <div class="col-6">
                 <h5>Proyek Kelompok</h5>
             </div>
+            @if(Auth::user()->isVerifiedGroupProject() < 4)
             <div class="col-6">
                 <div class="float-right">
                 <button onclick="openModalProgres('{{ $group->id }}')" class="btn btn-primary btn-sm progresKel float-right"><i class="fas fa-plus mr-1"></i> Tambah Progress</button>
                 </div>
             </div>
+            @endif
         </div>
         <div class="card card-primary">
             <div class="card-header">
                 <h5 class="card-title">
-                    <i class="fas fa-spinner mr-1"></i>
+                    <i class="fas fa-tasks mr-1"></i>
                     Progress
                 </h5>
             </div>
@@ -48,7 +50,7 @@
                             <td>
                                 @if ($p->agreement == 'N')
                                 <button onclick="openModalHapus('{{$p->id}}')"
-                                    title="Hapus Progress" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                    title="Hapus Progress" class="btn btn-danger">Hapus</button>
                                 @endif
                             </td>
                         </tr>

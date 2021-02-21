@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', 'Koordinator | Data PKL dan PK')
+@section('title', 'Koordinator | Pasca Seminar PKL dan PK')
 @section('content')
 <section class="content">
     <div class="container-fluid">
@@ -8,14 +8,14 @@
             <div class="col-6">
                 <h5>Pengumpulan Laporan PKL dan PK</h5>
             </div>
-            <!-- <div class="col-6">
+            <div class="col-6">
                 <div class="float-right">
-                    <a href="../koor/exportExcel" type="button" class="btn btn-success btn-sm">
-                        <i class="fas fa-download mr-1"></i>
-                        Eksport Data
+                    <button id="arsipAll" type="button" class="btn btn-success btn-sm">
+                        <i class="fas fa-archive mr-1"></i>
+                        Arsipkan Semua
                     </a>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="card card-primary">
             <div class="card-header">
@@ -28,11 +28,12 @@
                 <table id="report" class="table table-striped projects dataTable w-100">
                     <thead>
                         <tr>
-                            <th width='15%'>Tanggal</th>
-                            <th width='35%'>Judul</th>
-                            <th width='20%'>Kelompok</th>
+                            <th width='15%'>Tanggal Seminar</th>
+                            <th width='30%'>Judul & Kelompok</th>
+                            <th width='25%'>Penguji</th>
                             <th width='15%'>Catatan Revisi & Laporan</th>
-                            <th width='15%'>Aksi</th>
+                            <th width='5%'>Lihat</th>
+                            <th width='10%'>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,10 +69,10 @@
                             <a class="nav-link" id="instansi-tab" data-toggle="pill" href="#instansi" role="tab"
                                 aria-controls="instansi" aria-selected="false">Instansi/Perusahaan</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" id="seminar-tab" data-toggle="pill" href="#seminar" role="tab"
                                 aria-controls="seminar" aria-selected="false">Seminar</a>
-                        </li>
+                        </li> -->
                     </ul>
                     <div class="tab-content" id="tabContent">
                         <div class="tab-pane fade show active" id="group" role="tabpanel" aria-labelledby="group-tab">
@@ -128,7 +129,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="seminar" role="tabpanel" aria-labelledby="seminar-tab">
+                        <!-- <div class="tab-pane fade" id="seminar" role="tabpanel" aria-labelledby="seminar-tab">
                             <div class="form-group">
                                 <label>Tempat</label>
                                 <input type="text" name="tempat" id="tempat" class="form-control" disabled>
@@ -161,7 +162,7 @@
                                 <label>Penguji II</label>
                                 <input id="pem3" type="text" class="form-control" disabled>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -173,7 +174,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="fas fa-archive mr-1"></i>
+                        <i class="fas fa-file mr-1"></i>
                         Catatan Revisi
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -265,7 +266,6 @@
                             <tr>
                                 <th width="20%">NIM</th>
                                 <th>Nama</th>
-                                <!-- <th width="20%">Aksi</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -283,6 +283,7 @@
 <script>
     $("#report").DataTable({
         "processing": true,
+        "order": [[ 0, "desc" ]],
         "ajax": {
             url: "{{ url('../koor/arsip-pk/show') }}"
         },
@@ -297,9 +298,6 @@
                 }
             },
             {
-                data: "title"
-            },
-            {
                 sortable: false,
                 "render": function (data, type, full, meta) {
                     let img = ''
@@ -310,19 +308,30 @@
                             '" data-toggle="tooltip" data-placement="bottom" class="table-avatar m-1" title="' +
                             full.internship_students[i].name + '"></a>'
                     }
-                    return img
+                    return full.title + '<br><br>' +img
                 }
             },
             {
                 sortable: false,
                 "render": function (data, type, full, meta) {
-                    if ((full.report === null) && (full.laporan === null)) {
+                    let penguji = '<table class="table-borderless table-light">'
+                    for (let i = 0; i < full.group_project_examiner.length; i++) {
+                        penguji += '<tr><th width="20%">'+full.group_project_examiner[i].role+'</th><td>'+full.group_project_examiner[i].lecturer.name+'</td></tr>'
+                    }
+                    let end = '</table>'
+                    return penguji + end
+                }
+            },
+            {
+                sortable: false,
+                "render": function (data, type, full, meta) {
+                    if ((full.revisi === null) && (full.laporan === null)) {
                         return '<span class="badge badge-danger p-2 m-1">Catatan Revisi Belum Tersedia</span><span class="badge badge-danger p-2 ml-1">Laporan Belum Dikumpul</span>'
-                    } else if ((full.report !== null) && (full.laporan === null)) {
+                    } else if ((full.revisi !== null) && (full.laporan === null)) {
                         return '<span class="badge badge-success p-2 m-1">Catatan Revisi Tersedia</span><span class="badge badge-danger p-2 m-1">Laporan Belum Dikumpul</span>'
-                    } else if ((full.report === null) && (full.laporan !== null)) {
+                    } else if ((full.revisi === null) && (full.laporan !== null)) {
                         return '<span class="badge badge-danger p-2 m-1">Catatan Revisi Belum Tersedia</span><span class="badge badge-success p-2 m-1">Laporan Sudah Dikumpul</span>'
-                    } else if ((full.report !== null) && (full.laporan !== null)) {
+                    } else if ((full.revisi !== null) && (full.laporan !== null)) {
                         return '<span class="badge badge-success p-2 m-1">Catatan Revisi Tersedia</span><span class="badge badge-success p-2 m-1">Laporan Sudah Dikumpul</span>'
                     }
                 }
@@ -332,15 +341,21 @@
                 "render": function (data, type, full, meta) {
                     let buttonId = full.id;
                     return '<button id="' + buttonId +
-                        '" class="btn btn-primary btn-sm detail mx-1" title="Detail"><i class="fas fa-info-circle"></i></button>' +
+                        '" class="btn btn-block btn-primary btn-sm detail" title="Detail">Detail</button>' +
                         '<button id="' + buttonId +
-                        '" class="btn btn-info btn-sm observer" title="Menghadiri"><i class="fas fa-users"></i></button>' +
-                        '<button id="' + buttonId +
-                        '" class="btn btn-warning btn-sm news-report mx-1" title="Catatan Revisi"><i class="fas fa-file-upload"></i></button>' +
-                        '<button id="' + buttonId +
-                        '" class="btn btn-success btn-sm delete" title="Arsipkan"><i class="fas fa-archive"></i></button>'
+                        '" class="btn btn-block btn-dark btn-sm observer" title="Menghadiri">Pengamat</button>'
                 }
-            }
+            },
+            {
+                sortable: false,
+                "render": function (data, type, full, meta) {
+                    let buttonId = full.id;
+                    return '<button id="' + buttonId +
+                        '" class="btn btn-block btn-secondary btn-sm news-report" title="Catatan Revisi">Revisi</button>' +
+                        '<button id="' + buttonId +
+                        '" class="btn btn-block btn-success btn-sm delete" title="Arsipkan">Arsipkan</button>'
+                }
+            },
         ]
     });
 
@@ -359,26 +374,26 @@
                 $('#tlp').val(result.data.agency.phone_number)
                 $('#start').val(result.data.start_intern)
                 $('#end').val(result.data.end_intern)
-                $('#tempat').val(result.schedule.group_project_schedule.place)
-                $('#tanggal').val(moment(result.schedule.group_project_schedule.date).format(
-                    'D MMMM YYYY'))
-                $('#waktuMulai').val(moment(result.schedule.group_project_schedule.time, 'HH:mm:ss')
-                    .format('HH:mm A'))
-                $('#waktuSelesai').val(moment(result.schedule.group_project_schedule.time_end,
-                    'HH:mm:ss').format('HH:mm A'))
-                $('#pem3').val(result.supervisor.lecturer.name)
-                result.fck.forEach(function (mmk) {
-                    let role = mmk.role;
-                    if (role === "Ketua Penguji") {
-                        $('#ketuapem').val(mmk.lecturer.name);
-                    } else if (role === "Sekretaris") {
-                        $('#pem1').val(mmk.lecturer.name);
-                    } else if (role === "Penguji 1") {
-                        $('#pem2').val(mmk.lecturer.name);
-                    } else if (role === "Penguji 2") {
-                        $('#pem3').val(mmk.lecturer.name);
-                    }
-                });
+                // $('#tempat').val(result.schedule.group_project_schedule.place)
+                // $('#tanggal').val(moment(result.schedule.group_project_schedule.date).format(
+                //     'D MMMM YYYY'))
+                // $('#waktuMulai').val(moment(result.schedule.group_project_schedule.time, 'HH:mm:ss')
+                //     .format('HH:mm A'))
+                // $('#waktuSelesai').val(moment(result.schedule.group_project_schedule.time_end,
+                //     'HH:mm:ss').format('HH:mm A'))
+                // $('#pem3').val(result.supervisor.lecturer.name)
+                // result.fck.forEach(function (mmk) {
+                //     let role = mmk.role;
+                //     if (role === "Ketua Penguji") {
+                //         $('#ketuapem').val(mmk.lecturer.name);
+                //     } else if (role === "Sekretaris") {
+                //         $('#pem1').val(mmk.lecturer.name);
+                //     } else if (role === "Penguji 1") {
+                //         $('#pem2').val(mmk.lecturer.name);
+                //     } else if (role === "Penguji 2") {
+                //         $('#pem3').val(mmk.lecturer.name);
+                //     }
+                // });
 
                 let modal = ''
                 let job = ''
@@ -404,10 +419,6 @@
                         '<td>' + call_job + '</td>' +
                         '<td><a href="../berkas/nilaiPKL/' + i.file.penilaian_pkl +
                         '" class="btn btn-xs btn-secondary m-1 w-100" target="blank">Lembar Penilaian PKL</a><br>' +
-                        // '<a href="../berkas/bimbingPKL/' + i.file.bimbingan_pkl +
-                        // '" target="blank">Lembar Bimbingan PKL</a><br>' +
-                        // '<a href="../berkas/sertifikat/' + i.file.sertifikat +
-                        // '" target="blank">Sertifikat Menghadiri Seminar PKL & PK</a>'+
                         '</td></tr>'
 
                     $('#mahasiswa tbody').append(modal)
@@ -433,7 +444,6 @@
                     let mhsId = i.id
                     modal = '<tr><td>' + i.nim + '</td>' +
                         '<td>' + i.name + '</td>' +
-                        // '<td><a href="cetakSertifikat/'+ id + '/ ' + mhsId +'" target="_blank" class="d-inline-block btn btn-success mr-1" title="Cetak Sertifikat"><i class="fas fa-certificate"></i></a></td>'+
                         '</tr>'
 
                     $('#observer tbody').append(modal)
@@ -451,9 +461,9 @@
             success: function (result) {
                 $('#files tbody').html('')
                 $('#group_project_id').val(result.data.id)
-                file = '<tr><td> Catatan Revisi (' + result.data.report +')' +
+                file = '<tr><td> Catatan Revisi (' + result.data.revisi +')' +
                     '<td class="text-right py-0 align-middle">' +
-                    '<a href="../berkas/berita/' + result.data.report +
+                    '<a href="../berkas/revisi/' + result.data.revisi +
                     '" target="blank" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a></td></tr>' +
                     '<tr><td> Laporan (' + result.data.laporan +')' +
                     '<td class="text-right py-0 align-middle">' +
@@ -501,11 +511,53 @@
 
     document.querySelector('.custom-file-input').addEventListener('change', function (e) {
         var fileName = document.getElementById("file-arsip").data[0].name;
-        var nextSibling = e.target.nextElementSibling
+        var nextSibling = e.target.nextElementSibling;
         nextSibling.innerText = fileName
     })
 
     
+    $('#arsipAll').on('click', function() {
+        let id = $(this).attr('id');
+        var token = $("meta[name='csrf-token']").attr("content");
+        Swal.fire({
+            title: 'Yakin ingin mengarsipkan semua data?',
+            text: "Semua data akan diarsipkan",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yakin!'
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire({
+                    title: 'Loading',
+                    timer: 60000,
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
+                $.ajax({
+                    url: "arsipAll",
+                    method: "POST",
+                    data: {
+                        "_token": token,
+                    },
+                    success: function() {
+                        Swal.fire(
+                                'Berhasil!',
+                                'Data PKL-PK Telah Diarsipkan',
+                                'success'
+                            )
+                            .then(function() {
+                                $('#report').DataTable().ajax.reload();
+                            }
+                        )
+                    }
+                })
+            }
+        })
+    });
+
     $('#report tbody').on('click', '.delete', function() {
         let id = $(this).attr('id');
         var token = $("meta[name='csrf-token']").attr("content");
